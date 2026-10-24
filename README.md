@@ -34,7 +34,8 @@ files it needs and of the result, so it cannot be applied to anything else, and 
 reaches the radio.
 
 **Release candidates** (versions ending `-rc.N`) are test builds. They have passed the project's emulator tests, but
-may not have been checked on a radio yet. Codeplug Studio lists them only when you ask it to.
+may not have been checked on a radio yet. Codeplug Studio lists them only when you ask it to. While a release candidate
+is in testing, its docs are in `docs/rc/<radio>/`; `docs/<radio>/` always describes the current release.
 
 ## Reporting problems and asking for features
 
@@ -44,3 +45,8 @@ backup or a codeplug: they hold your radio's calibration, your DMR ID and possib
 
 The firmware is developed in private repositories. This repository is published from them on each release, so pull
 requests that change `docs/` or `releases/` cannot be merged here; please open an issue instead.
+
+## Licence
+
+Docs and release notes: CC BY-SA 4.0. Release patches: free to use and redistribute unmodified. Tools: MIT. No
+warranty of any kind. Details in [LICENSE.md](LICENSE.md).

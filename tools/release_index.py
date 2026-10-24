@@ -5,8 +5,10 @@
   release_index.py check                 releases.json is current, sidecars are well formed, docs links resolve,
                                          and nothing from the private firmware repos has leaked into a public page
   release_index.py publish --radio R --patch P --notes N [--docs D] [--date YYYY-MM-DD]
-                                         add one release (and, with --docs, replace docs/<radio>/), then build and
-                                         check. Called by the private firmware repos' release workflows.
+                                         add one release, then build and check. With --docs, a final replaces
+                                         docs/<radio>/ (and drops release-candidate docs it has caught up with); a
+                                         release candidate replaces docs/rc/<radio>/, each page under a banner.
+                                         Called by the private firmware repos' release workflows.
 
 A release is two files side by side: the patch, byte for byte as the firmware build wrote it, and a sidecar markdown
 file with the same stem. The sidecar starts with a front-matter block of `key: value` lines (one line each) and its
@@ -17,6 +19,7 @@ import argparse
 import datetime
 import hashlib
 import json
+import os
 import pathlib
 import re
 import shutil
@@ -26,6 +29,8 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 RELEASES = ROOT / 'releases'
 DOCS = ROOT / 'docs'
 INDEX = ROOT / 'releases.json'
+RC_DOCS = DOCS / 'rc'
+RC_BANNER = re.compile(r'^> \*\*Release candidate docs: (\S+)\*\*', re.M)
 RADIOS = json.loads((ROOT / 'radios.json').read_text())
 
 INDEX_FORMAT = 1
@@ -50,6 +55,52 @@ class Problem(Exception):
 
 def channel_of(version):
     return 'rc' if '-rc.' in version else 'final'
+
+
+def version_key(version):
+    """1.2.0-rc.2 sorts before 1.2.0, which sorts before 1.2.1-rc.1."""
+    base, _, rc = version.partition('-rc.')
+    return tuple(int(x) for x in base.split('.')) + ((int(rc),) if rc else (float('inf'),))
+
+
+def rc_docs_version(radio):
+    readme = RC_DOCS / radio / 'README.md'
+    m = RC_BANNER.search(readme.read_text()) if readme.is_file() else None
+    return m.group(1) if m else None
+
+
+def publish_docs(src, radio, version):
+    """A final replaces docs/<radio>/; a release candidate replaces docs/rc/<radio>/ with a banner on each page."""
+    if not (src / 'README.md').is_file():
+        raise Problem(f'{src} has no README.md')
+    ignore = shutil.ignore_patterns('releases')
+    if channel_of(version) == 'final':
+        target = DOCS / radio
+        if target.exists():
+            shutil.rmtree(target)
+        shutil.copytree(src, target, ignore=ignore)
+        rc = rc_docs_version(radio)
+        if rc and version_key(rc) < version_key(version):
+            shutil.rmtree(RC_DOCS / radio)
+        return
+    target = RC_DOCS / radio
+    if target.exists():
+        shutil.rmtree(target)
+    shutil.copytree(src, target, ignore=ignore)
+    for page in sorted(target.rglob('*.md')):
+        stable = DOCS / radio / page.relative_to(target)
+        if not stable.is_file():
+            stable = DOCS / radio / 'README.md'
+        link = (f' For the current release, see [these docs]({os.path.relpath(stable, page.parent)}).'
+                if stable.is_file() else '')
+        banner = (f'> **Release candidate docs: {version}** These pages describe a release candidate that is still '
+                  f'being tested.{link}\n\n')
+        text = page.read_text()
+        if text.startswith('# '):
+            title, _, rest = text.partition('\n')
+            page.write_text(f'{title}\n\n{banner}{rest.lstrip(chr(10))}')
+        else:
+            page.write_text(banner + text)
 
 
 def parse_sidecar(text, where):
@@ -218,13 +269,7 @@ def publish(args):
     }, body))
 
     if args.docs:
-        src = pathlib.Path(args.docs)
-        if not (src / 'README.md').is_file():
-            raise Problem(f'{src} has no README.md')
-        target = DOCS / args.radio
-        if target.exists():
-            shutil.rmtree(target)
-        shutil.copytree(src, target, ignore=shutil.ignore_patterns('releases'))
+        publish_docs(pathlib.Path(args.docs), args.radio, version)
 
     INDEX.write_text(serialise(build_index()))
     print(f'published {args.radio} {version}')
@@ -239,7 +284,7 @@ def main():
     p.add_argument('--radio', required=True)
     p.add_argument('--patch', required=True)
     p.add_argument('--notes', required=True, help='notes master with summary and verify front matter')
-    p.add_argument('--docs', help='folder that replaces docs/<radio>/ (its releases/ subfolder is skipped)')
+    p.add_argument('--docs', help='user docs for this release (its releases/ subfolder is skipped); see publish above')
     p.add_argument('--date', default=datetime.datetime.now(datetime.timezone.utc).date().isoformat())
     args = ap.parse_args()
     try:
