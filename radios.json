@@ -1,0 +1,14 @@
+{
+  "anytone-at-d890uv": {
+    "name": "AnyTone AT-D890UV",
+    "patchName": "anytone-d890-firmware",
+    "assetPrefix": "d890-fw-",
+    "stockVersion": "V1.05 (20260521)"
+  },
+  "baofeng-dm32uv": {
+    "name": "Baofeng DM-32UV",
+    "patchName": "baofeng-dm32-firmware",
+    "assetPrefix": "dm32-fw-",
+    "stockVersion": "v1.01.048"
+  }
+}

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Codeplug Studio problems
+    url: https://github.com/pskillen/codeplug-studio/issues
+    about: Problems with Codeplug Studio itself (other than flashing these releases) go to its own tracker.

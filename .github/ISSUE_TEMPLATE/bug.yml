@@ -1,0 +1,54 @@
+name: Bug report
+description: Something on the radio does not work as the docs say, or a flash went wrong.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Never attach a radio backup or a codeplug file: they hold your radio's calibration, your DMR ID and possibly encryption keys.
+        If the radio will not start after a flash, follow your radio's recovery page first.
+  - type: dropdown
+    id: radio
+    attributes:
+      label: Radio
+      options:
+        - AnyTone AT-D890UV
+        - Baofeng DM-32UV
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Release
+      description: The release on the radio, as the power-on screen or Device Info shows it (for example mm9pdy-1.1.0).
+      placeholder: mm9pdy-1.1.0
+    validations:
+      required: true
+  - type: dropdown
+    id: when
+    attributes:
+      label: When did it happen?
+      options:
+        - While flashing
+        - Using the radio after flashing
+        - Going back to stock
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what the radio did instead. Which keys, which screen, which channel type (analogue or digital, simplex or repeater).
+    validations:
+      required: true
+  - type: textarea
+    id: studio
+    attributes:
+      label: Codeplug Studio's summary
+      description: For a flashing problem, paste the summary from the end of the firmware flasher (it has a Copy button).
+      render: text
+  - type: input
+    id: hardware
+    attributes:
+      label: Anything else about the radio
+      description: Where you bought it, its region or hardware version if you know them, and any other firmware it has run.

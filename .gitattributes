@@ -1,0 +1,3 @@
+# Patches are hashed: never let git or an editor change a byte.
+releases/**/*.patch.json -text -diff
+releases.json -text

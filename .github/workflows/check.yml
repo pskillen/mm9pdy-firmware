@@ -1,0 +1,21 @@
+name: Check
+
+# releases.json matches releases/, every sidecar is well formed, links resolve, and nothing from the private firmware
+# repos (links, addresses, build detail) has leaked into a public page.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python3 -I tools/release_index.py check

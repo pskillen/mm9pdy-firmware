@@ -1,0 +1,119 @@
+{
+  "format": 1,
+  "releases": [
+    {
+      "radioId": "anytone-at-d890uv",
+      "version": "1.2.0-rc.2",
+      "channel": "rc",
+      "patchName": "anytone-d890-firmware",
+      "patchFile": "d890-fw-1.2.0-rc.2.patch.json",
+      "patchPath": "releases/anytone-at-d890uv/d890-fw-1.2.0-rc.2.patch.json",
+      "patchSha256": "27a8cc428e4d8c750549b3bd299b2fd3d2bced89b951b911e33ea0bb59d97b85",
+      "stockVersion": "V1.05 (20260521)",
+      "publishedOn": "2026-10-23",
+      "summary": "A 1.2.0 release candidate: the distance to the channel's site from positions Codeplug Studio writes, a new single-display layout, a heard-call popup during zone scan, and new quick filters rows.",
+      "verifyHint": "After the radio restarts, Device Info > Mod Ver shows \"mm9pdy-1.2.0-rc.2\".",
+      "resultSha256": {
+        "cdd": "5b11aad1d366984c0ab9554d7a1418525f39d17d9314ba1864e0b43172de71d1",
+        "cdi": "4b3f407c599e8f1917fb2f658434b5f3e2cc610d20a012f0fc2069c055b52ea7",
+        "spi": "da822730221f40c9ff3df741816420f41d4cf0d224022db3ef7bf603489d1d85"
+      },
+      "notesPath": "releases/anytone-at-d890uv/d890-fw-1.2.0-rc.2.md",
+      "notes": "A release candidate for 1.2.0, for testing. It applies to the stock **V1.05** package (20260521) only. It is 1.2.0-rc.1 with **channel distance** added. Everything in 1.1.0 is also in this build.\n\n**How far it has been checked:** this build has been written to the owner's radio. A Codeplug Studio write worked and the channel distances showed. The other 1.2.0 changes below are checked in an emulator only.\n\n**What's new since 1.1.0**\n\n- **Channel distance:** the channel screen shows how far away the current memory channel's site is, and in which direction, from the radio's GPS fix, for example `850m N` or `4.3km NE`. It needs channel positions written by Codeplug Studio's **MM9PDY** target, GPS on and a recent fix. VFO, scanning and channels with no position show nothing. A channel renamed or retuned on the radio shows nothing until Studio writes it again.\n- **Single display:** one 3-line layout for analogue and digital channels: the channel name, then the talk group or receive frequency, then the zone name on a small line underneath.\n- **Dual display:** the sub side's line shows the sub side's own talk group, `Talk group / Zone`.\n- **Heard-call popup:** a zone scan that holds on a DMR call shows a box over the receive screen. It is on by default; the quick filters' new **Scan popup** row turns it off.\n- **Bluetooth headset volume:** while a headset is connected, the volume knob sets its volume.\n- **Quick filters Tone: Ch / Any:** Any opens the squelch of an analogue channel with a receive tone on any signal. The channel still transmits its tone.\n- **Quick filters To VFO: Copy:** copies the main side's channel into that side's VFO and switches to it.\n\nThe quick filters list now has eight rows and scrolls.\n\n**Known limits**\n\n- The distance text can clip.\n- The dual display shows no distance, on either side.\n- Whether the Bluetooth module applies the knob's volume on a live link is unchecked; some headsets keep their own volume.\n- A channel with no contact must store \"none\" within 0–9999 (Codeplug Studio writes 9999).\n\n**Checking it worked:** after the radio restarts, Device Info > Mod Ver shows `mm9pdy-1.2.0-rc.2`.\n\n**Going back to stock:** flash stock V1.05 from this page, or use the official CPS.\n"
+    },
+    {
+      "radioId": "anytone-at-d890uv",
+      "version": "1.1.0",
+      "channel": "final",
+      "patchName": "anytone-d890-firmware",
+      "patchFile": "d890-fw-1.1.0.patch.json",
+      "patchPath": "releases/anytone-at-d890uv/d890-fw-1.1.0.patch.json",
+      "patchSha256": "a5dd67e45957605a45c2da3b5b0bafa10d8286a9d9a712ad3de9cbb07688acb0",
+      "stockVersion": "V1.05 (20260521)",
+      "publishedOn": "2026-10-22",
+      "summary": "TG Next / TG Previous during a call, a scan stop that keeps the talk group you heard, a timeslot per RX group list member, the talk group and zone on screen, and a Mod Ver item in Device Info.",
+      "verifyHint": "After the radio restarts, Device Info > Mod Ver shows \"mm9pdy-1.1.0\".",
+      "resultSha256": {
+        "cdd": "f14acc2e294dd7f926ee1e4dc36e10a926c6bef18ff57c4bd3e1c3a208be91e2",
+        "cdi": "3ca0366f3ad809a466beb7e890877dcfa9598a7289396ca47416544573f57bf8",
+        "spi": "8fc39b820320912d8a57217479612c08b634f6f90d949d40ac709ed660d85410"
+      },
+      "notesPath": "releases/anytone-at-d890uv/d890-fw-1.1.0.md",
+      "notes": "The 1.1.0 release of the AT-D890UV firmware mods. It applies to the stock **V1.05** package (20260521) only.\n\nIt is the same build as release candidate 1.1.0-rc.2, apart from the release name, and rc.2 passed its radio check. Everything in 1.0.0 is also in this build.\n\n**What's new since 1.0.0**\n\n- **Mod version:** the power-on screen shows `mm9pdy-1.1.0`, and Menu > Settings > Device Info has a **Mod Ver:** item with the same text. Firmware Ver: still shows the stock `Ver 1.05`.\n- **TG Next / TG Previous during a call:** step off a busy talk group while a call is being received. Main side and digital memory channels only; they do nothing while the sub side is receiving.\n- **Stop a scan, reply to what you heard:** stop a zone scan during or just after a DMR call and the radio stays on the talk group you heard, so PTT answers it. A talk group outside the channel's RX group list is used for now only.\n- **Channel with no contact:** a digital channel with no transmit contact starts on the first talk group in its RX group list, not on talk-group slot 0. This needs TG Next or TG Previous assigned to a key.\n- **A timeslot per RX group list member:** set in Codeplug Studio's MM9PDY target. Step to that talk group and you transmit on its slot. The list's slot wins over a `TS1` / `TS2` name suffix.\n- **Talk group and zone on screen:** a digital channel shows the channel name, the talk group, and the zone name in small text underneath. With both channels shown, line 2 reads `Talk group | Zone`.\n\n**Known limits**\n\n- A channel with no contact must store \"none\" as an unused talk-group slot within 0–9999. Codeplug Studio writes 9999. A contact word above 9999 makes the stock radio show \"Program Error\" at power-on on that channel.\n- Per-member timeslots are written only by Codeplug Studio. A write with the official CPS, or editing that list's members on the radio, is expected to drop them; neither is confirmed on the radio.\n- On the dual display, a `Talk group | Zone` pair with a non-ASCII character is cut at 15 characters.\n- What a call does straight after a TG step during that call is unconfirmed.\n\n**Checking it worked:** after the radio restarts, Device Info > Mod Ver shows `mm9pdy-1.1.0`.\n\n**Going back to stock:** flash stock V1.05 from this page, or use the official CPS.\n"
+    },
+    {
+      "radioId": "anytone-at-d890uv",
+      "version": "1.0.0",
+      "channel": "final",
+      "patchName": "anytone-d890-firmware",
+      "patchFile": "d890-fw-1.0.0.patch.json",
+      "patchPath": "releases/anytone-at-d890uv/d890-fw-1.0.0.patch.json",
+      "patchSha256": "bd9e32812a89d91fdb548f6dddbea81f7de65c3d8c096e87ed20c82487f68b1f",
+      "stockVersion": "V1.05 (20260521)",
+      "publishedOn": "2026-10-20",
+      "summary": "Talk-group keys, a star-key timeslot toggle, a quick filters menu, whole-zone scan, and the release name on the power-on screen.",
+      "verifyHint": "After the radio restarts, Device Info > Version shows \"1.0.0\".",
+      "resultSha256": {
+        "cdd": "934ed27c51ef38a125c88f418deae90fb8d131969046c620f6c164913f8ba19b",
+        "cdi": "d74cb1e9f3dfd49eb8cc2b30f8640f335508303f35f91621deccbe0ffe7cb56d",
+        "spi": "d00aebd3a1a6b20ff1a5ebcf38662a63cbc8cbe4f90277c7f33083b8a064523d"
+      },
+      "notesPath": "releases/anytone-at-d890uv/d890-fw-1.0.0.md",
+      "notes": "The first full release of the AT-D890UV firmware mods. It applies to the stock **V1.05** package (20260521) only.\n\nIt is the same build as release candidate 1.0.0-rc.3, apart from the release name, and that build passed its full\nradio check.\n\n**What's in it**\n\n- **Talk-group keys:** step through the channel's RX group list with TG Previous / TG Next, and transmit on the picked\n  talk group. A `TS1` or `TS2` suffix on a talk-group name sets the timeslot.\n- **Star-key timeslot toggle.**\n- **Quick filters menu** with five rows: RX match (TG / RGL / Any), TS filter, CC match, Scan (Zone / List) and TG slot.\n  The settings are kept across a power cycle and across a write with the official CPS.\n- **Zone scan:** scans the whole zone, including on channels with no scan list.\n- The release name shows on the power-on screen and in Device Info.\n\n**Checking it worked:** after the radio restarts, Device Info > Version shows `1.0.0`.\n\n**Going back to stock:** flash stock V1.05 from this page, or use the official CPS.\n"
+    },
+    {
+      "radioId": "baofeng-dm32uv",
+      "version": "1.2.0-rc.1",
+      "channel": "rc",
+      "patchName": "baofeng-dm32-firmware",
+      "patchFile": "dm32-fw-1.2.0-rc.1.patch.json",
+      "patchPath": "releases/baofeng-dm32uv/dm32-fw-1.2.0-rc.1.patch.json",
+      "patchSha256": "6eea12ecfc9a9422917340d9bd31d16a907a6aac459bb2f4d14a47ebc3a52135",
+      "stockVersion": "v1.01.048",
+      "publishedOn": "2026-10-23",
+      "summary": "A 1.2.0 release candidate: a timeslot per RX group list member, quick-menu RX match and TS filter rows, and the distance to the channel's site from positions Codeplug Studio writes. Emulator-checked only.",
+      "verifyHint": "Settings > Device Info > Versions shows \"mm9pdy-1.2.0-rc.1\" under DM32.01.L01.048.",
+      "resultSha256": {
+        "bin": "96be3b3374d10a8339fa0d1d66c578e3c710ca77bf20058f3261e9ba9730eb93"
+      },
+      "notesPath": "releases/baofeng-dm32uv/dm32-fw-1.2.0-rc.1.md",
+      "notes": "A release candidate for 1.2.0, for testing. It applies to stock firmware **v1.01.048** only. Everything in 1.1.0 is also in this build.\n\n**Not yet tried on a radio:** the new items below are checked in an emulator only.\n\n**What's new since 1.1.0**\n\n- **Channel distance:** the zone-name row shows how far away the current memory channel's site is, and in which direction, from the radio's GPS position, for example `4.3km NE`. It needs channel positions written by Codeplug Studio's **MM9PDY** target, GNSS on and a recent fix. Power-cycle the radio after the write: it reads the positions at power-on. VFO, zone scan and channels with no position show nothing.\n- **A timeslot per RX group list member:** Codeplug Studio's MM9PDY target can store a slot for each member of an RX group list. Step to that talk group with TG Prev / TG Next and the radio uses that slot. It wins over a `TS1` / `TS2` name suffix; the star key still overrides both.\n- **Quick menu rows RX match and TS filter,** under Light mode. **RX match** (TG / RGL / Any) sets which group calls you hear; RGL is stock. **TS filter** (On / Off): Off also listens on the other timeslot when both are quiet; On is stock.\n\n**Known limits**\n\n- A 16-character zone name leaves no room for the distance, so none is shown.\n- If you change an RX group list's members in another tool, such as the official CPS, the radio ignores that list's stored slots until Studio writes them again.\n- TS filter Off is a test feature: PTT always goes out on the channel's own slot.\n- RX match TG applies from the next call after a talk-group step. The Monitor key still opens the radio to every call.\n\n**Checking it worked:** Settings > Device Info > Versions shows `mm9pdy-1.2.0-rc.1` under Baofeng's `DM32.01.L01.048`.\n\n**Going back to stock:** flash stock v1.01.048 from this page, or use the official CPS.\n"
+    },
+    {
+      "radioId": "baofeng-dm32uv",
+      "version": "1.1.0",
+      "channel": "final",
+      "patchName": "baofeng-dm32-firmware",
+      "patchFile": "dm32-fw-1.1.0.patch.json",
+      "patchPath": "releases/baofeng-dm32uv/dm32-fw-1.1.0.patch.json",
+      "patchSha256": "e4ea52a8717c0cad0fed72d78fe868ef37227b2e0a5b231b53d553c3e0408000",
+      "stockVersion": "v1.01.048",
+      "publishedOn": "2026-10-22",
+      "summary": "Talk-group keys that step through the RX group list, the PTT contact on screen, a star-key timeslot swap with a TS1/TS2 badge, a timeslot from a talk-group name suffix, and the mod version in Device Info.",
+      "verifyHint": "Settings > Device Info > Versions shows \"mm9pdy-1.1.0\" under DM32.01.L01.048.",
+      "resultSha256": {
+        "bin": "d77cdb00dbfd0e72a786c2a54cdb9fa07bceaf530bf8e953f2ed96be37a96be5"
+      },
+      "notesPath": "releases/baofeng-dm32uv/dm32-fw-1.1.0.md",
+      "notes": "The 1.1.0 release of the DM-32UV firmware mods. It applies to stock firmware **v1.01.048** only. It is about DMR: change who you're talking to and which timeslot you're on from the front panel. Everything in 1.0.0 is also in this build.\n\nThe codeplug format is unchanged, so the official CPS and Codeplug Studio read and write the radio as before, and the radio keeps its channels and settings across the update.\n\n**How far it has been checked:** every feature passes the emulator test suite, and the release was checked on the owner's radio before it shipped. The full on-air checklist (which slot actually goes out, for example) is still open.\n\n**What's new since 1.0.0**\n\n- **Talk groups without reprogramming:** assign two keys to **Previous Record** and **Next Record** in the CPS (the radio lists them as **TG Prev** and **TG Next**). On a digital channel with an RX group list they step through its members, and PTT calls the one you picked. Nothing is saved: power off and every channel is back to its own contact.\n- **See who you're calling:** on a digital channel, the line under the channel name shows the contact PTT will call instead of the frequency.\n- **Star-key timeslot swap:** a short press of `*` on a digital repeater channel swaps between TS1 and TS2 until you change channel, step talk group or power off. On analogue channels `*` still toggles NOAA weather.\n- **Timeslot badge:** `TS1` or `TS2` next to the `DIG` badge, showing the slot the radio is actually using.\n- **Timeslot from a talk-group name:** a contact named, for example, `Scotland TS2` switches to that slot when you step to it. The name is shown without the suffix.\n- **Mod version:** `mm9pdy-1.1.0` at the bottom of the boot screen and under Settings > Device Info > Versions.\n\n**Known limits**\n\n- While scanning, the second line shows the frequency, not a talk-group name.\n- After a channel change, the frequency can flash for a moment before the contact name appears.\n- A contact name that happens to end in `ts1` or `ts2` sets the slot; there is no switch to turn that off.\n- In dual watch with both sides on the same channel, a star-key swap can sometimes outlive a channel change on one side.\n\n**Checking it worked:** Settings > Device Info > Versions shows `mm9pdy-1.1.0` under Baofeng's `DM32.01.L01.048`.\n\n**Going back to stock:** flash stock v1.01.048 from this page, or use the official CPS.\n"
+    },
+    {
+      "radioId": "baofeng-dm32uv",
+      "version": "1.0.0",
+      "channel": "final",
+      "patchName": "baofeng-dm32-firmware",
+      "patchFile": "dm32-fw-1.0.0.patch.json",
+      "patchPath": "releases/baofeng-dm32uv/dm32-fw-1.0.0.patch.json",
+      "patchSha256": "fb14da26d8248011d50b89fc8286c67fcbcabeb3b43ebf3d184afd7bc474bf9f",
+      "stockVersion": "v1.01.048",
+      "publishedOn": "2026-10-20",
+      "summary": "Zone scan on channels without a scan list, a quick menu with light mode, position-report retry, a GPS padding fix and menu text fixes.",
+      "verifyHint": "Press Scan on a channel with no scan list: a zone scan should start. Device information still reads DM32.01.L01.048; that is expected.",
+      "resultSha256": {
+        "bin": "342bd5aceb5021508d31a1fc58d1cb12e41a1840ebe1b1c18c86f3cd23e5739a"
+      },
+      "notesPath": "releases/baofeng-dm32uv/dm32-fw-1.0.0.md",
+      "notes": "The first full release of the DM-32UV firmware mods. It applies to stock firmware **v1.01.048** only.\n\nEverything not listed here behaves exactly as stock. The codeplug format is unchanged, so the official CPS and Codeplug\nStudio read and write the radio as before, and the radio keeps its channels and settings across the update.\n\n**What's in it**\n\n- **Zone scan:** pressing Scan on a channel with no scan list scans the whole current zone (up to 64 channels) instead\n  of refusing. While it walks, the screen shows the zone name and `Scanning...`. It resumes about 5 s after a signal\n  ends. Channels with a scan list scan it exactly as stock. Tested on the radio.\n- **Quick menu and light mode:** assign the stock **Flashlight** key function to a free programmable key (SK1, SK2 or\n  P1; avoid P2). It opens a small menu with one row, **Light mode**, which inverts the screen for easier reading in\n  daylight. The choice is saved across power-off. Tested on the radio.\n- **Position report retry:** a timed position report now waits for a GPS fix instead of being skipped until the next\n  interval, so a 300 s interval actually sends. Tested on the radio.\n- **GPS position padding fix:** Fixed Beacon position reports keep leading zeros in latitude and longitude, so APRS\n  gateways can read them. A community fix (IU2VTP). Emulator and byte checks only.\n- **Text fixes:** eleven English typos and wording fixes in menus and pop-ups, for example \"VerSions\" → \"Versions\" and\n  \"Nonsupport\" → \"Unsupported\". Checked byte for byte; not every screen has been looked at on the radio.\n\n**Known limits:** nuisance delete during a zone scan is untested, and the zone-scan hang time is fixed at about 5 s.\n\n**Checking it worked:** the radio does not show the mod's version yet. Device information still reads\n`DM32.01.L01.048`. Check that Scan on a channel with no scan list starts a zone scan.\n\n**Going back to stock:** flash stock v1.01.048 from this page, or use the official CPS.\n"
+    }
+  ]
+}

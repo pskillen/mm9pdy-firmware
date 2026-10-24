@@ -1,0 +1,26 @@
+name: Feature request
+description: Something you would like the radio to do.
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: radio
+    attributes:
+      label: Radio
+      multiple: true
+      options:
+        - AnyTone AT-D890UV
+        - Baofeng DM-32UV
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What would you like it to do?
+      description: Describe it from the operator's side - which key you press, what the screen shows, what the radio does. Say what you do today instead.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: How you use the radio and what this would make easier.
