@@ -1,9 +1,9 @@
-# Features (1.0.0 and 1.1.0)
+# Features
 
-What the modified firmware does on the radio, release by release. **1.0.0** is the first release (features 1 to 5).
-**1.1.0** is in release-candidate testing and not yet released: it adds features 6 to 10 and the zone-scan checks listed
-in the [release history](#12-release-history). Everything not listed here behaves exactly as stock v1.01.048: the codeplug format is unchanged, so the official
-CPS and Codeplug Studio read and write the radio as before, and the radio keeps its channels and settings across the update.
+What the modified firmware does on the radio. The table says which release added each feature; what each release
+contains, and how far it was checked, is in its release notes (Codeplug Studio shows them when you pick a release).
+Everything not listed here behaves exactly as stock v1.01.048: the codeplug format is unchanged, so the official CPS and
+Codeplug Studio read and write the radio as before, and the radio keeps its channels and settings across the update.
 
 | Feature | In short | Tested on a radio? |
 |---|---|---|
@@ -12,11 +12,11 @@ CPS and Codeplug Studio read and write the radio as before, and the radio keeps 
 | [Text fixes](#3-text-fixes) | Eleven English typos and wording fixes in menus and pop-ups | Built and checked byte for byte; the screens were not each looked at on the radio |
 | [GPS position padding fix](#4-gps-position-padding-fix) | Fixed Beacon position reports keep leading zeros in latitude and longitude | Emulator and byte checks only |
 | [Position report retry](#5-position-report-retry) | A timed position report waits for a GPS fix instead of being skipped until the next interval | Yes (rc.2): reports kept going every 300 s |
-| [Independent talk groups](#6-independent-talk-groups) (1.1.0) | On a digital channel, the line under the channel name shows the contact PTT calls (not the frequency); two keys step through its RX list and PTT calls the one you stopped on | No |
-| [Star key timeslot](#7-star-key-timeslot) (1.1.0) | Short `*` swaps a digital repeater channel between TS1 and TS2 until you change channel or power off | No |
-| [Timeslot indicator](#8-timeslot-indicator) (1.1.0) | `TS1` or `TS2` next to the `DIG` badge on each digital channel, showing the slot it uses | No |
-| [Timeslot from the talk-group name](#9-timeslot-from-the-talk-group-name) (1.1.0) | A talk group named `... TS1` or `... TS2` puts the channel on that slot while it is selected | No |
-| [Version display](#10-which-version-is-installed) (1.1.0) | `mm9pdy-<version>` on the boot screen and on Settings > Device Info > Versions, under Baofeng's `DM32.01.L01.048` | No |
+| [Independent talk groups](#6-independent-talk-groups) (1.1.0) | On a digital channel, the line under the channel name shows the contact PTT calls (not the frequency); two keys step through its RX list and PTT calls the one you stopped on | Checked on the owner's radio for the 1.1.0 release; the full on-air checks are still open |
+| [Star key timeslot](#7-star-key-timeslot) (1.1.0) | Short `*` swaps a digital repeater channel between TS1 and TS2 until you change channel or power off | Checked on the owner's radio for the 1.1.0 release; the full on-air checks are still open |
+| [Timeslot indicator](#8-timeslot-indicator) (1.1.0) | `TS1` or `TS2` next to the `DIG` badge on each digital channel, showing the slot it uses | Checked on the owner's radio for the 1.1.0 release; the full on-air checks are still open |
+| [Timeslot from the talk-group name](#9-timeslot-from-the-talk-group-name) (1.1.0) | A talk group named `... TS1` or `... TS2` puts the channel on that slot while it is selected | Checked on the owner's radio for the 1.1.0 release; the full on-air checks are still open |
+| [Version display](#10-which-version-is-installed) (1.1.0) | `mm9pdy-<version>` on the boot screen and on Settings > Device Info > Versions, under Baofeng's `DM32.01.L01.048` | Checked on the owner's radio for the 1.1.0 release; the full on-air checks are still open |
 
 The known limits of the 1.1.0 features are collected in [section 11](#11-known-limits-in-110).
 
@@ -196,7 +196,7 @@ Nothing is saved. Power off clears every selection. The codeplug is not modified
 - The keys do nothing on an analogue channel, on a digital channel with no RX list, in a menu, in VFO, or while scanning.
 - If the radio is set to show the frequency as the big line, there is no name. That display is unchanged.
 
-**Tested on a radio?** No. The emulator gate covers the step, the name, and the destination the firmware hands to the modem. It does not cover the air.
+**Tested on a radio?** Checked on the owner's radio for the 1.1.0 release; the full on-air checks are still open. The emulator gate covers the step, the name, and the destination the firmware hands to the modem. It does not cover the air.
 
 ## 7. Star key timeslot
 
@@ -213,7 +213,7 @@ The swap belongs to that channel and lasts until you move that side to another c
 
 **Known limits.** The radio's own channel menu still shows the programmed slot after a swap. The [timeslot indicator](#8-timeslot-indicator) shows the swap on the channel screen.
 
-**Tested on a radio?** No. The emulator shows the firmware switch the slot settings and keep them through dual watch, but it cannot show which slot the radio transmits on.
+**Tested on a radio?** Checked on the owner's radio for the 1.1.0 release; the full on-air checks are still open. The emulator shows the firmware switch the slot settings and keep them through dual watch, but it cannot show which slot the radio transmits on.
 
 ## 8. Timeslot indicator
 
@@ -227,7 +227,7 @@ Talk-group stepping, the star key and the badge all work on every channel number
 
 **Known limits.** The stock recording icon, if the radio ever draws it, sits under the badge. Recording appears to have been removed from this firmware, so it should not be seen. The radio's own channel menu still shows the programmed slot after a swap.
 
-**Tested on a radio?** No. The emulator gate checks the badge text and position in the screen it records.
+**Tested on a radio?** Checked on the owner's radio for the 1.1.0 release; the full on-air checks are still open. The emulator gate checks the badge text and position in the screen it records.
 
 ## 9. Timeslot from the talk-group name
 
@@ -244,7 +244,7 @@ Talk-group stepping, the star key and the badge all work on every channel number
 
 **Known limits.** The suffix uses three or four of the name's 16 characters. A name that happens to end in `ts1` or `ts2` sets the slot too. There is no switch to turn suffixes off. The radio's own channel menu still shows the programmed slot.
 
-**Tested on a radio?** No. The emulator shows the firmware switch the slot settings and the call go to the selected talk group, but not which slot goes out on air.
+**Tested on a radio?** Checked on the owner's radio for the 1.1.0 release; the full on-air checks are still open. The emulator shows the firmware switch the slot settings and the call go to the selected talk group, but not which slot goes out on air.
 
 ## 10. Which version is installed
 
@@ -267,7 +267,7 @@ plain `mm9pdy` with nothing after it is an unstamped build (the image the emulat
 and 16 high. The official CPS and Codeplug Studio still read `DM32.01.L01.048` as the firmware version, because that text
 is unchanged.
 
-**Tested on a radio?** No. The emulator gate checks both lines in the screens it records.
+**Tested on a radio?** Checked on the owner's radio for the 1.1.0 release; the full on-air checks are still open. The emulator gate checks both lines in the screens it records.
 
 **Older releases (1.0.0 and its RCs)** do not show our version on the radio; Device Info shows only `DM32.01.L01.048`.
 For those:
@@ -278,13 +278,13 @@ For those:
 
 ## 11. Known limits in 1.1.0
 
-The ones that matter in use, collected from the sections above. None of the 1.1.0 features has been on a radio yet.
+The ones that matter in use, collected from the sections above. The 1.1.0 features were checked on the owner's radio for the release; the full on-air checks are still open.
 
 - **Nothing is saved.** Talk-group selections and star-key swaps live in RAM only and are gone at power-off. The
   codeplug is never written by them. The radio's own channel menu still shows the programmed timeslot after a swap or a
   suffix; the `TS1`/`TS2` badge shows what is really used.
 - **Which slot goes out on air is radio-only.** The emulator shows the firmware switch its slot and call settings, not
-  the air. Until a radio test, treat the timeslot features (sections 7 and 9) as unproven.
+  the air. Until the on-air check, treat which slot goes out (sections 7 and 9) as unconfirmed.
 - **A brief frequency first.** After a channel change, the line under the channel name can show the frequency for a
   moment before the contact name appears (section 6).
 - **A stale name after an edit.** If you change a channel's transmit contact in the radio's own channel menu, the old name
@@ -298,15 +298,3 @@ The ones that matter in use, collected from the sections above. None of the 1.1.
   over a suffix, and a talk-group step drops the swap.
 - **Frequency display mode.** If the radio is set to show the frequency as the big line, there is no talk-group name.
 - **Version line.** On a boot picture, the version line covers a strip at the bottom of it.
-
-## 12. Release history
-
-| Release | Date | Changes | Radio |
-|---|---|---|---|
-| 1.0.0-rc.1 | 2026-10-19 | Zone scan, quick menu with light mode, text fixes, GPS padding fix. No version stamp | Written with the official CPS and used on the owner's radio |
-| 1.0.0-rc.2 | 2026-10-19 | Adds the position report retry and the version stamp. First published release (a patch) | Written with our sender; position reports kept going every 300 s |
-| 1.0.0-rc.3 | 2026-10-20 | Zone-scan display: zone name and `Scanning...` while walking; zone-scan hang time 5 s instead of 25 s | Written with our sender; display and 5 s resume checked |
-| 1.0.0 | 2026-10-20 | First release: the same commit as rc.3 | As rc.3 |
-| 1.1.0 (unreleased; release candidates `1.1.0-rc.N` to come) | not yet | Independent talk groups, the star key timeslot swap, the `TS1`/`TS2` badge, the timeslot from a talk-group name suffix, the default contact name on the line under the channel name, and our version `mm9pdy-<version>` on the boot screen and Device Info > Versions. The 1.0.0 zone-scan nuisance delete and the other radio checks still owed from 1.0.x ride along as radio checks. 1.0.1 was folded into this release | Not yet on a radio: the radio checklist sections G to L are the first test |
-
-The 1.1.0 features (sections 6 to 10) are emulator-verified and wait for their first radio test before the tag. Planned for 1.2.0: showing the scanned channel (name, indicators and talk group), quick-menu value changes with the knob and P1/P2, a working S-meter, and the GPS `$GPRMC` checksum check.
