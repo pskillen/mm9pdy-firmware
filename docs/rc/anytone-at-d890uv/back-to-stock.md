@@ -1,6 +1,6 @@
 # Going back to stock
 
-> **Release candidate docs: 1.2.0-rc.2** These pages describe a release candidate that is still being tested. For the current release, see [these docs](../../anytone-at-d890uv/back-to-stock.md).
+> **Release candidate docs: 1.2.0-rc.3** These pages describe a release candidate that is still being tested. For the current release, see [these docs](../../anytone-at-d890uv/back-to-stock.md).
 
 How to put AnyTone's stock V1.05 firmware back on the radio. You need the stock V1.05 zip
 ([install.md](install.md#1-get-the-stock-v105-package)).

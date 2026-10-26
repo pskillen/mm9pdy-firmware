@@ -1,6 +1,6 @@
 # AnyTone AT-D890UV: MM9PDY modded firmware
 
-> **Release candidate docs: 1.2.0-rc.2** These pages describe a release candidate that is still being tested. For the current release, see [these docs](../../anytone-at-d890uv/README.md).
+> **Release candidate docs: 1.2.0-rc.3** These pages describe a release candidate that is still being tested. For the current release, see [these docs](../../anytone-at-d890uv/README.md).
 
 Small, carefully tested changes to AnyTone's own firmware **V1.05** for the AT-D890UV dual-band DMR handheld:
 independent talk groups, a star-key timeslot toggle, zone scan, a quick filters menu and more. It is not a new

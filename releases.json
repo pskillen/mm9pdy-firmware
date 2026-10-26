@@ -3,6 +3,26 @@
   "releases": [
     {
       "radioId": "anytone-at-d890uv",
+      "version": "1.2.0-rc.3",
+      "channel": "rc",
+      "patchName": "anytone-d890-firmware",
+      "patchFile": "d890-fw-1.2.0-rc.3.patch.json",
+      "patchPath": "releases/anytone-at-d890uv/d890-fw-1.2.0-rc.3.patch.json",
+      "patchSha256": "06d32eab4c508ffa33a1332fecd73e4c0c6c0a58ca970b2b9cc8a3befb1f8439",
+      "stockVersion": "V1.05 (20260521)",
+      "publishedOn": "2026-10-26",
+      "summary": "A 1.2.0 release candidate: rc.2 plus an S-meter, with a signal bar on the channel screen, a dedicated signal screen with a difference mode for comparing antennas, and a spectrum screen.",
+      "verifyHint": "After the radio restarts, Device Info > Mod Ver shows \"mm9pdy-1.2.0-rc.3\".",
+      "resultSha256": {
+        "cdd": "eb19c7be3b99bae8ede14d524ec4d7488a4326772cce2d7a0db5619aace8502c",
+        "cdi": "98e922b7834a54f1576395ce895eb629d8edc833dcbc193c44f5e297c5196b99",
+        "spi": "c6c8bc9ae6daed4917c2426718e4c52acd2ccfdfdbc2c258370529cf7461910e"
+      },
+      "notesPath": "releases/anytone-at-d890uv/d890-fw-1.2.0-rc.3.md",
+      "notes": "A release candidate for 1.2.0, for testing. It applies to the stock **V1.05** package (20260521) only. It is 1.2.0-rc.2 with the **S-meter** added. Everything in 1.1.0 and 1.2.0-rc.2 is also in this build.\n\n**How far it has been checked:** the S-meter has been tried on the owner's radio from a test build: the bar, the signal screen and the spectrum all respond to a nearby transmitter. This exact build is checked in an emulator only.\n\n**What's new since 1.2.0-rc.2**\n\n- **S-meter menu:** the Main Menu has a new **S-Meter** item at the end. **Display** turns the signal bar on and picks what it shows: Bar, Bar + raw, Bar + dBm or Bar + S (S-units). It is off by default. **Average** smooths the reading (Off, Fast, Slow). **Peak hold** keeps a peak marker for 1 or 3 seconds.\n- **Signal bar:** in the single display, a bar under the channel shows the received signal strength, with the reading in the corner. It replaces the last-call lines while it is on. It shows the noise floor as well as signals, so it moves even when nothing is heard.\n- **Signal screen:** **S-Meter > S-Meter screen** (or a key assigned to **Satellite Predicting** in the CPS, which this firmware turns into the S-meter key) opens a full-screen meter with a large reading, a scale, and min / max / average. Press **P1** to take the current reading as a reference: the screen then shows the difference in dB, which is handy for comparing antennas. **P2** clears the reference and the min / max. Up and Down change the unit. **Back** leaves it.\n- **Spectrum:** **S-Meter > Spectrum** sweeps the main side's receiver across a band around the channel and draws the signal level at each step. **S-Meter > Spectrum set** chooses the span, the step and the top and bottom of the scale. On the screen, **P1** and **P2** change the span and step, Up and Down move a marker that shows its frequency and level, and **Back** stops the sweep and returns the radio to the channel. The backlight stays on while the spectrum is open.\n\n**Known limits**\n\n- The dBm and S-unit readings are approximate: the meter isn't calibrated against a signal generator yet. The raw reading and the dB difference on the signal screen are the reliable parts, so use those to compare antennas.\n- On the air band (108–136 MHz) the radio can't measure signal strength. The spectrum won't start there, but the signal bar stays on screen with its last reading. That is a bug, to be fixed.\n- The dual display shows no signal bar.\n- The spectrum sweeps a few dozen steps a second, and stays within the channel's band.\n- During a sweep the main side isn't listening to the channel. Back returns it.\n\n**Checking it worked:** after the radio restarts, Device Info > Mod Ver shows `mm9pdy-1.2.0-rc.3`, and Main Menu ends with **S-Meter**.\n\n**Going back to stock:** flash stock V1.05 from this page, or use the official CPS.\n"
+    },
+    {
+      "radioId": "anytone-at-d890uv",
       "version": "1.2.0-rc.2",
       "channel": "rc",
       "patchName": "anytone-d890-firmware",

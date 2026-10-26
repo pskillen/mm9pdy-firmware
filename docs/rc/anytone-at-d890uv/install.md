@@ -1,6 +1,6 @@
 # Installing a release
 
-> **Release candidate docs: 1.2.0-rc.2** These pages describe a release candidate that is still being tested. For the current release, see [these docs](../../anytone-at-d890uv/install.md).
+> **Release candidate docs: 1.2.0-rc.3** These pages describe a release candidate that is still being tested. For the current release, see [these docs](../../anytone-at-d890uv/install.md).
 
 From nothing to a running radio, with [Codeplug Studio](https://codeplug.mm9pdy.net). Read
 [README.md](README.md#read-this-first) first.
