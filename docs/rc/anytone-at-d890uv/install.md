@@ -1,6 +1,6 @@
 # Installing a release
 
-> **Release candidate docs: 1.2.0-rc.3** These pages describe a release candidate that is still being tested. For the current release, see [these docs](../../anytone-at-d890uv/install.md).
+> **Release candidate docs: 1.2.0-rc.4** These pages describe a release candidate that is still being tested. For the current release, see [these docs](../../anytone-at-d890uv/install.md).
 
 From nothing to a running radio, with [Codeplug Studio](https://codeplug.mm9pdy.net). Read
 [README.md](README.md#read-this-first) first.
@@ -55,6 +55,8 @@ If Studio stops with an error, go to [recovery.md](recovery.md) before trying an
 3. **Menu > Settings > Device Info**: "Firmware Ver:" still shows **Ver 1.05** (the stock firmware the release is
    built on), and the next item, **Mod Ver:**, shows the same release name. Release 1.0.0 has no Mod Ver item: the name
    is under "Version" instead.
+   ![Device Info with Firmware Ver and Mod Ver](images/device-info-mod-ver.png)
+
 4. The radio reaches the channel screen with your channels, zones and settings as before.
 
 If the release name is missing, the radio is still on its old firmware: the write did not happen.

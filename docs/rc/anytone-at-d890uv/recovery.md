@@ -1,6 +1,6 @@
 # Recovery
 
-> **Release candidate docs: 1.2.0-rc.3** These pages describe a release candidate that is still being tested. For the current release, see [these docs](../../anytone-at-d890uv/recovery.md).
+> **Release candidate docs: 1.2.0-rc.4** These pages describe a release candidate that is still being tested. For the current release, see [these docs](../../anytone-at-d890uv/recovery.md).
 
 What to do when a firmware write fails or the radio will not start afterwards.
 

@@ -1,6 +1,6 @@
 # Your codeplug and the mods
 
-> **Release candidate docs: 1.2.0-rc.3** These pages describe a release candidate that is still being tested. For the current release, see [these docs](../../anytone-at-d890uv/codeplug.md).
+> **Release candidate docs: 1.2.0-rc.4** These pages describe a release candidate that is still being tested. For the current release, see [these docs](../../anytone-at-d890uv/codeplug.md).
 
 What the mods change about your codeplug, what the CPS does and does not see, and what happens if you take the same
 codeplug back to stock firmware.
@@ -29,7 +29,7 @@ assign the keys is in [features.md](features.md), section 1.
 
 ## 2. The mods' own settings
 
-The quick filters menu's settings (TS filter, CC match, Scan, TG slot, Tone, and RX match TG) are not in the codeplug. The
+The quick filters menu's settings (TS filter, CC match, TG slot, Tone match, and RX match TG, and the Scan menu's Scan, Scan popup and Zone scan resume rows) are not in the codeplug. The
 radio keeps them in a small record of its own, in a spare part of the radio's settings memory that stock firmware
 neither reads nor uses.
 
