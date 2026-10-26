@@ -43,6 +43,26 @@
     },
     {
       "radioId": "anytone-at-d890uv",
+      "version": "1.2.0",
+      "channel": "final",
+      "patchName": "anytone-d890-firmware",
+      "patchFile": "d890-fw-1.2.0.patch.json",
+      "patchPath": "releases/anytone-at-d890uv/d890-fw-1.2.0.patch.json",
+      "patchSha256": "94ffa65cab1cb930dd3f0eb6f2516a5e72a113fe50b80031ab51ad42b579c332",
+      "stockVersion": "V1.05 (20260521)",
+      "publishedOn": "2026-10-26",
+      "summary": "Channel distance, an S-meter with a spectrum and a signal history, a zone-scan resume time, volume ranges with a volume bar, timeslot fixes, and a new single-display layout.",
+      "verifyHint": "After the radio restarts, Device Info > Mod Ver shows \"mm9pdy-1.2.0\".",
+      "resultSha256": {
+        "cdd": "bfd1e71fa5c945b22c1d9f4513754ce72c3a0d8b891a4dc793e1a6484d096029",
+        "cdi": "f48b0d1374d78acec08067f143d5646734fe0af30ddce8377c387001becc9e79",
+        "spi": "b7d713b004e1bbd708192633dcdc2a72da80e6a272bc35870d4067ee26cb14ab"
+      },
+      "notesPath": "releases/anytone-at-d890uv/d890-fw-1.2.0.md",
+      "notes": "The 1.2.0 release of the AT-D890UV firmware mods. It applies to the stock **V1.05** package (20260521) only.\n\nIt is the same build as release candidate 1.2.0-rc.4, apart from the release name, and rc.4 passed its radio check. Everything in 1.1.0 is also in this build.\n\n**What's new since 1.1.0**\n\n- **Channel distance:** the channel screen shows how far away the current memory channel's site is, and in which direction, from the radio's GPS fix, for example `850m N` or `4.3km NE`. It needs channel positions written by Codeplug Studio's **MM9PDY** target, GPS on and a recent fix.\n- **Single display:** one 3-line layout for analogue and digital channels: the channel name, then the talk group or receive frequency, then the zone name on a small line underneath. In the dual display the sub side's line shows its own `Talk group / Zone`.\n- **S-meter:** Main Menu > **S-Meter** opens the screens first, then the settings.\n  - A signal bar on the channel screen, coloured by level, with a raw, dBm or S-unit reading.\n  - A full-screen meter with min / max / average and a difference mode for comparing antennas.\n  - A **spectrum** that sweeps the receiver around the channel and shows signals as peaks at their own frequency.\n  - A **signal history** that plots the channel's level over time, like a heart monitor.\n  - One fixed colour scale everywhere, so a colour always means the same strength.\n- **Zone scan resume time:** Main Menu > Scan > **Zone scan resume** (0.5 s, 1 s, 2 s, 5 s or 10 s; default 5 s) sets how long a zone scan waits on a channel after the activity ends, and after you transmit, before it carries on. Before, it could carry on after a fraction of a second.\n- **Heard-call popup:** a zone scan that holds on a DMR call shows who and which talk group. **Scan** (Zone / List) and **Scan popup** are rows of Main Menu > Scan.\n- **Timeslots:** the T1 / T2 badge shows the slot in use, a short `*` always switches it, and a Slot Switch key does the same and saves it into the channel.\n- **Volume:** **Vol Range** (Stock, Indoor, Outdoor, Full) changes how the knob maps to loudness, with true silence at the bottom of a range. An optional volume bar shows the level and range when you turn the knob; press **Menu** on it to step the range. Both settings are rows of Settings > Radio Set > Voice Func. With a Bluetooth headset connected, the knob sets the headset's volume.\n- **Quick filters:** **Tone match: On / Off** (Off opens the squelch of a toned analogue channel on any signal) and **To VFO: Copy** (copies the main side's channel into its VFO).\n\n**Known limits**\n\n- The channel distance text can clip at the right, and the dual display shows no distance.\n- The S-meter's dBm, S-units and colours are approximate until it is calibrated. On the air band the signal bar stays on screen with its last reading. During a spectrum sweep the main side isn't listening to the channel.\n- The volume ranges' loudness steps are first values and may change in a later release.\n- A channel with no contact must store \"none\" within 0–9999 (Codeplug Studio writes 9999).\n\n**Checking it worked:** after the radio restarts, Device Info > Mod Ver shows `mm9pdy-1.2.0`.\n\n**Going back to stock:** flash stock V1.05 from this page, or use the official CPS.\n"
+    },
+    {
+      "radioId": "anytone-at-d890uv",
       "version": "1.2.0-rc.2",
       "channel": "rc",
       "patchName": "anytone-d890-firmware",
