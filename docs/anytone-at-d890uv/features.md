@@ -119,7 +119,12 @@ badge follows.
 - On an analogue channel a short `*` does nothing, as stock.
 - A key set to the radio's own **Slot Switch** function now does the same as `*`, and saves the new timeslot into
   the channel.
-- Not yet checked on a radio: `*` over a talk group's own timeslot (emulator only so far).
+- **Busy Lock follows the slot in use** (new in 1.2.1). On a digital repeater channel (or a TDMA
+  channel) with Busy Lock on, the radio refuses to transmit when the timeslot it is using is busy, which after `*` or with a talk group's own timeslot may not be the
+  channel's programmed one. Before, it looked at the programmed slot: it could key up over a call on the slot in use,
+  or refuse while only the other slot was busy. The same goes for the talk-group check just after a call on a
+  repeater: it follows the slot in use.
+- Not yet checked on a radio: `*` over a talk group's own timeslot, and Busy Lock with `*` (emulator only so far).
 
 On a channel in timeslot 1, the badge reads T1:
 
@@ -263,14 +268,45 @@ The codeplug format is not changed, so the same codeplug works on stock and on a
 
 The details are in [codeplug.md](codeplug.md).
 
-## 9. Bluetooth headset volume
+## 9. Bluetooth headset: volume and microphone
 
 With a Bluetooth headset connected, the volume knob also sets the headset's loudness, in 15 steps. Fully down still
 mutes, as on stock. When the headset connects, it starts at the knob's loudness, so the Bluetooth speaker-gain value
 from the CPS or the Bluetooth menu is replaced while the knob is up. Changing that menu item still works, until you next
 turn the knob. Some headsets keep their own volume and may not follow the knob.
 
-Not yet tried on a radio: whether the headset follows the knob at once depends on the Bluetooth module.
+**Turning it off.** Main Menu > BT has two rows after the stock ones, **BT Knob Vol** (On or Off; On is the default) and
+**BT Int Mic** (described below).
+
+![The Bluetooth menu with the BT Knob Vol and BT Int Mic rows added after the stock rows](images/bt-menu.png)
+
+With **Off** the radio behaves as stock: the knob sets the speaker only, and the headset keeps the Bluetooth speaker-gain
+value from the CPS or the Bluetooth menu, including when it reconnects. Fully down still mutes. Use it for headsets that
+keep their own volume, or to set the headset once and use the knob for the speaker. With a headset connected, changing
+the row takes effect at once. The setting is kept when the radio is switched off. The row appears with the other
+Bluetooth rows, so it is not there when the radio has no Bluetooth module or is in Repeater Mode.
+
+Not yet tried on a radio: whether the headset follows the knob at once, and whether the switch takes effect at once,
+depends on the Bluetooth module.
+
+**Using the radio's own microphone.** Normally, with a headset connected, everything you transmit comes from the headset's
+microphone. **BT Int Mic** (Main Menu > BT, the last row; Off or On; Off is the default) changes that for the radio's own
+PTT:
+
+- **On:** when you press the radio's own PTT, the radio transmits from its own microphone, not the headset's.
+- The headset's own PTT button still transmits from the headset's microphone, and so does VOX, as on stock.
+- The first PTT you press decides for the whole transmission. Start with the radio's PTT and the headset's button joining
+  or leaving later changes nothing; start with the headset's button and it stays on the headset's microphone.
+- The emergency alarm's voice uses the headset's microphone, as on stock.
+- **Off:** as stock. Everything uses the headset's microphone.
+
+What you hear in the headset is not changed. It does nothing without a headset connected, and not in the Bluetooth KISS TNC
+mode. The setting is kept when the radio is switched off. The row appears with the other Bluetooth rows, so it is not
+there when the radio has no Bluetooth module or is in Repeater Mode.
+
+Not yet tried on a radio: whether the headset's microphone is fully out of the transmission (nothing mixed in) with the
+radio's PTT depends on the Bluetooth module. Also not yet tried: the sub PTT and the PTT on a hand microphone (they should
+act like the main PTT), and the "first PTT decides" rule with both PTTs in use.
 
 ## 10. S-meter
 
@@ -312,6 +348,8 @@ you are receiving on the main side, about ten times a second, and the marker sho
 - **The last-call lines are not shown while the bar is on.** They use the same place on the screen. Set Display to Off
   to get them back.
 - The bar shows on the single display only (see "What it does not do").
+- On the air band the bar is not drawn (the radio has no signal strength there) and the last-call lines show as usual
+  if they are on.
 - It is hidden while a menu, the quick filters or a popup is on screen, and comes back when they close.
 - A steady signal does not redraw the screen, so it does not flicker.
 - **The bar is coloured by the signal's strength**, the same colours on every screen (see "Colours" below).
@@ -424,9 +462,9 @@ trace starts empty each time you open it. It does not measure on the air band.
 - **The dual display is not supported.** With both channels on screen the bar is not drawn. The dedicated screen and
   the spectrum are meant for use with one channel on screen.
 - **No meter on the air band (108 to 136 MHz).** The radio listens to the air band with a separate receiver that does
-  not report signal strength. The spectrum will not start there, and the signal history draws nothing. **Known problem:** in this release the bar on the
-  channel screen does not go away when the main side is on the air band; it stays on screen frozen at the last reading
-  from before, which is misleading. Ignore it there. This is reported and will be fixed.
+  not report signal strength. The bar on the channel screen is not drawn there, and the channel screen is as it is with
+  the meter off. The full-screen meter reads "Air band" and "Cannot measure", the spectrum will not start, and the signal
+  history draws nothing. The bar comes back when the main side is on any other channel. Not yet checked on a radio.
 - It does not measure while you transmit, and it does not change anything about receiving, squelch or scanning.
 - Labels are in English.
 
@@ -544,10 +582,9 @@ positions; the radio has no setting for it. The number changes at most every few
 **Limits**
 
 - **Single display only.** With both sides on screen (CPS "sub channel" on) no distance is shown, on either side.
-- **The text can be cut off at the right edge.** In this release the direction letters can be clipped, as in the
-  screenshot above, where `5.1km N` reads `5.1km`. This is a known issue.
 - The zone name moves to the left while a distance shows, so both fit.
 - A GPS fix indoors may never come: the distance appears once the radio has one.
 
-Not yet checked on a radio: the distance against a site whose position you know, and the positions after an official
-CPS write. A Codeplug Studio write and the distance showing have been checked on a radio.
+Not yet checked on a radio: the distance against a site whose position you know, the longest texts (`999km NW`,
+`9.9mi NW`) showing whole, and the positions after an official CPS write. A Codeplug Studio write and the distance
+showing have been checked on a radio.
