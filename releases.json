@@ -3,6 +3,26 @@
   "releases": [
     {
       "radioId": "anytone-at-d890uv",
+      "version": "1.2.1-rc.1",
+      "channel": "rc",
+      "patchName": "anytone-d890-firmware",
+      "patchFile": "d890-fw-1.2.1-rc.1.patch.json",
+      "patchPath": "releases/anytone-at-d890uv/d890-fw-1.2.1-rc.1.patch.json",
+      "patchSha256": "6a04289172faa49c8268f3e7d052ff597bca6d8a1889c42322d6fde23cb38ecb",
+      "stockVersion": "V1.05 (20260521)",
+      "publishedOn": "2026-10-27",
+      "summary": "A 1.2.1 release candidate: S-meter and channel-distance fixes, Busy Lock following the timeslot in use, and two new Bluetooth menu rows (knob volume on/off, internal mic with a headset).",
+      "verifyHint": "After the radio restarts, Device Info > Mod Ver shows \"mm9pdy-1.2.1-rc.1\".",
+      "resultSha256": {
+        "cdd": "c14859dfef298a80c1ad8cd1fb7fb06b5ae89d8b5a6d1f602cf22e9dbd77babc",
+        "cdi": "fec93404bb0b10e245987503c0c32a7db99834b5edd2e28973158dff9d4294ad",
+        "spi": "789aeab2c1054277b8bc876114433b6b02241acc1a4631e1efa735b808b4d1d8"
+      },
+      "notesPath": "releases/anytone-at-d890uv/d890-fw-1.2.1-rc.1.md",
+      "notes": "A release candidate for 1.2.1, for testing. It applies to the stock **V1.05** package (20260521) only. Everything in 1.2.0 is also in this build.\n\n**How far it has been checked:** every change in this build has been checked in an emulator only. None of it has been tried on a radio yet, and the emulator has no audio and no Bluetooth link, so the Bluetooth rows in particular need a radio and a headset.\n\n**What's fixed**\n\n- **S-meter on the air band:** on the air band (108–136 MHz) the signal bar is no longer drawn. It used to stay on screen, frozen at its last reading. The full-screen S-meter says it cannot measure there. Leaving the air band brings the bar back with a fresh reading.\n- **Channel distance:** the text is no longer cut off at the right edge. The compass point is drawn whole, for example `992km NW` and `9.9mi NW`, where before the last letter was missing or cut.\n- **Busy Lock follows the timeslot in use:** after `*`, or on a talk group with its own timeslot, Busy Lock checks the slot the radio is actually using, not the channel's programmed slot. Before, on a digital repeater channel it could refuse to transmit because the other slot was busy, and let you key up over a call on your own slot.\n\n**What's new**\n\n- **BT Knob Vol:** Main Menu > BT has a new row, **BT Knob Vol** (On or Off). On is the default and works as before. Off gives stock behaviour: the volume knob no longer changes the headset volume, and the headset keeps the Bluetooth speaker-gain value from the CPS or the Bluetooth menu. With a headset connected the change applies at once.\n- **BT Int Mic:** Main Menu > BT has a new last row, **BT Int Mic** (Off or On). Off is the default and is stock. On means the radio's own PTT transmits from the radio's microphone (or the hand microphone) while a Bluetooth headset is connected. The headset's PTT button and VOX still use the headset's microphone. The first PTT you press decides the microphone for the whole transmission. The emergency alarm's voice still uses the headset microphone, as stock.\n\n**Known limits**\n\n- The Bluetooth rows have not been tried with a real headset. In particular, it is not yet known whether the headset's microphone is fully cut out when BT Int Mic sends the radio's microphone, or whether the sub PTT and the hand microphone's PTT behave like the main PTT.\n- Busy Lock and the heard-call record are fixed. Other places where the radio might still use the channel's programmed timeslot instead of the slot in use are being looked at for a later release.\n\n**Checking it worked:** after the radio restarts, Device Info > Mod Ver shows `mm9pdy-1.2.1-rc.1`.\n\n**Going back to stock:** flash stock V1.05 from this page, or use the official CPS.\n"
+    },
+    {
+      "radioId": "anytone-at-d890uv",
       "version": "1.2.0-rc.4",
       "channel": "rc",
       "patchName": "anytone-d890-firmware",
