@@ -10,5 +10,11 @@
     "patchName": "baofeng-dm32-firmware",
     "assetPrefix": "dm32-fw-",
     "stockVersion": "v1.01.048"
+  },
+  "retevis-rt95-head": {
+    "name": "Retevis RT95 front panel (LCD)",
+    "patchName": "retevis-rt95-firmware",
+    "assetPrefix": "rt95-fw-",
+    "stockVersion": "LCD V1.41 (20231202)"
   }
 }
