@@ -234,6 +234,26 @@
       },
       "notesPath": "releases/baofeng-dm32uv/dm32-fw-1.0.0.md",
       "notes": "The first full release of the DM-32UV firmware mods. It applies to stock firmware **v1.01.048** only.\n\nEverything not listed here behaves exactly as stock. The codeplug format is unchanged, so the official CPS and Codeplug\nStudio read and write the radio as before, and the radio keeps its channels and settings across the update.\n\n**What's in it**\n\n- **Zone scan:** pressing Scan on a channel with no scan list scans the whole current zone (up to 64 channels) instead\n  of refusing. While it walks, the screen shows the zone name and `Scanning...`. It resumes about 5 s after a signal\n  ends. Channels with a scan list scan it exactly as stock. Tested on the radio.\n- **Quick menu and light mode:** assign the stock **Flashlight** key function to a free programmable key (SK1, SK2 or\n  P1; avoid P2). It opens a small menu with one row, **Light mode**, which inverts the screen for easier reading in\n  daylight. The choice is saved across power-off. Tested on the radio.\n- **Position report retry:** a timed position report now waits for a GPS fix instead of being skipped until the next\n  interval, so a 300 s interval actually sends. Tested on the radio.\n- **GPS position padding fix:** Fixed Beacon position reports keep leading zeros in latitude and longitude, so APRS\n  gateways can read them. A community fix (IU2VTP). Emulator and byte checks only.\n- **Text fixes:** eleven English typos and wording fixes in menus and pop-ups, for example \"VerSions\" → \"Versions\" and\n  \"Nonsupport\" → \"Unsupported\". Checked byte for byte; not every screen has been looked at on the radio.\n\n**Known limits:** nuisance delete during a zone scan is untested, and the zone-scan hang time is fixed at about 5 s.\n\n**Checking it worked:** the radio does not show the mod's version yet. Device information still reads\n`DM32.01.L01.048`. Check that Scan on a channel with no scan list starts a zone scan.\n\n**Going back to stock:** flash stock v1.01.048 from this page, or use the official CPS.\n"
+    },
+    {
+      "radioId": "retevis-rt95-head",
+      "version": "1.0.0-rc.2",
+      "channel": "rc",
+      "patchName": "retevis-rt95-firmware",
+      "patchFile": "rt95-fw-1.0.0-rc.2.patch.json",
+      "patchPath": "releases/retevis-rt95-head/rt95-fw-1.0.0-rc.2.patch.json",
+      "patchSha256": "15c03068ac908d67299e5bfd9fec15a39286a4c64da42b78fd1d070202a8b08b",
+      "stockVersion": "LCD V1.41 (20231202)",
+      "publishedOn": "2026-10-28",
+      "summary": "Release candidate 2: the first published build. The radio works as stock, and the power-on screen shows which firmware is installed.",
+      "verifyHint": "The bottom of the power-on screen shows \"MM9PDY-1.0.0-RC.2\".",
+      "resultSha256": {
+        "cdd": "31931dce16f0fb813a6d687c089795863b2ebf0a1aea4fb2668665cb4e544daf",
+        "cdi": "5b1b9a8fcd2cd69a300cdaecda11f3cd6cc3b853de5f00346b6f012deb89a7de",
+        "spi": "bff9f3b7970e98e93fe9438f036cd7ca0283a820a5e9aa876f0e7b1619873c3f"
+      },
+      "notesPath": "releases/retevis-rt95-head/rt95-fw-1.0.0-rc.2.md",
+      "notes": "The first release candidate of the Retevis RT95 front-panel modification, for testing. It applies to the stock front-panel firmware **LCD V1.41** (20231202) only, and leaves the radio board's firmware alone.\n\n**How far it has been checked:** this exact build has been checked in an emulator only. A test build that differs from it only in the version line was written to a radio once with Codeplug Studio and worked. Nothing else has been tried on a radio.\n\n**What's in it**\n\n- **Everything else as stock:** the radio works as it does with the maker's front-panel firmware. The channels, the menus and the radio's own version text are unchanged.\n- **Version on the power-on screen:** the bottom of the power-on screen shows `MM9PDY-1.0.0-RC.2`, so you can tell which firmware is installed. The radio's small text is capitals only.\n\n**Known limits**\n\n- The version line is only on the power-on screen, for as long as that screen stays up.\n- The test screen (**FUNC** and **P4**) keeps showing the maker's version text. That is expected.\n\n**Checking it worked:** switch the radio off and on and read the bottom of the power-on screen: it shows `MM9PDY-1.0.0-RC.2`.\n\n**Going back to stock:** write the maker's stock front-panel firmware (LCD V1.41) again with Codeplug Studio, or use the maker's own tool.\n"
     }
   ]
 }
