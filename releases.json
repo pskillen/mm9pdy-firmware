@@ -3,6 +3,26 @@
   "releases": [
     {
       "radioId": "anytone-at-d890uv",
+      "version": "1.3.0",
+      "channel": "final",
+      "patchName": "anytone-d890-firmware",
+      "patchFile": "d890-fw-1.3.0.patch.json",
+      "patchPath": "releases/anytone-at-d890uv/d890-fw-1.3.0.patch.json",
+      "patchSha256": "0eef8e0410d34fca3e7a5919b35102b526b47a8d66dc336c47afa070c703bf12",
+      "stockVersion": "V1.05 (20260521)",
+      "publishedOn": "2026-10-29",
+      "summary": "Fixes the Display Func, Key Func and DMR Func menus, which showed two extra rows, and the graph screens and S-meter bar flashing black.",
+      "verifyHint": "After the radio restarts, Device Info > Mod Ver shows \"mm9pdy-1.3.0\".",
+      "resultSha256": {
+        "cdd": "16cadb461e78955bd087d3e695c643752c3a19b5f0c0a4aaec8bbf493ee7f591",
+        "cdi": "f481b5a26ff9cb8f0ea5fe3b775dfedad218eee2e3a8646e111a87bbeeee5466",
+        "spi": "2f794c45dba6907fcaf91ecbee916caecad7b17fe3581710663da2ce72c51242"
+      },
+      "notesPath": "releases/anytone-at-d890uv/d890-fw-1.3.0.md",
+      "notes": "The 1.3.0 release of the AT-D890UV firmware mods. It applies to the stock **V1.05** package (20260521) only. Everything in 1.2.1 is also in this build.\n\n**What's changed**\n\n- **Quieter Indoor volume range:** the Indoor range now starts at -39 dB at knob level 1 (it was -30 dB), so the bottom of the knob is almost silent. The top of the range is unchanged. The other ranges are unchanged.\n\n**What's fixed**\n\n- **Extra rows in three Radio Set menus:** Settings > Radio Set > Display Func, Key Func and DMR Func each ended with two rows, \"Vol Popup\" and \"Vol Range\", that belong only in Voice Func. They are gone: the three menus have their stock rows again (15, 11 and 3), and Voice Func keeps both rows.\n- **Graph screens and the S-meter bar flashing:** on a digital channel, with a long contact name scrolling on the last-call line, the channel-screen meter bar, the S-meter screen, Spectrum and Signal graph went black for a moment every two or three seconds. They now stay drawn, and the name still scrolls.\n\n**Checking it worked:** after the radio restarts, Device Info > Mod Ver shows `mm9pdy-1.3.0`. Settings > Radio Set > Display Func ends with its stock last row, with no \"Vol Popup\" or \"Vol Range\".\n\n**Going back to stock:** flash stock V1.05 from this page, or use the official CPS.\n"
+    },
+    {
+      "radioId": "anytone-at-d890uv",
       "version": "1.3.0-rc.1",
       "channel": "rc",
       "patchName": "anytone-d890-firmware",

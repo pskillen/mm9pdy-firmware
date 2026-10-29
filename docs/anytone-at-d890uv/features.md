@@ -479,9 +479,22 @@ Out of the box nothing changes: the range is **Stock**, which behaves exactly as
 | Range | What the knob does |
 |---|---|
 | Stock | The stock mapping, including the stock "Max Vol Level" setting. This is the default. |
-| Indoor | Quiet and fine-grained: the top of the knob stays well below full loudness. For a desk or a quiet room. |
+| Indoor | Quiet and fine-grained: it starts almost silent and the top of the knob stays well below full loudness. For a desk or a quiet room. |
 | Outdoor | Loud: the knob starts fairly high and the top is full loudness. For a noisy place. |
 | Full | The widest spread: a very quiet bottom and full loudness at the top. |
+
+**Loudness at each range.** Loudness is in dB relative to the loudest the volume control can go (0 dB). Every 6 dB
+is about half the loudness again. Between the first and last level each range rises in equal dB steps, so each step
+sounds about equally bigger than the one before.
+
+| Range | Knob level 1 (quietest) | Knob level 15 (loudest) | Step per level |
+|---|---|---|---|
+| Stock | the stock row: −42 dB at level 1, uneven steps | the stock row for your Max Vol Level | uneven (9.5 dB, then 2.5 dB, then smaller) |
+| Indoor | −39 dB | −9 dB | 2.1 dB |
+| Outdoor | −24 dB | 0 dB | 1.7 dB |
+| Full | −36 dB | 0 dB | 2.6 dB |
+
+Level 0 is mute in every range. These numbers are provisional until they have been tuned by ear on a radio.
 
 The knob is always in charge. A range only changes how a knob position maps to loudness; nothing on screen holds a
 volume of its own. With Indoor, Outdoor or Full, the stock "Max Vol Level" setting is ignored (it still applies in
