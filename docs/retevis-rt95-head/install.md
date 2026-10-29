@@ -1,8 +1,6 @@
 # Installing
 
-> **Release candidate docs: 1.0.0-rc.2** These pages describe a release candidate that is still being tested.
-
-Steps marked *Not yet checked on a radio* are a plan, not a record. Steps marked *Checked on a radio once* were done once, with a test build that differs from release 1.0.0-rc.2 only in the version line. Do not rely on any of it more than that.
+Steps marked *Not yet checked on a radio* are a plan, not a record. Steps marked *Checked on a radio once* were done once, with test builds that differ from a release only in the version line. Do not rely on any of it more than that.
 
 You need: a charged battery or a stable supply, the programming cable, a computer with a Chrome-based browser, your own
 copy of the stock front-panel firmware (version LCD V1.41, see [the first page](README.md#read-this-first)), and the
@@ -18,7 +16,7 @@ time to do it without being interrupted.
 
 ## 2. Write it with Codeplug Studio
 
-1. **Checked on a radio once** (a test build, not this release candidate). Open Codeplug Studio, *Tools*, *Firmware flasher*, and pick the Retevis RT95 front
+1. **Checked on a radio once** (a test build). Open Codeplug Studio, *Tools*, *Firmware flasher*, and pick the Retevis RT95 front
    panel.
 2. **Not yet checked on a radio.** Choose a release. Studio offers final releases; tick *show release candidates* to see
    test builds.
@@ -26,16 +24,16 @@ time to do it without being interrupted.
    fingerprints and refuses anything else.
 4. **Not yet checked on a radio.** Answer Studio's questions about your radio (its serial number and the version shown on
    the radio's test screen). Studio will not go on if they do not fit.
-5. **Checked on a radio once** (a test build, not this release candidate). Put the radio into front-panel update mode with a cold start: remove the DC power, then hold **P1** and the
+5. **Checked on a radio once** (a test build). Put the radio into front-panel update mode with a cold start: remove the DC power, then hold **P1** and the
    knob (push) while you switch it on. The screen stays blank.
-6. **Checked on a radio once** (a test build, not this release candidate). Connect the cable, choose the port in Studio, and start the write. Do not touch the
+6. **Checked on a radio once** (a test build). Connect the cable, choose the port in Studio, and start the write. Do not touch the
    radio, the cable or the power until Studio says it is finished.
-7. **Checked on a radio once** (a test build, not this release candidate). The radio restarts by itself, in under a minute. If it does not, switch it off and on.
+7. **Checked on a radio once** (a test build). The radio restarts by itself, in under a minute. If it does not, switch it off and on.
 
 ## 3. Check it worked
 
-1. **Checked on a radio once** (a test build, not this release candidate). The radio starts and shows its channel screen.
-2. **Checked on a radio once** (a test build, not this release candidate). Switch the radio off and on again and read the bottom of the power-on screen: it
+1. **Checked on a radio once** (a test build). The radio starts and shows its channel screen.
+2. **Checked on a radio once** (a test build). Switch the radio off and on again and read the bottom of the power-on screen: it
    shows `MM9PDY-` and the version you wrote (for example `MM9PDY-1.0.0-RC.2`). It is only on screen for a moment.
 3. **Not yet checked on a radio.** Hold **FUNC** and press **P4**: the test screen still shows the maker's version text.
    That is expected; the modification leaves it alone.

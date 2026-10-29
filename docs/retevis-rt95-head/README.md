@@ -1,19 +1,19 @@
 # Retevis RT95 front panel (MM9PDY)
 
-> **Release candidate docs: 1.0.0-rc.2** These pages describe a release candidate that is still being tested.
-
 A small, free modification for the front panel (the "head", with the screen, keys and knob) of the Retevis RT95 and the
 AnyTone AT-778UV it is built on. It is applied to the **stock front-panel firmware, version LCD V1.41**, and leaves the
 radio board's own firmware (the "RF" side) exactly as the maker made it.
 
-**Very little here has been checked on a radio.** A test build was written once with Codeplug Studio and worked. Every
-step not yet seen on a radio is marked *Not yet checked on a radio*; the others say they were checked once.
+**Not much here has been checked on a radio.** Test builds were written with Codeplug Studio and worked, including one
+with zones and descriptions. Every step not yet seen on a radio is marked *Not yet checked on a radio*; the others say
+how far they were checked.
 
 ## Pages
 
 | Page | What it is for |
 |---|---|
-| [features.md](features.md) | What the modification does (release 1.0.0-rc.2: the version line on the power-on screen, nothing else) |
+| [features.md](features.md) | What the modification does (release 1.1.0: the version line, zones, and channel descriptions in single watch) |
+| [codeplug.md](codeplug.md) | Zones and the CPS and CHIRP: what writes them, what leaves them alone |
 | [install.md](install.md) | Putting it on the radio with Codeplug Studio |
 | [back-to-stock.md](back-to-stock.md) | Putting the maker's firmware back |
 | [recovery.md](recovery.md) | If the radio does not start after a write |

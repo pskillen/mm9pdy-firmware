@@ -1,7 +1,5 @@
 # Back to stock
 
-> **Release candidate docs: 1.0.0-rc.2** These pages describe a release candidate that is still being tested.
-
 Steps marked *Not yet checked on a radio* are a plan, not a record.
 
 Going back means writing the maker's own front-panel firmware again. It leaves the codeplug alone.

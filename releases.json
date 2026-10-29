@@ -237,6 +237,26 @@
     },
     {
       "radioId": "retevis-rt95-head",
+      "version": "1.1.0",
+      "channel": "final",
+      "patchName": "retevis-rt95-firmware",
+      "patchFile": "rt95-fw-1.1.0.patch.json",
+      "patchPath": "releases/retevis-rt95-head/rt95-fw-1.1.0.patch.json",
+      "patchSha256": "5d487f4b352e9f8ff18481ff171a87a150fc1076d4be03557d28f68be770fb80",
+      "stockVersion": "LCD V1.41 (20231202)",
+      "publishedOn": "2026-10-29",
+      "summary": "Zones, channel descriptions and a tidier single-watch screen.",
+      "verifyHint": "The bottom of the power-on screen shows \"MM9PDY-1.1.0\".",
+      "resultSha256": {
+        "cdd": "71777cb1bcb987a6ee57dd46d83b178fc08bdfbf1cbeed1a7956de819696d800",
+        "cdi": "3740359abd080249e779882cf9f23d6ed36f552104db9523820e73f20062dbc3",
+        "spi": "e7dbcd758afb776ba2abba7054a879a56a0984029353cf92befef54461a784ba"
+      },
+      "notesPath": "releases/retevis-rt95-head/rt95-fw-1.1.0.md",
+      "notes": "Release 1.1.0 of the Retevis RT95 front-panel modification. It applies to the stock front-panel firmware **LCD V1.41** (20231202) only, and leaves the radio board's firmware alone.\n\n**How far it has been checked:** this build has been checked in an emulator. A test build of the same code (it differs only in the version line) was written to a radio with Codeplug Studio and used with zones and descriptions before this release was made. There was no separate release candidate.\n\n**What's new**\n\n- **Zones:** group your channels into up to 32 named zones in Codeplug Studio, with the *Retevis RT95 VOX (MM9PDY modded firmware)* target. A programmable key set to DIR shows `ZON` and opens the zone selector. The knob, the microphone's Up and Down keys and scan stay inside the zone. Each side keeps its own zone, and the radio remembers it when switched off. Studio can set the key for you (\"Put Zone on a P-key\").\n- **Channel descriptions:** a short description per channel (up to 12 characters, from the channel's Name in Studio) shows under the channel name in single watch.\n- **Single-watch screen:** the main side is drawn where it sits in dual watch, so the zone name (sky blue) and the description (amber) fit underneath. Dual watch is unchanged.\n\n**Known issues** (to be fixed in 1.1.1)\n\n- In the zone selector, some zone names run past the end of the box and leave a few pixels on the screen near the P6 label. Some names flicker and are not drawn.\n- Switching zone stays on the current channel if it also belongs to the new zone, instead of going to the channel you last used in that zone.\n- The channel number shown is the radio's own number, not the channel's place in the zone.\n\n**Known limits**\n\n- Screen flip stays in the radio's FUNC menu (DIR). A key set to DIR opens zones instead.\n- A description is hidden once the channel has been changed on the radio or with another programming tool. Write again from Studio to bring it back.\n- Without zone data from Studio, the radio behaves as before, with all channels.\n\n**Checking it worked:** switch the radio off and on and read the bottom of the power-on screen: it shows `MM9PDY-1.1.0`.\n\n**Going back:** write release 1.0.0-rc.2, or the maker's stock front-panel firmware (LCD V1.41), with Codeplug Studio.\n"
+    },
+    {
+      "radioId": "retevis-rt95-head",
       "version": "1.0.0-rc.2",
       "channel": "rc",
       "patchName": "retevis-rt95-firmware",
