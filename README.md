@@ -1,20 +1,29 @@
 # MM9PDY modded firmware
 
-Small, carefully tested changes to the stock firmware of two DMR handhelds. Each one is the manufacturer's own
-firmware with a few features added: independent talk groups, a star-key timeslot swap, zone scan, quick menus and more.
-Everything else behaves as stock, and the codeplug format is unchanged.
+Small, carefully tested changes to the stock firmware of two DMR handhelds and the Retevis RT95 mobile. Each one is the
+manufacturer's own firmware with a few features added: independent talk groups, a star-key timeslot swap, zone scan,
+quick menus, named zones and channel descriptions on the RT95, and more. Everything else behaves as stock, and the
+codeplug format is unchanged.
 
 | Radio | Stock base | User guide | Releases |
 |---|---|---|---|
 | AnyTone AT-D890UV | V1.05 (20260521) | [docs/anytone-at-d890uv](docs/anytone-at-d890uv/README.md) | [releases/anytone-at-d890uv](releases/anytone-at-d890uv) |
 | Baofeng DM-32UV | v1.01.048 | [docs/baofeng-dm32uv](docs/baofeng-dm32uv/README.md) | [releases/baofeng-dm32uv](releases/baofeng-dm32uv) |
+| Retevis RT95 front panel (LCD) | LCD V1.41 (20231202) | [docs/retevis-rt95-head](docs/retevis-rt95-head/README.md) | [releases/retevis-rt95-head](releases/retevis-rt95-head) |
+
+**Retevis RT95** (also sold as the AnyTone AT-778UV): latest 1.1.0. It changes the front panel only; the radio board's
+firmware stays as the maker made it. Features: up to 32 named zones, written with Codeplug Studio's *Retevis RT95 VOX
+(MM9PDY modded firmware)* target and opened with a key set to DIR (the radio shows ZON), and 12-character channel
+descriptions shown under the channel name in single watch. Read the revision and serial-number notes in the
+[user guide](docs/retevis-rt95-head/README.md) before you flash.
 
 ## Installing
 
 Use the firmware flasher in [Codeplug Studio](https://codeplug.mm9pdy.net) (**Tools > Firmware flasher**, in Chrome
 or Edge on a desktop computer). It lists every release published here, shows the release notes, checks your stock
 firmware, builds the modded firmware on your computer and writes it to the radio. Step by step:
-[AT-D890UV](docs/anytone-at-d890uv/install.md), [DM-32UV](docs/baofeng-dm32uv/install.md).
+[AT-D890UV](docs/anytone-at-d890uv/install.md), [DM-32UV](docs/baofeng-dm32uv/install.md),
+[RT95](docs/retevis-rt95-head/install.md).
 
 **Flashing firmware can brick a radio.** Everything here is at your own risk, with no warranty of any kind. Read your
 radio's docs, especially going back to stock and recovery, before your first write.
