@@ -12,7 +12,7 @@ how far they were checked.
 
 | Page | What it is for |
 |---|---|
-| [features.md](features.md) | What the modification does (release 1.1.0: the version line, zones, and channel descriptions in single watch) |
+| [features.md](features.md) | What the modification does (release 1.1.1: the version line, zones, and channel descriptions in single watch) |
 | [codeplug.md](codeplug.md) | Zones and the CPS and CHIRP: what writes them, what leaves them alone |
 | [install.md](install.md) | Putting it on the radio with Codeplug Studio |
 | [back-to-stock.md](back-to-stock.md) | Putting the maker's firmware back |

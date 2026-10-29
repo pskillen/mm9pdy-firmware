@@ -257,6 +257,26 @@
     },
     {
       "radioId": "retevis-rt95-head",
+      "version": "1.1.1",
+      "channel": "final",
+      "patchName": "retevis-rt95-firmware",
+      "patchFile": "rt95-fw-1.1.1.patch.json",
+      "patchPath": "releases/retevis-rt95-head/rt95-fw-1.1.1.patch.json",
+      "patchSha256": "76454fd410f56faec417445674463690ae4f8e4eff9a3fe5610e864ffb3e63a9",
+      "stockVersion": "LCD V1.41 (20231202)",
+      "publishedOn": "2026-10-29",
+      "summary": "Fixes the radio's menus freezing the screen and keys.",
+      "verifyHint": "The bottom of the power-on screen shows \"MM9PDY-1.1.1\".",
+      "resultSha256": {
+        "cdd": "8078a9b14476dd26e706e68d0810438111091568b07ac70baa3e9badcf4757f5",
+        "cdi": "0cef2f4191c129dabf3d1434de35ffedfd7948a702ac2841ed2ec50702567f7e",
+        "spi": "b0b1ab9f0ec216af370d05107097173c6061b3ac9d8753259e7560f737bf01b7"
+      },
+      "notesPath": "releases/retevis-rt95-head/rt95-fw-1.1.1.md",
+      "notes": "Release 1.1.1 of the Retevis RT95 front-panel modification. It applies to the stock front-panel firmware **LCD V1.41** (20231202) only, and leaves the radio board's firmware alone. Everything in 1.1.0 is unchanged apart from the fix below.\n\n**How far it has been checked:** this build has been checked in an emulator, including a new test that opens the FUNC menu and goes into and out of every item. A test build of the same fix was written to a radio with Codeplug Studio and the menus were used on it before this release was made. There was no separate release candidate.\n\n**Fixed**\n\n- **Menus froze the radio.** On 1.1.0, opening the radio's own menus (the FUNC menu, the channel menu and others) and picking an item could freeze the screen and every key, power included, until the battery or DC power was removed. Audio kept working. The menus now work as on the stock firmware.\n\n**Known issues** (still open, to be fixed in a later release)\n\n- In the zone selector, some zone names run past the end of the box and leave a few pixels on the screen near the P6 label. Some names flicker and are not drawn.\n- Switching zone stays on the current channel if it also belongs to the new zone, instead of going to the channel you last used in that zone.\n- The channel number shown is the radio's own number, not the channel's place in the zone.\n\n**Known limits**\n\n- Screen flip stays in the radio's FUNC menu (DIR). A key set to DIR opens zones instead.\n- A description is hidden once the channel has been changed on the radio or with another programming tool. Write again from Studio to bring it back.\n- Without zone data from Studio, the radio behaves as before, with all channels.\n\n**Checking it worked:** switch the radio off and on and read the bottom of the power-on screen: it shows `MM9PDY-1.1.1`.\n\n**Going back:** write release 1.1.0, or the maker's stock front-panel firmware (LCD V1.41), with Codeplug Studio. Avoid 1.1.0 if you use the radio's menus.\n"
+    },
+    {
+      "radioId": "retevis-rt95-head",
       "version": "1.1.0",
       "channel": "final",
       "patchName": "retevis-rt95-firmware",

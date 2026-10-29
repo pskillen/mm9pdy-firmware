@@ -1,7 +1,8 @@
 # What it does
 
-Release 1.1.0 is the unmodified front-panel firmware plus the changes below: the version line, zones, and channel descriptions
-with a new single-watch layout. Everything else is as the maker made it.
+Release 1.1.1 is the unmodified front-panel firmware plus the changes below: the version line, zones, and channel descriptions
+with a new single-watch layout. 1.1.1 fixes the radio's own menus freezing the screen and keys on 1.1.0. Everything else
+is as the maker made it.
 
 Each feature adds a row to this table in the release that ships it, and the row says how far it has been checked.
 
@@ -36,7 +37,7 @@ feature. Everything else on every screen is as before.
 
 **Checked on a radio once**, on a test build of 1.1.0 (it differs from this release only in the version line).
 
-**Known issues in 1.1.0**, to be fixed in 1.1.1: some zone names run past the end of the popup box and leave a few
+**Known issues**, still open in 1.1.1: some zone names run past the end of the popup box and leave a few
 pixels near the P6 label, and some flicker and are not drawn; switching zone stays on the channel you are on when it is
 also in the new zone.
 
