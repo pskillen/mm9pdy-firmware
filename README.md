@@ -11,7 +11,7 @@ codeplug format is unchanged.
 | Baofeng DM-32UV | v1.01.048 | [docs/baofeng-dm32uv](docs/baofeng-dm32uv/README.md) | [releases/baofeng-dm32uv](releases/baofeng-dm32uv) |
 | Retevis RT95 front panel (LCD) | LCD V1.41 (20231202) | [docs/retevis-rt95-head](docs/retevis-rt95-head/README.md) | [releases/retevis-rt95-head](releases/retevis-rt95-head) |
 
-**Retevis RT95** (also sold as the AnyTone AT-778UV) changes the front panel only; the radio board's
+**Retevis RT95** (also sold as the AnyTone AT-778UV): the mods change the front panel only; the radio board's
 firmware stays as the maker made it. Features: up to 32 named zones, written with Codeplug Studio's *Retevis RT95 VOX
 (MM9PDY modded firmware)* target and opened with a key set to DIR (the radio shows ZON), and 12-character channel
 descriptions shown under the channel name in single watch. Read the revision and serial-number notes in the
