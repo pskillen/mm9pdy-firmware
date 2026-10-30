@@ -1,8 +1,7 @@
 # What it does
 
-Release 1.1.1 is the unmodified front-panel firmware plus the changes below: the version line, zones, and channel descriptions
-with a new single-watch layout. 1.1.1 fixes the radio's own menus freezing the screen and keys on 1.1.0. Everything else
-is as the maker made it.
+The modification is the unmodified front-panel firmware plus the changes below: the version line, zones, channel
+descriptions with a new single-watch layout, and the Scan Pause Time on carrier scan. Everything else is as the maker made it.
 
 Each feature adds a row to this table in the release that ships it, and the row says how far it has been checked.
 
@@ -11,6 +10,7 @@ Each feature adds a row to this table in the release that ships it, and the row 
 | [Version on the power-on screen](#version-on-the-power-on-screen) | A small line along the bottom of the power-on screen: `MM9PDY-` and the firmware version | 1.0.0-rc.2 | Yes, on test builds of 1.0.0-rc.2 and 1.1.0 |
 | [Zones](#zones) | Group your channels into up to 32 named zones in Codeplug Studio, then pick one with the key set to DIR (the radio shows ZON). The knob, mic Up and Down and scan stay inside the zone | 1.1.0 | Once, on a test build of 1.1.0 |
 | [Channel descriptions](#channel-descriptions) | In single watch, a short description (up to 12 characters, the channel's Name in Studio) in amber under the channel name, with the zone name in sky blue above it. Dual watch is unchanged | 1.1.0 | Once, on a test build of 1.1.0 |
+| [CO scan and Scan Pause Time](#co-scan-and-scan-pause-time) | In carrier-operated (CO) scan, after the signal goes the radio waits the Scan Pause Time already in the menu (5, 10 or 15 seconds), then continues. Time-operated and search scan are unchanged | 1.1.2 | Once, on a test build of 1.1.2: the 5 second setting |
 
 The vendor's own version text (what the official programming software and Codeplug Studio read from the radio) is not
 changed. The release name appears separately, as `mm9pdy-` plus the version (shown in capitals on the power-on screen).
@@ -35,9 +35,9 @@ feature. Everything else on every screen is as before.
 
 ## Zones
 
-**Checked on a radio once**, on a test build of 1.1.0 (it differs from this release only in the version line).
+**Checked on a radio once**, on a test build that differs from the release only in the version line.
 
-**Known issues**, still open in 1.1.1: some zone names run past the end of the popup box and leave a few
+**Known issues:** some zone names run past the end of the popup box and leave a few
 pixels near the P6 label, and some flicker and are not drawn; switching zone stays on the channel you are on when it is
 also in the new zone.
 
@@ -87,9 +87,17 @@ One damaged zone is left out; the others still work.
 **Your codeplug.** The official CPS and CHIRP do not read or write zones and do not disturb them. Zones are matched by
 channel number, so if you edit your channels with them, check your zones in Codeplug Studio afterwards.
 
+## CO scan and Scan Pause Time
+
+**Checked on a radio once**, on a test build that differs from the release only in the version line, with the 5 second setting. The 10 and 15 second settings and VFO scan have not been timed on a radio.
+
+In **CO** scan the radio already stayed on a channel while a signal was present. It now also waits the **Scan Pause Time (SCT)** after the signal goes before it moves on—the same **5, 10 or 15 seconds** the FUNC MENU already offers for SCT (labels 5S, 10S, 15S). If the signal comes back during that wait, the timer starts again. **TO** scan still pauses for SCT from when the carrier appears; **SE** (search) still stops when a signal is found. Nothing new appears in the menu and the codeplug is unchanged.
+
+**Release note:** CO scan waits the Scan Pause Time after the signal drops, using the existing 5 / 10 / 15 second menu values.
+
 ## Channel descriptions
 
-**Checked on a radio once**, on a test build of 1.1.0 (it differs from this release only in the version line).
+**Checked on a radio once**, on a test build that differs from the release only in the version line.
 
 Codeplug Studio's MM9PDY target can give each channel a short description, up to 12 characters, taken from the channel's
 Name in Studio. The radio's own channel name (the one the official CPS and CHIRP edit) is not changed, so a call sign can
