@@ -67,6 +67,21 @@ groups you use on it in the channel's RX group list. Then:
   RX match set to TG, the call you stepped away from should stop being heard (not yet confirmed on a radio). With RGL or Any the call may carry on,
   but the next time you transmit it goes to the talk group you picked. It works for group and private calls. It does
   nothing while the sub side (dual watch) is the one receiving.
+- **Reply** (new in 1.3.1). While a call is on the receive screen, the right-hand soft key says **Reply** where it used
+  to say List. Press it to answer: the radio goes back to the channel screen with the talk group the call was for on
+  line 2, on the timeslot the call came in on, and PTT goes to it. A **private call** is answered with a private call
+  to the caller's ID. You do not need TG next / previous on a key for this.
+  - Whatever the call was for (the channel's own contact, a talk group in its RX group list, or any other talk group)
+    is used **for now only**: line 2 shows its name if it is in the radio's talk-group list, otherwise its ID.
+  - The pick lasts until the next talk group step or channel change. Nothing is saved to the codeplug.
+  - Reply only appears when the call can be answered. For an all call, a call to or from ID 0, a call on the sub side
+    (dual watch), a call heard while a scan is running, a VFO channel or NXDN, the soft key still says **List** and does
+    what it always did. The radio's talk-group list should also be reachable from the main menu (Menu, then Talk Group; not
+    yet checked on a radio).
+
+  ![The receive screen of a group call, with Reply on the right-hand soft key](images/reply-key.png)
+
+  (Checked in an emulator; not yet checked on a radio.)
 - A channel with no RX group list shows "No RX list" and nothing changes.
 - A digital channel with **no contact** (the CPS's "None", or a contact that points at a deleted talk group) starts on
   the **first talk group in its RX group list** instead of the first talk group in the radio. PTT, line 2 and what you
@@ -124,7 +139,18 @@ badge follows.
   channel's programmed one. Before, it looked at the programmed slot: it could key up over a call on the slot in use,
   or refuse while only the other slot was busy. The same goes for the talk-group check just after a call on a
   repeater: it follows the slot in use.
-- Not yet checked on a radio: `*` over a talk group's own timeslot, and Busy Lock with `*` (emulator only so far).
+- **Editing Time Slot in the channel menu now takes effect** (new in 1.3.1). After `*` (or with a talk group's own
+  timeslot) the menu's **Time Slot** item used to change only the saved channel and not what the radio used until you
+  changed channel. Now the value you pick is the timeslot in use at once, the badge and PTT follow, until the next
+  TG next / previous, channel change or zone change. The saved channel gets the new value as before. Without a
+  `*` active this holds too: a Time Slot edit in the channel menu pins that slot, so a talk group's own timeslot does
+  not override it until the next TG next / previous or channel change.
+- **A call on the other timeslot of a TDMA channel is left alone when you press PTT** (new in 1.3.1). With `*` or a
+  talk group's own timeslot in use, the radio decided which timeslot was "the other one" from the channel's
+  programmed slot, so it could disturb a call on the other timeslot, or not protect it. It now uses the slot in use.
+- The digital APRS report channel keeps its own timeslot when `*` or a talk group's slot is in use (new in 1.3.1).
+  Roaming's explicit timeslots are unchanged, so with roaming `*` can still override them.
+- Not yet checked on a radio: `*` over a talk group's own timeslot, Busy Lock with `*`, and the three 1.3.1 changes above (emulator only so far).
 
 On a channel in timeslot 1, the badge reads T1:
 
@@ -207,6 +233,15 @@ A small list of receive and scan settings over the channel screen. Press the key
 - **Menu**, **Back**, the same key again, or 10 seconds without a key close it. Changes are saved when it closes and
   survive switching off.
 - PTT works as normal while it is open.
+- **It works during a call.** Press the key while a call is being received, on the call screen, and the menu opens over
+  it; a call that starts while it is open does not close it. When the menu closes you are back on the call screen, on the
+  same channel. Changing **RX match**, **TS filter** or **TG slot** during a call makes the radio restart its receiver
+  and leaves the call screen, so the call may drop or pause; it carries on only if it still passes the new filter. If
+  you press PTT, the menu closes and the radio transmits.
+- **From the heard-call card of a zone scan**, the key closes the card, stops the scan on that channel (as any key does
+  during a scan) and opens the menu there.
+- **To VFO** shows `--` while a scan is running.
+- Not yet checked on a radio.
 
 | Row | Values | What it does |
 |---|---|---|
@@ -227,7 +262,7 @@ the stock menu and the CPS see the change.
 Limits:
 
 - The clock and status icons do not update while the menu is open. Closing it redraws the screen.
-- It does not open during a scan, off the channel screen, or over a popup.
+- Pressing the key during a scan stops the scan, then opens the menu. It does not open in a menu or over a popup.
 - While it is open it takes every key, so TG next / previous do nothing.
 - If you assign it to a long press, a second long press does not close it. Use Back, Menu or wait 10 seconds.
 - Labels are in English.
@@ -252,7 +287,7 @@ stock or someone else's mod. See [install.md](install.md#4-check-it-worked).
 ## 7. Settings the mods keep
 
 The quick filters menu's own settings (TS filter, CC match, TG slot, Tone match and RX match TG), the Scan menu's (Scan, Scan popup and Zone scan resume) and the
-S-meter's settings (section 10: Display, Average, Peak hold and the spectrum's span, step, top and bottom) are kept in a small unused
+S-meter's settings (section 10: Display, Average, Peak hold and the spectrum's span, step, top and bottom) and the Up/Down keys setting (section 14) are kept in a small unused
 area of the radio's settings memory, not in the codeplug format. The CPS does not show them and does not write that
 area. Settings the stock radio already has (digital monitor, monitor colour code) stay in their stock place.
 A CPS write or a settings reset may put the mods' settings back to their defaults (section 8).
@@ -312,7 +347,8 @@ act like the main PTT), and the "first PTT decides" rule with both PTTs in use.
 
 The radio's signal-strength icon is four coarse steps. The S-meter adds a real reading: a **bar on the channel screen**,
 a **dedicated signal screen** for comparing antennas, a **spectrum** of the band around your channel, and a **signal
-history** that plots the level over the last 16 seconds. It works on
+history** that plots the level over the last 16 seconds. The dedicated screen and the signal history also work during a call
+and while you transmit. It works on
 VHF and UHF, on the main (active) side. It is off until you turn it on.
 
 > **Not yet checked on a radio.** The screens below are from an emulator, with a demo codeplug. The radio's own
@@ -388,7 +424,15 @@ reading since the last restart. The keys are on its bottom line:
 | **Menu, Back**, or the key you assigned | Close it |
 
 Every other key does nothing while it is open, so the channel knob cannot change the channel under it. It does not time
-out: it is for watching. It closes by itself when a call is received or when you transmit.
+out: it is for watching. It stays up when a call arrives and while the call goes on (you can also open it during a call,
+from the menu or with its key), and it stays up when you transmit: while you transmit the big number reads **TX**, the
+bar is solid magenta and the line under it reads "Transmitting - no reading"; live readings carry on when you let go
+of PTT.
+
+![The dedicated screen while transmitting](images/smeter-screen-tx.png)
+
+**Back** or **Menu** closes it and the screen that was under it (the channel screen, or the call screen during a call)
+is back. It does not open during a scan. Not yet checked on a radio.
 
 **Delta mode, for comparing antennas.** Receive a steady signal on antenna A and press **P1**: the reading is stored as
 the reference and the large number turns into the **difference from it**, starting at `+0.0dB`. Change antenna (or
@@ -422,7 +466,8 @@ A change takes effect at the next sweep and is saved when the screen closes.
 
 While it sweeps, the receiver is tuned away from your channel and the screen keeps the backlight on, so **you will not
 hear your channel**. It closes by itself, and the radio returns to your channel, when you transmit, when a call is
-received, or when a scan starts. If it cannot start (air band, a scan running, a transmission, a call), the top line
+received, or when a scan starts. (The S-meter screen and the signal history, unlike the spectrum, stay up during calls
+and transmissions.) If it cannot start (air band, a scan running, a transmission, a call), the top line
 reads "no sweep" with a number and nothing is drawn. The sweep stays inside the band the channel is in.
 
 ### The signal history
@@ -431,6 +476,14 @@ Open it from **Menu > S-Meter > Signal graph**. It watches your channel and plot
 monitor: each 0.1 second adds one column, and the writing point moves from left to right across the screen, 16 seconds
 from edge to edge. At the right edge it wraps to the left and writes over the oldest columns. A short blank gap just
 ahead of the writing point shows where "now" is. Nothing scrolls, so the picture stays easy to read.
+
+The graph stays up when a call arrives and during the call (you can open it during a call, too), and when you transmit.
+While you transmit the graph keeps going, but each column is a full-height **magenta** bar instead of a signal level, so a
+magenta block shows how long you transmitted, and the reading ends in "TX". Normal columns carry on when you let go of PTT.
+
+![The signal history with a short over shown as a magenta block](images/smeter-history-tx.png)
+
+**Back** or **Menu** closes it. Not yet checked on a radio.
 
 ![The signal history, paused, with three bursts of signal and the blank gap at the writing point](images/smeter-history.png)
 
@@ -480,7 +533,7 @@ Out of the box nothing changes: the range is **Stock**, which behaves exactly as
 |---|---|
 | Stock | The stock mapping, including the stock "Max Vol Level" setting. This is the default. |
 | Indoor | Quiet and fine-grained: it starts almost silent and the top of the knob stays well below full loudness. For a desk or a quiet room. |
-| Outdoor | Loud: the knob starts fairly high and the top is full loudness. For a noisy place. |
+| Outdoor | Loud: the knob starts higher than in the other ranges and the top is full loudness. For a noisy place. |
 | Full | The widest spread: a very quiet bottom and full loudness at the top. |
 
 **Loudness at each range.** Loudness is in dB relative to the loudest the volume control can go (0 dB). Every 6 dB
@@ -490,8 +543,8 @@ sounds about equally bigger than the one before.
 | Range | Knob level 1 (quietest) | Knob level 15 (loudest) | Step per level |
 |---|---|---|---|
 | Stock | the stock row: −42 dB at level 1, uneven steps | the stock row for your Max Vol Level | uneven (9.5 dB, then 2.5 dB, then smaller) |
-| Indoor | −39 dB | −9 dB | 2.1 dB |
-| Outdoor | −24 dB | 0 dB | 1.7 dB |
+| Indoor | −42 dB | −9 dB | 2.4 dB |
+| Outdoor | −30 dB | 0 dB | 2.1 dB |
 | Full | −36 dB | 0 dB | 2.6 dB |
 
 Level 0 is mute in every range. These numbers are provisional until they have been tuned by ear on a radio.
@@ -601,3 +654,30 @@ positions; the radio has no setting for it. The number changes at most every few
 Not yet checked on a radio: the distance against a site whose position you know, the longest texts (`999km NW`,
 `9.9mi NW`) showing whole, and the positions after an official CPS write. A Codeplug Studio write and the distance
 showing have been checked on a radio.
+
+## 14. Up/Down keys
+
+From 1.3.1. On the channel screen the **Up** and **Down** keys change the zone, and the CPS cannot give them another job. **Up goes to the next one and Down to the previous one, whichever value you choose, the zone included** (on the stock firmware, Up is the previous zone). **Settings > Radio Set > Key Func** now has one more row at the end of its list, **Up/Down**, that lets you choose what they do:
+
+| Value | Up | Down |
+|---|---|---|
+| **Zone** (the default) | the next zone | the previous zone |
+| **Channel** | the next channel, as the channel knob does | the previous channel |
+| **Talk group** | the next talk group, as TG next does | the previous talk group, as TG previous does |
+
+![Key Func list with the Up/Down row at the end](images/updown-row.png)
+
+![The Up/Down choices: Zone, Channel and Talk group](images/updown-values.png)
+
+Choose a value and press Select: the radio saves it, shows a tick and returns to the list. The default is Zone: the keys still change the zone, but Up is the next zone, the opposite way round to stock. The setting is kept over a power-off.
+
+- **Up is always the next one and Down the previous one,** whichever value you choose, the zone too. This is the opposite of the stock zone keys. The exceptions are in the list below: a scan that is running is still steered the stock way round.
+- **Talk group needs no TG key in the CPS.** Up and Down step the talk group on line 2 of a digital channel, and PTT calls it, just as TG previous and TG next do (section 2): the channel without an RX group list shows the *No RX list* popup, and on an analogue channel nothing happens.
+- **Channel** works the same way as turning the channel knob, including the receive screen: the first key leaves it and steps.
+- **These stay as stock, whatever you choose:** a long press of Up or Down (it starts a scan, as before); a scan that is running (Up and Down steer it the stock way round, a long press does not stop it); a VFO (Up and Down step 1 MHz); the keypad lock; any popup (the key closes it); menus and the quick filters menu.
+- With Channel or Talk group chosen, the zone is reached from Main Menu > Zone. The bottom bar of the channel screen shows "Zone" with the up and down arrows only while Up/Down is Zone: with Channel or Talk group chosen the label and its arrows are gone ("Channel" and "Talk group" would not fit), and they come back as soon as you choose Zone, with no power cycle.
+
+  ![The channel screen with Up/Down set to Channel: no Zone label in the bottom bar](images/updown-channel-screen.png)
+- The row's labels are in English in every menu language.
+
+Not yet checked on a radio: how the keys feel in use, and the cases with the keypad lock. All of it has been run in an emulator only.

@@ -27,7 +27,7 @@ assign the keys is in [features.md](features.md), section 1.
 
 ## 2. The mods' own settings
 
-The quick filters menu's settings (TS filter, CC match, TG slot, Tone match, and RX match TG, and the Scan menu's Scan, Scan popup and Zone scan resume rows) are not in the codeplug. The
+The quick filters menu's settings (TS filter, CC match, TG slot, Tone match, and RX match TG, the Scan menu's Scan, Scan popup and Zone scan resume rows, and the Up/Down row of Key Func) are not in the codeplug. The
 radio keeps them in a small record of its own, in a spare part of the radio's settings memory that stock firmware
 neither reads nor uses.
 
