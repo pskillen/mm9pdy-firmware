@@ -277,6 +277,26 @@
     },
     {
       "radioId": "retevis-rt95-head",
+      "version": "1.1.3",
+      "channel": "final",
+      "patchName": "retevis-rt95-firmware",
+      "patchFile": "rt95-fw-1.1.3.patch.json",
+      "patchPath": "releases/retevis-rt95-head/rt95-fw-1.1.3.patch.json",
+      "patchSha256": "5be8c4ea49f646276686ffc89fb8122d1a82a53868609f620cdea3ad1d5891b8",
+      "stockVersion": "LCD V1.41 (20231202)",
+      "publishedOn": "2026-11-04",
+      "summary": "Hold SCN while a scan is stopped on a channel to skip that channel until the next scan.",
+      "verifyHint": "The bottom of the power-on screen shows \"MM9PDY-1.1.3\".",
+      "resultSha256": {
+        "cdd": "00dced7a039dedd4de8e38beee2cf042966e713b2cdb4bd3b7840276b2b65202",
+        "cdi": "46bc5b71ba2f9406d835ccc1247e0f1c6ccbdddb9042653917bb2e72541abea3",
+        "spi": "fb92e69d810928b0906cd6c3db6c5c778ac1c0548e98a5bd591e0838d0e307d0"
+      },
+      "notesPath": "releases/retevis-rt95-head/rt95-fw-1.1.3.md",
+      "notes": "Release 1.1.3 of the Retevis RT95 front-panel modification. It applies to the stock front-panel firmware **LCD V1.41** (20231202) only, and leaves the radio board's firmware alone. Everything in 1.1.2 is unchanged apart from the change below.\n\n**How far it has been checked:** both changes have been checked in an emulator and tried once on a radio, with a test build that differs from this release only in the version line. On the radio, skipping a channel worked, and long zone names showed cut to fit inside the box, with nothing left beside it and no blank box.\n\n**What's new**\n\n- **Nuisance delete in scan.** While a scan is stopped on a channel, hold SCN for about a second to skip that channel until you start the next scan. The SCN key on the screen reads NUI while the scan is stopped on a channel. Nothing in your codeplug changes.\n\n- **Long zone names fit.** The zone selector shows the zone name by itself, without `ZONE:`, so more of it fits. A name still too wide for the box is cut to fit (a twelve-character name of wide letters shows its first seven), instead of running past the box, leaving marks by the P6 label, or flickering and not being drawn. The zone line on the single-watch screen is cut the same way when a name is too wide for it. Zone names can be up to 12 characters.\n\n**Known issues** (still open, to be fixed in a later release)\n\n- Switching zone stays on the current channel if it also belongs to the new zone, instead of going to the channel you last used in that zone.\n- The channel number shown is the radio's own number, not the channel's place in the zone.\n\n**Known limits**\n\n- Screen flip stays in the radio's FUNC menu (DIR). A key set to DIR opens zones instead.\n- A description is hidden once the channel has been changed on the radio or with another programming tool. Write again from Studio to bring it back.\n- Without zone data from Studio, the radio behaves as before, with all channels.\n- Skipping a channel works from the front-panel SCN key only, not from a microphone key.\n\n**Checking it worked:** switch the radio off and on and read the bottom of the power-on screen: it shows `MM9PDY-1.1.3`.\n\n**Going back:** write release 1.1.2, or the maker's stock front-panel firmware (LCD V1.41), with Codeplug Studio.\n"
+    },
+    {
+      "radioId": "retevis-rt95-head",
       "version": "1.1.2",
       "channel": "final",
       "patchName": "retevis-rt95-firmware",

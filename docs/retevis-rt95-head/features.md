@@ -1,16 +1,17 @@
 # What it does
 
 The modification is the unmodified front-panel firmware plus the changes below: the version line, zones, channel
-descriptions with a new single-watch layout, and the Scan Pause Time on carrier scan. Everything else is as the maker made it.
+descriptions with a new single-watch layout, the Scan Pause Time on carrier scan, and skipping a channel during a scan. Everything else is as the maker made it.
 
 Each feature adds a row to this table in the release that ships it, and the row says how far it has been checked.
 
 | Feature | What you see | Since | Checked on a radio |
 |---|---|---|---|
 | [Version on the power-on screen](#version-on-the-power-on-screen) | A small line along the bottom of the power-on screen: `MM9PDY-` and the firmware version | 1.0.0-rc.2 | Yes, on test builds of 1.0.0-rc.2 and 1.1.0 |
-| [Zones](#zones) | Group your channels into up to 32 named zones in Codeplug Studio, then pick one with the key set to DIR (the radio shows ZON). The knob, mic Up and Down and scan stay inside the zone | 1.1.0 | Once, on a test build of 1.1.0 |
+| [Zones](#zones) | Group your channels into up to 32 named zones in Codeplug Studio, then pick one with the key set to DIR (the radio shows ZON). The knob, mic Up and Down and scan stay inside the zone | 1.1.0 | Once, on a test build of 1.1.0; long names cut to fit once, on a test build of 1.1.3 |
 | [Channel descriptions](#channel-descriptions) | In single watch, a short description (up to 12 characters, the channel's Name in Studio) in amber under the channel name, with the zone name in sky blue above it. Dual watch is unchanged | 1.1.0 | Once, on a test build of 1.1.0 |
 | [CO scan and Scan Pause Time](#co-scan-and-scan-pause-time) | In carrier-operated (CO) scan, after the signal goes the radio waits the Scan Pause Time already in the menu (5, 10 or 15 seconds), then continues. Time-operated and search scan are unchanged | 1.1.2 | Once, on a test build of 1.1.2: the 5 second setting |
+| [Nuisance delete in scan](#nuisance-delete-in-scan) | While a scan is stopped on a channel, hold SCN to skip that channel until you start the next scan | 1.1.3 | Once, on a test build of 1.1.3 |
 
 The vendor's own version text (what the official programming software and Codeplug Studio read from the radio) is not
 changed. The release name appears separately, as `mm9pdy-` plus the version (shown in capitals on the power-on screen).
@@ -37,26 +38,32 @@ feature. Everything else on every screen is as before.
 
 **Checked on a radio once**, on a test build that differs from the release only in the version line.
 
-**Known issues:** some zone names run past the end of the popup box and leave a few
-pixels near the P6 label, and some flicker and are not drawn; switching zone stays on the channel you are on when it is
-also in the new zone.
+**Long names.** The popup shows the zone name by itself, with room for eight wide letters or nine to ten ordinary capitals
+(seven W, eight M). A longer name is cut to fit, so `NORTHERN-REP` shows as `NORTHERN-RE`. The name itself is not changed, and the
+zone line under the channel in single watch (when it is on) shows more of it. Nothing is drawn past the box.
+
+![A long zone name cut to fit the popup, NORTHERN-RE](images/zones-selector-long.png)
+
+*A twelve-character name cut to fit. Demo channels and zones, in dual watch.*
+
+**Known issues:** switching zone stays on the channel you are on when it is also in the new zone.
 
 A zone is a named group of your channels, such as `LOCAL` or `UHF`. You make zones in Codeplug Studio (its MM9PDY
-target writes them with the rest of your codeplug); the radio never edits them. A zone has 1 to 8 characters in its name,
+target writes them with the rest of your codeplug); the radio never edits them. A zone has 1 to 12 characters in its name,
 and there can be up to 32 zones.
 
 **Setting it up.** Give a key the function **DIR**: a P-key (in the official CPS, in Codeplug Studio, or in the radio's
 MINI KEY menu) or a key on the keypad microphone (PA to PD, in the radio's HAND KEY menu). The radio then labels that key
-**ZON**, and the popup it opens says **ZONE**. Codeplug Studio's MM9PDY target can set the key for you. The DIR item in the
+**ZON**, and the popup it opens shows the name of the zone. Codeplug Studio's MM9PDY target can set the key for you. The DIR item in the
 radio's FUNC MENU is not changed: it still flips the screen.
 
-![The ZON key label and the zone popup, ZONE:UHF](images/zones-selector.png)
+![The ZON key label and the zone popup, UHF](images/zones-selector.png)
 
 *The popup shows the zone name; the key at the top left now reads ZON. Demo channels and zones, in dual watch.*
 
 **Using it.**
 
-1. Press the ZON key. The bottom line shows `ZONE:` and the name of the current zone (`ZONE:ALL` for all channels).
+1. Press the ZON key. The bottom line shows the name of the current zone (`ALL` for all channels).
 2. Turn the knob, or press the microphone's Up and Down keys. You step through **All channels**, then each zone that has at
    least one of its channels on the radio, and round again. The radio changes to a channel of the new zone: the one you are
    on if it belongs, else the one you last used in that zone, else the lowest.
@@ -94,6 +101,22 @@ channel number, so if you edit your channels with them, check your zones in Code
 In **CO** scan the radio already stayed on a channel while a signal was present. It now also waits the **Scan Pause Time (SCT)** after the signal goes before it moves on—the same **5, 10 or 15 seconds** the FUNC MENU already offers for SCT (labels 5S, 10S, 15S). If the signal comes back during that wait, the timer starts again. **TO** scan still pauses for SCT from when the carrier appears; **SE** (search) still stops when a signal is found. Nothing new appears in the menu and the codeplug is unchanged.
 
 **Release note:** CO scan waits the Scan Pause Time after the signal drops, using the existing 5 / 10 / 15 second menu values.
+
+## Nuisance delete in scan
+
+**Checked on a radio once,** on a test build of 1.1.3.
+
+While a scan is stopped on a channel, the **SCN** key on the screen changes to read **NUI**. Hold **SCN** for about a second. That channel is skipped for the rest of this scan: you get the usual key beep, if beeps are on, and the scan moves on to the next channel at once. A skipped channel is not stopped on again until you start a new scan; pressing **SCN** to stop and **SCN** to start brings every channel back. Nothing in your codeplug changes, and the channel stays in your scan list.
+
+- **The label.** The key reads **NUI** only while holding it would skip the channel. While the scan is moving it reads **SCN**, and it goes back to **SCN** a moment before the scan moves on after a signal.
+- **When it works.** Only while the scan is stopped on a channel: a signal is present, or the radio is waiting after it went (the Scan Pause Time in carrier scan, the pause in time scan). If the scan is moving, holding **SCN** stops it, as before.
+- **The last channel.** The radio will not skip the only channel left to scan. It shows `ERROR` and stays on that channel.
+- **Zones.** In a zone, the skip is inside the zone. Mic Up and Down and the knob also pass over a skipped channel while the scan runs.
+- **Search scan (SE).** A signal stops the scan, so there is almost nothing to skip. Holding **SCN** after a stop is the radio's own skip, not this feature.
+- **Be careful when not scanning.** Holding **SCN** when no scan is running is the radio's own **permanent** skip of that channel (it shows `SKP`), exactly as before. Hold it only while a scan is stopped on a channel.
+- **Not covered.** It is the front-panel **SCN** key only, not a microphone key. VFO (band) scan is unchanged.
+
+**Release note:** While a scan is stopped on a channel, hold SCN for about a second to skip that channel until you start the next scan. The SCN key on the screen reads NUI while the scan is stopped on a channel. Nothing in your codeplug changes.
 
 ## Channel descriptions
 
