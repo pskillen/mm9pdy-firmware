@@ -3,6 +3,26 @@
   "releases": [
     {
       "radioId": "anytone-at-d890uv",
+      "version": "1.3.2",
+      "channel": "final",
+      "patchName": "anytone-d890-firmware",
+      "patchFile": "d890-fw-1.3.2.patch.json",
+      "patchPath": "releases/anytone-at-d890uv/d890-fw-1.3.2.patch.json",
+      "patchSha256": "b7192811531e17cc93c7534e8fa3f9972e31c82a9f51ced50f75401ceb7a12b9",
+      "stockVersion": "V1.05 (20260521)",
+      "publishedOn": "2026-11-07",
+      "summary": "Programmable squelch down/up on FM, using the same keys that step talk groups on DMR.",
+      "verifyHint": "After the radio restarts, Device Info > Mod Ver shows \"mm9pdy-1.3.2\".",
+      "resultSha256": {
+        "cdd": "7c0f9ebb3dc3ab9596fea99e6410ad7e3ccfd43e9fdcccffdf5ca92b3179d642",
+        "cdi": "18a23d3ebd16466d7bee7ec09afcb5e44a8c8a727abe7fa4a55fac71a2173985",
+        "spi": "cba654944bb3e7fb2ee3a2d12bb459872336148f3c9ff921dc1e8f36aaf87f1a"
+      },
+      "notesPath": "releases/anytone-at-d890uv/d890-fw-1.3.2.md",
+      "notes": "The 1.3.2 release of the AT-D890UV firmware mods. It applies to the stock **V1.05** package (20260521) only. Everything in 1.3.1 is also in this build.\n\n**What's changed**\n\n- **FM squelch keys:** TG Previous lowers and TG Next raises squelch on ordinary FM channels and FM VFOs, with the stock confirmation. Levels clamp at S0 and S5, are saved, and apply to the selected side. DMR talk-group stepping is unchanged. The radio and Codeplug Studio keep their TG key labels; the official CPS uses Record Switch and Record. AM and special modes keep stock controls. Threshold changes and dual-watch behaviour still need a radio check.\n\n- **Channel distance:** fixed a case where the leading digits could disappear during a channel change, and clears the previous channel’s distance before showing the new one.\n\n- **NXDN is an open beta:** the radio's own NXDN mode, which AnyTone hasn't released and which isn't approved by the NXDN Forum, has been in the mods behind a PIN since 1.3.0, for invited testers. It's now documented for everyone, on its own manual page: turning it on, programming it with Codeplug Studio, how channels behave in each mode, and its limits. The firmware is unchanged: a radio on 1.3.0 or 1.3.1 can be unlocked the same way. For amateur use; check your licence.\n\n**Checking it worked:** after the radio restarts, Device Info > Mod Ver shows `mm9pdy-1.3.2`.\n\n**Going back to stock:** flash stock V1.05 from this page, or use the official CPS.\n"
+    },
+    {
+      "radioId": "anytone-at-d890uv",
       "version": "1.3.1",
       "channel": "final",
       "patchName": "anytone-d890-firmware",

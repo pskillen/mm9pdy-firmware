@@ -21,8 +21,8 @@ their old name. The radio's own menu (Menu > Radio Set > Key Func, English menu 
 
 | Mod | Pick this in the CPS key list | The radio's Key Func menu shows | Stock function it replaces |
 |---|---|---|---|
-| TG previous | Record Switch | TG Previous | Record Switch |
-| TG next | Record | TG Next | Record |
+| TG previous / FM squelch down | Record Switch | TG Previous | Record Switch |
+| TG next / FM squelch up | Record | TG Next | Record |
 | Quick filters menu | Priority Zone | Quick Filters | Priority Zone |
 | S-meter screen (optional) | Satellite Predicting | S-Meter | Satellite Predicting |
 
@@ -32,6 +32,27 @@ previous, PF3 = Priority Zone (quick filters). Write the codeplug to the radio a
 While the mods are on the radio, the stock Record Switch, Record and Priority Zone functions are not available. The
 S-meter screen key (section 10) is optional: the screen also opens from the menu, so assign it only if you want a key.
 It replaces the stock Satellite Predicting function, which the D890 does not use for anything else.
+
+### FM squelch on the same keys
+
+From 1.3.2, the programmable **TG Previous** and **TG Next** keys also lower and raise squelch on an ordinary FM
+analogue channel or FM VFO. The names in the radio and Codeplug Studio stay the same: choose **Record Switch** for
+down and **Record** for up in the official CPS. Short and long presses can both be assigned.
+
+Each press moves one level, from **S0** (off) through **S5**, and shows the radio's usual squelch confirmation.
+At either end the level stays there; it does not wrap. The level is saved and survives switching off. It applies to
+all FM channels on the selected side, rather than just the current channel. In dual watch, use **Main Channel
+Switch** first to adjust the other side.
+
+On a digital DMR channel the same keys keep stepping talk groups as before. **Up/Down: Talk group** on the keypad
+remains talk-group-only and does nothing on analogue channels. The radio's separate **Sq Level** function still
+cycles the level as stock does.
+
+These keys do not alter the receive tone or optional signalling: a channel that requires a CTCSS or DCS tone still
+requires it. AM/air-band, FM broadcast, repeater and special operating modes keep their stock squelch controls.
+The keys do nothing in menus, during transmission or scanning, or while an unrelated notice is open.
+Not yet checked on a radio: the threshold change, dual-watch retuning, repeated presses and persistence after
+switching off.
 
 ## 2. Independent talk groups
 
@@ -643,7 +664,7 @@ distance until Studio writes the positions again.
 **What it shows.** The distance, then one of eight compass points (N, NE, E, SE, S, SW, W, NW) for the direction from
 you to the site, relative to true north. It is in metres below 1 km (`850m`), in kilometres or miles above, with one
 decimal below 10 (`4.3km`) and whole numbers after that (`27km`). The unit is the one Studio wrote with the
-positions; the radio has no setting for it. The number changes at most every few seconds, so it does not flicker.
+positions; the radio has no setting for it. While you stay on a channel, the number changes at most every few seconds, so it does not flicker. On a channel change, the previous distance clears and the new one appears when a valid position and GPS fix are available.
 
 **Limits**
 
@@ -681,3 +702,8 @@ Choose a value and press Select: the radio saves it, shows a tick and returns to
 - The row's labels are in English in every menu language.
 
 Not yet checked on a radio: how the keys feel in use, and the cases with the keypad lock. All of it has been run in an emulator only.
+
+## 15. NXDN (open beta)
+
+The stock firmware's own NXDN mode, which AnyTone hasn't released, can be turned on behind a PIN from Settings >
+Radio Set > Other Func > NXDN Access, in every release from 1.3.0. It has its own page: [nxdn.md](nxdn.md).

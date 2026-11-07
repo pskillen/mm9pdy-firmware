@@ -12,9 +12,10 @@ firmware: everything not listed in [features.md](features.md) behaves as stock V
 
 | Page | What it covers |
 |---|---|
-| [features.md](features.md) | What each mod does, how to set it up, and its limits |
+| [features.md](features.md) | What each mod does, including programmable FM squelch keys, how to set it up, and its limits |
 | [install.md](install.md) | Putting a release on the radio with Codeplug Studio, and checking it worked |
 | [codeplug.md](codeplug.md) | Your codeplug with the mods and on stock: reused key functions, the mods' own settings |
+| [nxdn.md](nxdn.md) | The radio's built-in NXDN mode (open beta): turning it on, programming, limits |
 | [back-to-stock.md](back-to-stock.md) | Putting stock V1.05 back |
 | [recovery.md](recovery.md) | What to do when a write fails or the radio will not start |
 
