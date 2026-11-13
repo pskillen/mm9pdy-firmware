@@ -32,7 +32,8 @@ radio's docs, especially going back to stock and recovery, before your first wri
 
 | Path | What it is |
 |---|---|
-| [releases/](releases) | One folder per radio. Each release is a `.patch.json` and a `.md` file with the same name: the release notes, with a short header (version, channel, stock version, date, summary, how to check it worked) |
+| [releases/](releases) | One folder per radio. Each release is a `.patch.json` and a `.md` file with the same name: the release notes, with a short header (version, channel, stock version, date, summary, how to check it worked). A radio whose builds depend on the exact stock firmware has one release per stock base, with the base in the file name |
+| `releases/<radio>/to-stock/` | For such a radio, the patch back to each stock base, one per base and version. Not listed in the index |
 | [releases.json](releases.json) | Index of every release, generated from `releases/`. This is what Codeplug Studio reads |
 | [docs/](docs) | The user guide for each radio |
 | [tools/release_index.py](tools/release_index.py) | Builds and checks the index, and publishes a release |

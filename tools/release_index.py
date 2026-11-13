@@ -5,14 +5,28 @@
   release_index.py check                 releases.json is current, sidecars are well formed, docs links resolve,
                                          and nothing from the private firmware repos has leaked into a public page
   release_index.py publish --radio R --patch P --notes N [--docs D] [--date YYYY-MM-DD]
+                           [--base B] [--to-stock T]
                                          add one release, then build and check. With --docs, a final replaces
                                          docs/<radio>/ (and drops release-candidate docs it has caught up with); a
                                          release candidate replaces docs/rc/<radio>/, each page under a banner.
+                                         --base names the stock base (required for a radio with bases, refused
+                                         otherwise); --to-stock also publishes that base's patch back to stock.
                                          Called by the private firmware repos' release workflows.
 
 A release is two files side by side: the patch, byte for byte as the firmware build wrote it, and a sidecar markdown
 file with the same stem. The sidecar starts with a front-matter block of `key: value` lines (one line each) and its
 body is the release notes, in the subset Codeplug Studio renders: paragraphs, `- ` bullets, **bold** and `code`.
+
+radios.json gives each radio either one `stockVersion` or a `bases` map, for a radio whose builds differ by stock
+base (one exact stock build). Each base has a `layout`, a `stockVersion`, a `fileLabel` and what the radio `shows`:
+
+  "bases": {"nrf-v0.27": {"layout": "L2", "stockVersion": "v0.27 (NRF)", "fileLabel": "nrf-v0.27-hw1.7", ...}}
+
+For such a radio a release is one row per version and base. Its files are <assetPrefix><version>-<fileLabel>
+.patch.json and .md; the sidecar carries `base: <id>`, its `stock` is that base's stockVersion, and the patch's own
+`base` must match. The row gains `layout` and `base`. --to-stock copies the base's patch back to stock to
+releases/<radio>/to-stock/<assetPrefix>to-stock-<fileLabel>-<version>.patch.json; that folder is not part of the index.
+Published files never change: publishing different bytes under an existing name is refused.
 """
 
 import argparse
