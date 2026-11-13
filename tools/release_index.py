@@ -41,9 +41,10 @@ NOTES_KEYS = ('summary', 'verify')  # what a private repo's notes master must ca
 
 # Things that belong in the private firmware repos only. A hit fails `check` (and so `publish`).
 LEAKS = [
-    (re.compile(r'github\.com/pskillen/(anytone-d890-firmware|baofeng-dm32-firmware)'), 'link to a private repo'),
+    (re.compile(r'github\.com/pskillen/(anytone-d890-firmware|baofeng-dm32-firmware|baofeng-uv5rmini-firmware'
+                r'|retevis-rt95-firmware)'), 'link to a private repo'),
     (re.compile(r'\b0x[0-9A-Fa-f]{6,}\b'), 'memory address'),
-    (re.compile(r'ghidra|hooks\.toml|make_patch|gate-result', re.I), 'reverse-engineering or build detail'),
+    (re.compile(r'ghidra|hooks\.toml|make_patch|gate-result|radio-data', re.I), 'reverse-engineering or build detail'),
     (re.compile(r'(^|[\s(`])(fw|vendor)/|tools/(?!release_index\.py)'), 'path into a firmware repo'),
 ]
 LINK = re.compile(r'\]\(([^)\s]+)\)')
@@ -118,8 +119,31 @@ def parse_sidecar(text, where):
     return meta, body
 
 
-def render_sidecar(meta, body):
-    head = '\n'.join(f'{k}: {meta[k]}' for k in SIDECAR_KEYS)
+def sidecar_keys(info):
+    """A radio with stock bases names its base in the sidecar, after the stock version."""
+    if 'bases' not in info:
+        return SIDECAR_KEYS
+    at = SIDECAR_KEYS.index('stock') + 1
+    return SIDECAR_KEYS[:at] + ('base',) + SIDECAR_KEYS[at:]
+
+
+def release_stem(info, version, base=None):
+    """The file stem: <assetPrefix><version>, and for a radio with bases <assetPrefix><version>-<fileLabel>."""
+    stem = info['assetPrefix'] + version
+    return f'{stem}-{info["bases"][base]["fileLabel"]}' if base is not None else stem
+
+
+def to_stock_name(info, base, version):
+    return f'{info["assetPrefix"]}to-stock-{info["bases"][base]["fileLabel"]}-{version}.patch.json'
+
+
+def refuse_changed(dest, raw):
+    if dest.exists() and dest.read_bytes() != raw:
+        raise Problem(f'{dest.relative_to(ROOT)} is already published with different bytes; releases never change')
+
+
+def render_sidecar(meta, body, keys=SIDECAR_KEYS):
+    head = '\n'.join(f'{k}: {meta[k]}' for k in keys)
     return f'---\n{head}\n---\n\n{body.strip()}\n'
 
 
@@ -147,6 +171,10 @@ def build_index():
         folder = RELEASES / radio
         if not folder.is_dir():
             continue
+        bases = info.get('bases')
+        keys = sidecar_keys(info)
+        seen = set()
+        # Not recursive: releases/<radio>/to-stock/ holds the way back to stock, which is not a release.
         patches = sorted(folder.glob('*.patch.json'))
         sidecars = {p.name[:-len('.md')] for p in folder.glob('*.md')}
         stems = {p.name[:-len('.patch.json')] for p in patches}
@@ -161,23 +189,33 @@ def build_index():
             if not sidecar.is_file():
                 raise Problem(f'{rel} has no sidecar {stem}.md')
             meta, body = parse_sidecar(sidecar.read_text(), f'releases/{radio}/{stem}.md')
-            missing = [k for k in SIDECAR_KEYS if not meta.get(k)]
+            missing = [k for k in keys if not meta.get(k)]
             if missing:
                 raise Problem(f'releases/{radio}/{stem}.md: missing {", ".join(missing)}')
             version = meta['version']
+            base = meta.get('base')
+            if bases is None and base is not None:
+                raise Problem(f'releases/{radio}/{stem}.md: this radio\'s releases have no base')
+            if bases is not None and base not in bases:
+                raise Problem(f'releases/{radio}/{stem}.md: unknown base {base!r}; known: {", ".join(bases)}')
+            stock = bases[base]['stockVersion'] if bases is not None else info['stockVersion']
+            want_stem = release_stem(info, version, base)
             checks = [
                 (VERSION.match(version), f'version {version!r} is not X.Y.Z or X.Y.Z-rc.N'),
                 (patch.get('version') == version, f'patch says version {patch.get("version")!r}'),
                 (patch.get('name') == info['patchName'], f'patch name {patch.get("name")!r} is not this radio\'s'),
-                (stem == info['assetPrefix'] + version, f'file name should be {info["assetPrefix"]}{version}'),
+                (bases is None or patch.get('base') == base, f'patch says base {patch.get("base")!r}, not {base!r}'),
+                (stem == want_stem, f'file name should be {want_stem}'),
                 (meta['channel'] == channel_of(version), f'channel should be {channel_of(version)}'),
-                (meta['stock'] == info['stockVersion'], f'stock should be {info["stockVersion"]!r}'),
+                (meta['stock'] == stock, f'stock should be {stock!r}'),
                 (DATE.match(meta['published']), 'published is not YYYY-MM-DD'),
+                ((version, base) not in seen, f'{version} on base {base} is listed twice'),
             ]
             for ok, why in checks:
                 if not ok:
                     raise Problem(f'{rel}: {why}')
-            rows.append({
+            seen.add((version, base))
+            row = {
                 'radioId': radio,
                 'version': version,
                 'channel': meta['channel'],
@@ -186,13 +224,18 @@ def build_index():
                 'patchPath': rel,
                 'patchSha256': hashlib.sha256(raw).hexdigest(),
                 'stockVersion': meta['stock'],
+            }
+            if bases is not None:  # one row per (version, base): Studio reads layout and base beside stockVersion
+                row |= {'layout': bases[base]['layout'], 'base': base}
+            row |= {
                 'publishedOn': meta['published'],
                 'summary': meta['summary'],
                 'verifyHint': meta['verify'],
                 'resultSha256': result_roles(patch),
                 'notesPath': f'releases/{radio}/{stem}.md',
                 'notes': body,
-            })
+            }
+            rows.append(row)
     rows.sort(key=lambda r: (r['radioId'], r['publishedOn'], [int(x) for x in re.findall(r'\d+', r['version'])]),
               reverse=True)
     rows.sort(key=lambda r: r['radioId'])
@@ -239,11 +282,27 @@ def publish(args):
     if args.radio not in RADIOS:
         raise Problem(f'unknown radio {args.radio!r}; known: {", ".join(RADIOS)}')
     info = RADIOS[args.radio]
+    bases = info.get('bases')
+    base = args.base
+    if bases is None and base is not None:
+        raise Problem(f'{args.radio} releases have no base; drop --base')
+    if bases is None and args.to_stock:
+        raise Problem(f'{args.radio} releases have no base, so no to-stock patch; drop --to-stock')
+    if bases is not None and base is None:
+        raise Problem(f'{args.radio} releases are one per stock base: give --base ({", ".join(bases)})')
+    if bases is not None and base not in bases:
+        raise Problem(f'unknown base {base!r} for {args.radio}; known: {", ".join(bases)}')
     raw = pathlib.Path(args.patch).read_bytes()
     patch = json.loads(raw)
     version = patch.get('version', '')
     if not VERSION.match(version):
         raise Problem(f'patch version {version!r} is not a release version')
+    if bases is not None and patch.get('base') != base:
+        raise Problem(f'patch says base {patch.get("base")!r}, not {base!r}')
+    to_stock = None
+    if args.to_stock:
+        to_stock = pathlib.Path(args.to_stock).read_bytes()
+        json.loads(to_stock)  # well-formed JSON, at least
     meta, body = parse_sidecar(pathlib.Path(args.notes).read_text(), args.notes)
     missing = [k for k in NOTES_KEYS if not meta.get(k)]
     if missing:
@@ -253,20 +312,24 @@ def publish(args):
         raise Problem('\n'.join(problems))
 
     folder = RELEASES / args.radio
-    folder.mkdir(parents=True, exist_ok=True)
-    stem = info['assetPrefix'] + version
+    stem = release_stem(info, version, base)
     dest = folder / f'{stem}.patch.json'
-    if dest.exists() and dest.read_bytes() != raw:
-        raise Problem(f'{dest.relative_to(ROOT)} is already published with different bytes; releases never change')
-    dest.write_bytes(raw)
+    back = folder / 'to-stock' / to_stock_name(info, base, version) if to_stock is not None else None
+    files = [(dest, raw)] + ([(back, to_stock)] if back is not None else [])
+    for path, data in files:  # refuse before writing either file
+        refuse_changed(path, data)
+    for path, data in files:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(data)
     sidecar = folder / f'{stem}.md'
     published = args.date
     if sidecar.exists():  # a re-run keeps the first publication date
         published = parse_sidecar(sidecar.read_text(), str(sidecar))[0].get('published') or published
+    stock = bases[base]['stockVersion'] if bases is not None else info['stockVersion']
     sidecar.write_text(render_sidecar({
-        'version': version, 'channel': channel_of(version), 'stock': info['stockVersion'],
+        'version': version, 'channel': channel_of(version), 'stock': stock, 'base': base,
         'published': published, 'summary': meta['summary'], 'verify': meta['verify'],
-    }, body))
+    }, body, sidecar_keys(info)))
 
     if args.docs:
         publish_docs(pathlib.Path(args.docs), args.radio, version)
@@ -285,6 +348,8 @@ def main():
     p.add_argument('--patch', required=True)
     p.add_argument('--notes', required=True, help='notes master with summary and verify front matter')
     p.add_argument('--docs', help='user docs for this release (its releases/ subfolder is skipped); see publish above')
+    p.add_argument('--base', help='stock base id, required for a radio with bases in radios.json, refused otherwise')
+    p.add_argument('--to-stock', help='the patch back to stock for this base, kept under releases/<radio>/to-stock/')
     p.add_argument('--date', default=datetime.datetime.now(datetime.timezone.utc).date().isoformat())
     args = ap.parse_args()
     try:
