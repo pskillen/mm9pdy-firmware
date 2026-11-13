@@ -11,6 +11,19 @@
     "assetPrefix": "dm32-fw-",
     "stockVersion": "v1.01.048"
   },
+  "baofeng-uv5rmini": {
+    "name": "Baofeng UV-5R Mini",
+    "patchName": "baofeng-uv5rmini-firmware",
+    "assetPrefix": "uv5rmini-fw-",
+    "bases": {
+      "nrf-v0.27": {
+        "layout": "L2",
+        "stockVersion": "v0.27 (NRF)",
+        "fileLabel": "nrf-v0.27-hw1.7",
+        "shows": "NRF, Firmware V0.27, Hardware V1.7"
+      }
+    }
+  },
   "retevis-rt95-head": {
     "name": "Retevis RT95 front panel (LCD)",
     "patchName": "retevis-rt95-firmware",

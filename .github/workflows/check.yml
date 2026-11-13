@@ -19,3 +19,4 @@ jobs:
         with:
           python-version: "3.13"
       - run: python3 -I tools/release_index.py check
+      - run: python3 -I tools/test_release_index.py
