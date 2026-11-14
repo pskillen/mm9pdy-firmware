@@ -1,13 +1,13 @@
 # Baofeng UV-5R Mini (MM9PDY)
 
-> **Release candidate docs: 1.0.0-rc.1** These pages describe a release candidate that is still being tested.
-
 A small, free modification of the Baofeng UV-5R Mini's own firmware. It adds zones (named groups of channels for
 each side of the radio), shows each side's zone on the idle screen, scans inside a zone, and names the build in Radio
 Info. Everything else works as the maker made it. It is written to the radio with
 [Codeplug Studio](https://codeplug.mm9pdy.net) and the radio's programming cable.
 
-This is for the **UV-5R Mini** only, not the UV-5RM or UV-5RH, which are different radios inside.
+Release 1.0.0 is for the **UV-5R Mini** with Firmware `V0.27`, Hardware `V1.7` and suffix `NRF` only.
+Check Firmware and Hardware in **MENU > Radio Info** and the suffix on the hold-8 power-on screen below. Other Minis
+are not supported yet; the UV-5RM and UV-5RH are different radios.
 
 ## What it does
 

@@ -1,6 +1,8 @@
 # Installing
 
-> **Release candidate docs: 1.0.0-rc.1** These pages describe a release candidate that is still being tested.
+Release 1.0.0 is for the **UV-5R Mini** with Firmware `V0.27`, Hardware `V1.7` and suffix `NRF` only.
+Check **MENU > Radio Info** for Firmware and Hardware, and the hold-8 power-on screen for the suffix. Other Minis
+are not supported yet.
 
 Steps marked *Not yet checked on a radio* are a plan, not a record. Steps marked *Checked on a radio once, with test
 builds* were done once, with test builds that differ from a release only in the build name. Do not rely on any of it
@@ -37,7 +39,7 @@ more than that.
    - A radio already running an MM9PDY build tells Studio which build it has, and Studio asks nothing.
    - A stock radio can't tell Studio its version, so Studio asks what Radio Info shows: pick the **Firmware** and
      **Hardware** lines from the lists, and confirm the suffix. Studio stops if they are not `V0.27`, `V1.7` and
-     `NRF`.
+     `NRF`. **Checked once:** Studio stopped for unsupported answers.
 5. **Checked on a radio once, with test builds.** Put the radio into update mode: switch it off, hold **PTT-A** and
    **=** together, and switch it on. Let go when the screen shows a computer picture and `UPDATE...`.
    If the red TX light comes on, or the normal screen appears, switch the radio off at once and try again.

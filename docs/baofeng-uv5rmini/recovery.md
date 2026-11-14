@@ -1,7 +1,5 @@
 # Recovery
 
-> **Release candidate docs: 1.0.0-rc.1** These pages describe a release candidate that is still being tested.
-
 **Not yet checked on a radio.** Every step below is a plan, not a record.
 
 ## The update stopped part way

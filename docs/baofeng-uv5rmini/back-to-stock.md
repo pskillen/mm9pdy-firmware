@@ -1,7 +1,5 @@
 # Back to stock
 
-> **Release candidate docs: 1.0.0-rc.1** These pages describe a release candidate that is still being tested.
-
 Steps marked *Not yet checked on a radio* are a plan, not a record.
 
 Going back puts the maker's own firmware (Firmware `V0.27`) back on the radio. It is there for emergencies, for

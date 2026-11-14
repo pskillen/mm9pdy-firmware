@@ -1,7 +1,5 @@
 # Zones
 
-> **Release candidate docs: 1.0.0-rc.1** These pages describe a release candidate that is still being tested.
-
 Zones let each side of the radio work with a named group of channels instead of all of them. With side A in a zone
 called "HOME", Up and Down on side A visit only HOME's channels, while side B can use another zone or all channels.
 
@@ -38,13 +36,16 @@ When you choose a zone, the side stays on its channel if that channel is in the 
 channel it last used in that zone since the radio was switched on, or to the zone's first channel. Choosing **All
 channels** keeps the channel. There is no voice prompt.
 
-The radio remembers each side's zone when it is switched off.
+**Checked on a radio with the 1.0.0 release candidate:** both sides returned to their zones and channels after a
+power cycle.
 
 The Zones item is not shown while the active side is in VFO (frequency) mode, or when the radio has no zones. The
 menu is then the same as the standard firmware's. In the Chinese menu the item and the zone names are shown in the
 same Latin letters.
 
 ## Seeing each side's zone
+
+**Checked on a radio with the 1.0.0 release candidate:** the zone line on both sides in NAME and FREQ modes.
 
 When the display mode (Program CH › CH-MDF) is **NAME**, the idle screen shows each side's zone in small letters
 just under the channel name: the zone's name, or **All channels** when the side is not in a zone. Like the channel
@@ -73,6 +74,9 @@ The screen is then the same as the standard firmware's.
   channel is put back in it.
 
 ## Scanning a zone
+
+**Checked on a radio with the 1.0.0 release candidate:** scan stopped on a zone channel with SCAN ADD, did not
+visit an outside channel, scanned a zone with no SCAN ADD channels, and kept the channel when stopped.
 
 When the active side is in a zone, a scan (started as usual, with the key set to scan) goes only through that
 zone's channels:
