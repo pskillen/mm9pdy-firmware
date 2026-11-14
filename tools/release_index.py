@@ -25,7 +25,7 @@ base (one exact stock build). Each base has a `layout`, a `stockVersion`, a `fil
 For such a radio a release is one row per version and base. Its files are <assetPrefix><version>-<fileLabel>
 .patch.json and .md; the sidecar carries `base: <id>`, its `stock` is that base's stockVersion, and the patch's own
 `base` must match. The row gains `layout` and `base`. --to-stock copies the base's patch back to stock to
-releases/<radio>/to-stock/<assetPrefix>to-stock-<fileLabel>-<version>.patch.json; that folder is not part of the index.
+releases/<radio>/to-stock/<assetPrefix>to-stock-<fileLabel>-<version>.patch.json; the row lists it when present.
 Published files never change: publishing different bytes under an existing name is refused.
 """
 
@@ -188,6 +188,7 @@ def build_index():
         bases = info.get('bases')
         keys = sidecar_keys(info)
         seen = set()
+        to_stock_files = set((folder / 'to-stock').glob('*.patch.json'))
         # Not recursive: releases/<radio>/to-stock/ holds the way back to stock, which is not a release.
         patches = sorted(folder.glob('*.patch.json'))
         sidecars = {p.name[:-len('.md')] for p in folder.glob('*.md')}
@@ -246,10 +247,27 @@ def build_index():
                 'summary': meta['summary'],
                 'verifyHint': meta['verify'],
                 'resultSha256': result_roles(patch),
+            }
+            if bases is not None:
+                back = folder / 'to-stock' / to_stock_name(info, base, version)
+                if back.is_file():
+                    back_rel = back.relative_to(ROOT).as_posix()
+                    back_raw = back.read_bytes()
+                    try:
+                        back_patch = json.loads(back_raw)
+                    except (ValueError, UnicodeDecodeError) as e:
+                        raise Problem(f'{back_rel}: invalid JSON: {e}') from e
+                    if isinstance(back_patch, dict) and 'base' in back_patch and back_patch['base'] != base:
+                        raise Problem(f'{back_rel}: patch says base {back_patch["base"]!r}, not {base!r}')
+                    row['toStock'] = {'path': back_rel, 'sha256': hashlib.sha256(back_raw).hexdigest()}
+                    to_stock_files.discard(back)
+            row |= {
                 'notesPath': f'releases/{radio}/{stem}.md',
                 'notes': body,
             }
             rows.append(row)
+        for orphan in sorted(to_stock_files):
+            raise Problem(f'{orphan.relative_to(ROOT)} has no matching release')
     rows.sort(key=lambda r: (r['radioId'], r['publishedOn'], [int(x) for x in re.findall(r'\d+', r['version'])]),
               reverse=True)
     rows.sort(key=lambda r: r['radioId'])

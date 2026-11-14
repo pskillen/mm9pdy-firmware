@@ -5,6 +5,7 @@ Each test runs the tool on a temporary copy of this repository, so nothing here 
 patches are synthetic: the right shape, made-up hashes.
 """
 
+import hashlib
 import json
 import pathlib
 import shutil
@@ -77,6 +78,9 @@ class ReleaseIndexTest(unittest.TestCase):
         self.tree = Tree()
         self.addCleanup(self.tree.tmp.cleanup)
         self.folder = self.tree.root / 'releases' / MINI
+        if self._testMethodName != 'test_build_leaves_todays_index_unchanged':
+            shutil.rmtree(self.folder)
+            self.ok(self.tree.run('build'))
 
     def ok(self, result):
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -115,10 +119,19 @@ class ReleaseIndexTest(unittest.TestCase):
         self.assertEqual(row['layout'], 'L2')
         self.assertEqual(row['base'], 'nrf-v0.27')
         self.assertEqual(row['resultSha256'], {'ufw': FAKE})
+        self.assertEqual(row['toStock'], {'path': back.relative_to(self.tree.root).as_posix(),
+                                          'sha256': hashlib.sha256(back.read_bytes()).hexdigest()})
+        self.assertEqual(list(row)[list(row).index('resultSha256') + 1], 'toStock')
         self.assertEqual(row['publishedOn'], '2026-11-20')
         self.assertEqual(list(row)[7:10], ['stockVersion', 'layout', 'base'])
         # Other radios' rows carry neither field.
-        self.assertFalse(any('layout' in r or 'base' in r for r in self.tree.index() if r['radioId'] != MINI))
+        self.assertFalse(any('layout' in r or 'base' in r or 'toStock' in r
+                             for r in self.tree.index() if r['radioId'] != MINI))
+
+    def test_row_without_to_stock_has_no_field(self):
+        self.ok(self.tree.publish('--base', 'nrf-v0.27'))
+        [row] = self.tree.mini_rows()
+        self.assertNotIn('toStock', row)
 
     def test_republishing_the_same_bytes_is_fine(self):
         back = self.tree.write('back.json', '{}\n')
@@ -136,17 +149,31 @@ class ReleaseIndexTest(unittest.TestCase):
                          [('1.0.0', 'nrf-v0.27', 'L2'), ('1.0.0', 'nrfb-v0.04', 'L1')])
 
     def test_to_stock_is_not_a_release(self):
-        """The release glob is not recursive: a patch under to-stock/ makes no row and needs no sidecar."""
+        """A to-stock patch belongs to a release and does not need its own sidecar."""
         self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{}\n')))
         (self.folder / 'to-stock' / 'stray.patch.json').write_text(mini_patch())
-        self.ok(self.tree.run('build'))
-        self.assertEqual(len(self.tree.mini_rows()), 1)
-        self.ok(self.tree.run('check'))
+        self.refused(self.tree.run('build'), 'stray.patch.json has no matching release')
+
+    def test_check_refuses_changed_or_missing_to_stock(self):
+        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{}\n')))
+        back = self.folder / 'to-stock' / 'uv5rmini-fw-to-stock-nrf-v0.27-hw1.7-1.0.0.patch.json'
+        back.write_text('{"changed": true}\n')
+        self.refused(self.tree.run('check'), 'releases.json is out of date')
+        back.unlink()
+        self.refused(self.tree.run('check'), 'releases.json is out of date')
+
+    def test_refuses_bad_to_stock_json_and_wrong_base(self):
+        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{}\n')))
+        back = self.folder / 'to-stock' / 'uv5rmini-fw-to-stock-nrf-v0.27-hw1.7-1.0.0.patch.json'
+        back.write_text('{bad')
+        self.refused(self.tree.run('check'), 'invalid JSON')
+        back.write_text('{"base": "wrong"}')
+        self.refused(self.tree.run('check'), "patch says base 'wrong'")
 
     def test_check_link_checks_pages_pointing_at_to_stock(self):
         self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{}\n')))
         docs = self.tree.root / 'docs' / MINI
-        docs.mkdir(parents=True)
+        docs.mkdir(parents=True, exist_ok=True)
         page = docs / 'README.md'
         page.write_text('# Mini\n\n[Back to stock](../../releases/baofeng-uv5rmini/to-stock/'
                         'uv5rmini-fw-to-stock-nrf-v0.27-hw1.7-1.0.0.patch.json)\n')
