@@ -33,7 +33,7 @@ radio's docs, especially going back to stock and recovery, before your first wri
 | Path | What it is |
 |---|---|
 | [releases/](releases) | One folder per radio. Each release is a `.patch.json` and a `.md` file with the same name: the release notes, with a short header (version, channel, stock version, date, summary, how to check it worked). A radio whose builds depend on the exact stock firmware has one release per stock base, with the base in the file name |
-| `releases/<radio>/to-stock/` | For such a radio, the patch back to each stock base, one per base and version. Not listed in the index |
+| `releases/<radio>/to-stock/` | For such a radio, the patch back to each stock base, one per base and version, listed alongside its release when available |
 | [releases.json](releases.json) | Index of every release, generated from `releases/`. This is what Codeplug Studio reads |
 | [docs/](docs) | The user guide for each radio |
 | [tools/release_index.py](tools/release_index.py) | Builds and checks the index, and publishes a release |
@@ -46,6 +46,14 @@ reaches the radio.
 **Release candidates** (versions ending `-rc.N`) are test builds. They have passed the project's emulator tests, but
 may not have been checked on a radio yet. Codeplug Studio lists them only when you ask it to. While a release candidate
 is in testing, its docs are in `docs/rc/<radio>/`; `docs/<radio>/` always describes the current release.
+
+## Release index format
+
+`releases.json` has `format: 1` and a `releases` array. Each row has `radioId`, `version`, `channel`, `patchName`,
+`patchFile`, `patchPath`, `patchSha256`, `stockVersion`, `publishedOn`, `summary`, `verifyHint`, `resultSha256`
+(result hashes by file role), `notesPath` and `notes`. Radios with stock bases also have `layout` and `base`.
+When a matching patch back to stock exists, the row has `toStock`, an object with its repository-relative `path`
+and the `sha256` of its file bytes. Paths are relative to the repository root.
 
 ## Reporting problems and asking for features
 
