@@ -296,6 +296,26 @@
       "notes": "The first full release of the DM-32UV firmware mods. It applies to stock firmware **v1.01.048** only.\n\nEverything not listed here behaves exactly as stock. The codeplug format is unchanged, so the official CPS and Codeplug\nStudio read and write the radio as before, and the radio keeps its channels and settings across the update.\n\n**What's in it**\n\n- **Zone scan:** pressing Scan on a channel with no scan list scans the whole current zone (up to 64 channels) instead\n  of refusing. While it walks, the screen shows the zone name and `Scanning...`. It resumes about 5 s after a signal\n  ends. Channels with a scan list scan it exactly as stock. Tested on the radio.\n- **Quick menu and light mode:** assign the stock **Flashlight** key function to a free programmable key (SK1, SK2 or\n  P1; avoid P2). It opens a small menu with one row, **Light mode**, which inverts the screen for easier reading in\n  daylight. The choice is saved across power-off. Tested on the radio.\n- **Position report retry:** a timed position report now waits for a GPS fix instead of being skipped until the next\n  interval, so a 300 s interval actually sends. Tested on the radio.\n- **GPS position padding fix:** Fixed Beacon position reports keep leading zeros in latitude and longitude, so APRS\n  gateways can read them. A community fix (IU2VTP). Emulator and byte checks only.\n- **Text fixes:** eleven English typos and wording fixes in menus and pop-ups, for example \"VerSions\" → \"Versions\" and\n  \"Nonsupport\" → \"Unsupported\". Checked byte for byte; not every screen has been looked at on the radio.\n\n**Known limits:** nuisance delete during a zone scan is untested, and the zone-scan hang time is fixed at about 5 s.\n\n**Checking it worked:** the radio does not show the mod's version yet. Device information still reads\n`DM32.01.L01.048`. Check that Scan on a channel with no scan list starts a zone scan.\n\n**Going back to stock:** flash stock v1.01.048 from this page, or use the official CPS.\n"
     },
     {
+      "radioId": "baofeng-uv5rmini",
+      "version": "1.0.0-rc.1",
+      "channel": "rc",
+      "patchName": "baofeng-uv5rmini-firmware",
+      "patchFile": "uv5rmini-fw-1.0.0-rc.1-nrf-v0.27-hw1.7.patch.json",
+      "patchPath": "releases/baofeng-uv5rmini/uv5rmini-fw-1.0.0-rc.1-nrf-v0.27-hw1.7.patch.json",
+      "patchSha256": "c728cd409e15645376924efcd9b1046bec1571c4e4bf2f7ffee358f9a157d465",
+      "stockVersion": "v0.27 (NRF)",
+      "layout": "L2",
+      "base": "nrf-v0.27",
+      "publishedOn": "2026-11-14",
+      "summary": "A 1.0.0 release candidate, the first MM9PDY build for the UV-5R Mini. Zones for each side, the zone under the channel name, scanning inside a zone, and the build name in Radio Info.",
+      "verifyHint": "After the radio restarts, Menu > Radio Info shows \"mm9pdy-L2-1.0.0-rc.1\" on its fourth row.",
+      "resultSha256": {
+        "ufw": "9b8ce8e38ed20274b6f8455a218ee99be7a73c9fe00920e0fab43787c61d6993"
+      },
+      "notesPath": "releases/baofeng-uv5rmini/uv5rmini-fw-1.0.0-rc.1-nrf-v0.27-hw1.7.md",
+      "notes": "A release candidate for 1.0.0, for testing. It is only for UV-5R Mini radios that show `5RMINI NRF` on the hold-8 power-on screen and `Firmware:V0.27` and `Hardware:V1.7` in Radio Info. A radio with any other combination is not supported, and Codeplug Studio writes nothing to it.\n\n**What's new**\n\n- **Zones:** up to 24 named groups of channels, written with the codeplug. Each side chooses its own zone from the menu (MENU, then UP to **Zones A** or **Zones B**), and Up and Down then step only through that zone's channels. Typing a channel number still reaches any channel.\n- **Zone line:** in NAME display mode, the idle screen shows each side's zone in small letters under the channel name.\n- **Zone scan:** a scan in a zone visits only that zone's channels: those with SCAN ADD on, or all of them when none has it.\n- **Build name:** the power-on screen and the fourth row of Radio Info show the build name.\n- A codeplug with no zones works exactly as the stock firmware does.\n\n**How far it has been checked:** everything in this build passes in an emulator. On a radio, once, with test builds that differ only in the build name: the install from Codeplug Studio, the build name on the power-on screen and in Radio Info, and zones on both sides. Going back to stock, carrying on after a cut update, and writing the same build again have not been tried on a radio yet.\n\n**Checking it worked:** after the radio restarts, Menu > Radio Info shows `mm9pdy-L2-1.0.0-rc.1` on its fourth row. The Firmware and Hardware rows are unchanged.\n\n**Going back to stock:** use **Back to stock** in Codeplug Studio's firmware flasher, with the to-stock file published with this release and your stock firmware file. It is meant for emergencies.\n"
+    },
+    {
       "radioId": "retevis-rt95-head",
       "version": "1.1.3",
       "channel": "final",
