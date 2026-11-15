@@ -1,5 +1,9 @@
 # Installing
 
+<!-- variant-status:start -->
+> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.0.0. NRFB, Firmware V0.04, Hardware V1.7: no final release; release candidate 1.0.0-rc.1.
+<!-- variant-status:end -->
+
 Release 1.0.0 is for the **UV-5R Mini** with Firmware `V0.27`, Hardware `V1.7` and suffix `NRF` only.
 Check **MENU > Radio Info** for Firmware and Hardware, and the hold-8 power-on screen for the suffix. Other Minis
 are not supported yet.

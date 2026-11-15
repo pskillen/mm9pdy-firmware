@@ -1,5 +1,9 @@
 # Back to stock
 
+<!-- variant-status:start -->
+> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.0.0. NRFB, Firmware V0.04, Hardware V1.7: no final release; release candidate 1.0.0-rc.1.
+<!-- variant-status:end -->
+
 Steps marked *Not yet checked on a radio* are a plan, not a record.
 
 Going back puts the maker's own firmware (Firmware `V0.27`) back on the radio. It is there for emergencies, for

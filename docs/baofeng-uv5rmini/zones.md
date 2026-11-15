@@ -1,5 +1,9 @@
 # Zones
 
+<!-- variant-status:start -->
+> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.0.0. NRFB, Firmware V0.04, Hardware V1.7: no final release; release candidate 1.0.0-rc.1.
+<!-- variant-status:end -->
+
 Zones let each side of the radio work with a named group of channels instead of all of them. With side A in a zone
 called "HOME", Up and Down on side A visit only HOME's channels, while side B can use another zone or all channels.
 
