@@ -7,8 +7,8 @@
   release_index.py publish --radio R --patch P --notes N [--docs D] [--date YYYY-MM-DD]
                            [--base B] [--to-stock T]
                                          add one release, then build and check. With --docs, a final replaces
-                                         docs/<radio>/ (and drops release-candidate docs it has caught up with); a
-                                         release candidate replaces docs/rc/<radio>/, each page under a banner.
+                                         docs/<radio>/; a release candidate uses docs/rc/<radio>/. Based radios
+                                         share one manual, with availability per base and RC cleanup across bases.
                                          --base names the stock base (required for a radio with bases, refused
                                          otherwise); --to-stock also publishes that base's patch back to stock.
                                          Called by the private firmware repos' release workflows.
@@ -116,6 +116,68 @@ def publish_docs(src, radio, version):
             page.write_text(f'{title}\n\n{banner}{rest.lstrip(chr(10))}')
         else:
             page.write_text(banner + text)
+
+
+STATUS = re.compile(r'<!-- variant-status:start -->.*?<!-- variant-status:end -->\n*', re.S)
+
+
+def latest_by_base(rows, channel):
+    latest = {}
+    for row in rows:
+        if row['channel'] == channel:
+            base = row['base']
+            if base not in latest or version_key(row['version']) > version_key(latest[base]):
+                latest[base] = row['version']
+    return latest
+
+
+def refresh_variant_status(radio, rows):
+    finals = latest_by_base(rows, 'final')
+    candidates = latest_by_base(rows, 'rc')
+    lines = []
+    for base, info in RADIOS[radio]['bases'].items():
+        final, rc = finals.get(base), candidates.get(base)
+        text = f"{info['shows']}: latest release {final}" if final else f"{info['shows']}: no final release"
+        if rc and (not final or version_key(rc) > version_key(final)):
+            text += f'; release candidate {rc}'
+        lines.append(text + '.')
+    status = '<!-- variant-status:start -->\n> **Availability by radio:** ' + ' '.join(lines) + \
+             '\n<!-- variant-status:end -->\n\n'
+    for root in (DOCS / radio, RC_DOCS / radio):
+        for page in sorted(root.rglob('*.md')) if root.exists() else []:
+            text = STATUS.sub('', page.read_text())
+            if text.startswith('# '):
+                title, _, rest = text.partition('\n')
+                text = f'{title}\n\n{status}{rest.lstrip(chr(10))}'
+            else:
+                text = status + text
+            page.write_text(text)
+
+
+def publish_based_docs(src, radio, version, previous, rows):
+    """Keep one shared manual at the newest version, with per-base availability on every page."""
+    if not (src / 'README.md').is_file():
+        raise Problem(f'{src} has no README.md')
+    finals_before = latest_by_base(previous, 'final')
+    rcs_before = latest_by_base(previous, 'rc')
+    rcs_before = {base: rc for base, rc in rcs_before.items()
+                  if base not in finals_before or version_key(rc) > version_key(finals_before[base])}
+    finals = latest_by_base(rows, 'final')
+    rcs = latest_by_base(rows, 'rc')
+    outstanding = {base: rc for base, rc in rcs.items()
+                   if base not in finals or version_key(rc) > version_key(finals[base])}
+    if channel_of(version) == 'final':
+        if not finals_before or version_key(version) >= max(map(version_key, finals_before.values())):
+            target = DOCS / radio
+            if target.exists():
+                shutil.rmtree(target)
+            shutil.copytree(src, target, ignore=shutil.ignore_patterns('releases'))
+    elif version in outstanding.values() and (not rcs_before or
+            version_key(version) >= max(map(version_key, rcs_before.values()))):
+        publish_docs(src, radio, version)
+    if not outstanding and (RC_DOCS / radio).exists():
+        shutil.rmtree(RC_DOCS / radio)
+    refresh_variant_status(radio, rows)
 
 
 def parse_sidecar(text, where):
@@ -268,7 +330,7 @@ def build_index():
             rows.append(row)
         for orphan in sorted(to_stock_files):
             raise Problem(f'{orphan.relative_to(ROOT)} has no matching release')
-    rows.sort(key=lambda r: (r['radioId'], r['publishedOn'], [int(x) for x in re.findall(r'\d+', r['version'])]),
+    rows.sort(key=lambda r: (r['radioId'], version_key(r['version']), r['publishedOn']),
               reverse=True)
     rows.sort(key=lambda r: r['radioId'])
     return {'format': INDEX_FORMAT, 'releases': rows}
@@ -331,10 +393,18 @@ def publish(args):
         raise Problem(f'patch version {version!r} is not a release version')
     if bases is not None and patch.get('base') != base:
         raise Problem(f'patch says base {patch.get("base")!r}, not {base!r}')
+    if patch.get('name') != info['patchName']:
+        raise Problem(f'patch name {patch.get("name")!r} is not this radio\'s')
+    if args.docs and not (pathlib.Path(args.docs) / 'README.md').is_file():
+        raise Problem(f'{args.docs} has no README.md')
+    previous = [r for r in build_index()['releases'] if r['radioId'] == args.radio]
     to_stock = None
     if args.to_stock:
         to_stock = pathlib.Path(args.to_stock).read_bytes()
-        json.loads(to_stock)  # well-formed JSON, at least
+        back_patch = json.loads(to_stock)
+        back_base = back_patch.get('base') if isinstance(back_patch, dict) else None
+        if back_base != base:
+            raise Problem(f'to-stock patch says base {back_base!r}, not {base!r}')
     meta, body = parse_sidecar(pathlib.Path(args.notes).read_text(), args.notes)
     missing = [k for k in NOTES_KEYS if not meta.get(k)]
     if missing:
@@ -350,23 +420,32 @@ def publish(args):
     files = [(dest, raw)] + ([(back, to_stock)] if back is not None else [])
     for path, data in files:  # refuse before writing either file
         refuse_changed(path, data)
+    sidecar = folder / f'{stem}.md'
+    published = args.date
+    if sidecar.exists():
+        published = parse_sidecar(sidecar.read_text(), str(sidecar))[0].get('published') or published
+    stock = bases[base]['stockVersion'] if bases is not None else info['stockVersion']
+    sidecar_text = render_sidecar({
+        'version': version, 'channel': channel_of(version), 'stock': stock, 'base': base,
+        'published': published, 'summary': meta['summary'], 'verify': meta['verify'],
+    }, body, sidecar_keys(info))
+    refuse_changed(sidecar, sidecar_text.encode())
     for path, data in files:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(data)
-    sidecar = folder / f'{stem}.md'
-    published = args.date
-    if sidecar.exists():  # a re-run keeps the first publication date
-        published = parse_sidecar(sidecar.read_text(), str(sidecar))[0].get('published') or published
-    stock = bases[base]['stockVersion'] if bases is not None else info['stockVersion']
-    sidecar.write_text(render_sidecar({
-        'version': version, 'channel': channel_of(version), 'stock': stock, 'base': base,
-        'published': published, 'summary': meta['summary'], 'verify': meta['verify'],
-    }, body, sidecar_keys(info)))
+    sidecar.write_text(sidecar_text)
 
+    index = build_index()
+    rows = [r for r in index['releases'] if r['radioId'] == args.radio]
     if args.docs:
-        publish_docs(pathlib.Path(args.docs), args.radio, version)
+        if bases is not None:
+            publish_based_docs(pathlib.Path(args.docs), args.radio, version, previous, rows)
+        else:
+            publish_docs(pathlib.Path(args.docs), args.radio, version)
+    elif bases is not None:
+        refresh_variant_status(args.radio, rows)
 
-    INDEX.write_text(serialise(build_index()))
+    INDEX.write_text(serialise(index))
     print(f'published {args.radio} {version}')
 
 

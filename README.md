@@ -18,6 +18,9 @@ scanning within a zone and the build name in Radio Info. Codeplug Studio's **Bac
 to-stock file, so you only need to bring your stock firmware file. Read the [user guide](docs/baofeng-uv5rmini/README.md)
 before you flash.
 
+The V0.04 NRFB variant is registered for future releases; no firmware release for it is available here yet. The
+Mini has one shared user guide: when variants have different release versions, it identifies the latest for each.
+
 **Retevis RT95** (also sold as the AnyTone AT-778UV): the mods change the front panel only; the radio board's
 firmware stays as the maker made it. Features: up to 32 named zones, written with Codeplug Studio's *Retevis RT95 VOX
 (MM9PDY modded firmware)* target and opened with a key set to DIR (the radio shows ZON), and 12-character channel
