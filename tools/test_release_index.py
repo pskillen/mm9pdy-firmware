@@ -101,13 +101,13 @@ class ReleaseIndexTest(unittest.TestCase):
     # A Mini release
 
     def test_mini_release_names_row_and_to_stock(self):
-        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{"x": 1}\n')))
+        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{"base": "nrf-v0.27", "x": 1}\n')))
         stem = 'uv5rmini-fw-1.0.0-nrf-v0.27-hw1.7'
         self.assertTrue((self.folder / f'{stem}.patch.json').is_file())
         sidecar = (self.folder / f'{stem}.md').read_text()
         self.assertIn('\nstock: v0.27 (NRF)\nbase: nrf-v0.27\n', sidecar)
         back = self.folder / 'to-stock' / 'uv5rmini-fw-to-stock-nrf-v0.27-hw1.7-1.0.0.patch.json'
-        self.assertEqual(back.read_text(), '{"x": 1}\n')
+        self.assertEqual(back.read_text(), '{"base": "nrf-v0.27", "x": 1}\n')
 
         [row] = self.tree.mini_rows()
         self.assertEqual(row['version'], '1.0.0')
@@ -134,28 +134,81 @@ class ReleaseIndexTest(unittest.TestCase):
         self.assertNotIn('toStock', row)
 
     def test_republishing_the_same_bytes_is_fine(self):
-        back = self.tree.write('back.json', '{}\n')
+        back = self.tree.write('back.json', '{"base": "nrf-v0.27"}\n')
         self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', back))
         self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', back, date='2026-12-01'))
         [row] = self.tree.mini_rows()
         self.assertEqual(row['publishedOn'], '2026-11-20')
 
     def test_two_bases_of_one_version_are_two_rows(self):
-        self.tree.add_base('nrfb-v0.04', 'L1', 'v0.04 (NRFB)', 'nrfb-v0.04-hw1.4')
         self.ok(self.tree.publish('--base', 'nrf-v0.27'))
         self.ok(self.tree.publish('--base', 'nrfb-v0.04', patch=mini_patch(base='nrfb-v0.04')))
         rows = self.tree.mini_rows()
         self.assertEqual(sorted((r['version'], r['base'], r['layout']) for r in rows),
                          [('1.0.0', 'nrf-v0.27', 'L2'), ('1.0.0', 'nrfb-v0.04', 'L1')])
 
+    def test_shared_docs_follow_versions_and_keep_other_base_candidate(self):
+        docs = self.tree.inputs / 'docs'
+        docs.mkdir()
+        page = docs / 'README.md'
+        (docs / 'install.md').write_text('# Install\n')
+        page.write_text('# Mini\n\nNew features.\n')
+        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--docs', str(docs),
+                                  patch=mini_patch('1.0.1-rc.2')))
+        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--docs', str(docs),
+                                  patch=mini_patch('1.0.1-rc.10')))
+        rc = self.tree.root / 'docs' / 'rc' / MINI / 'README.md'
+        self.assertIn('Release candidate docs: 1.0.1-rc.10', rc.read_text())
+        page.write_text('# Mini\n\nOlder features.\n')
+        self.ok(self.tree.publish('--base', 'nrfb-v0.04', '--docs', str(docs),
+                                  patch=mini_patch('1.0.0', 'nrfb-v0.04')))
+        self.assertIn('release candidate 1.0.1-rc.10', rc.read_text())
+        page.write_text('# Mini\n\nNew features.\n')
+        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--docs', str(docs), patch=mini_patch('1.0.1')))
+        self.assertFalse(rc.exists())
+        stable = self.tree.root / 'docs' / MINI / 'README.md'
+        self.assertIn('Firmware V0.04, Hardware V1.7: latest release 1.0.0', stable.read_text())
+        self.assertIn('Firmware V0.27, Hardware V1.7: latest release 1.0.1', stable.read_text())
+        page.write_text('# Mini\n\nStale content.\n')
+        self.ok(self.tree.publish('--base', 'nrfb-v0.04', '--docs', str(docs),
+                                  patch=mini_patch('0.9.0', 'nrfb-v0.04')))
+        self.assertIn('New features.', stable.read_text())
+        self.assertNotIn('Stale content.', stable.read_text())
+        self.assertEqual([r['version'] for r in self.tree.mini_rows() if r['base'] == 'nrf-v0.27'],
+                         ['1.0.1', '1.0.1-rc.10', '1.0.1-rc.2'])
+        before = (self.tree.root / 'releases.json').read_bytes()
+        self.ok(self.tree.run('build'))
+        self.assertEqual(before, (self.tree.root / 'releases.json').read_bytes())
+
+    def test_wrong_to_stock_rejected_before_writing(self):
+        back = self.tree.write('back.json', '{"base": "nrfb-v0.04"}\n')
+        self.refused(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', back), 'to-stock patch says base')
+        self.assertFalse(self.folder.exists())
+
+    def test_final_does_not_remove_another_bases_candidate(self):
+        docs = self.tree.inputs / 'docs'
+        docs.mkdir()
+        (docs / 'README.md').write_text('# Mini\n')
+        (docs / 'install.md').write_text('# Install\n')
+        self.ok(self.tree.publish('--base', 'nrfb-v0.04', '--docs', str(docs),
+                                  patch=mini_patch('1.0.0-rc.1', 'nrfb-v0.04')))
+        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--docs', str(docs), patch=mini_patch('1.0.1')))
+        rc = self.tree.root / 'docs' / 'rc' / MINI / 'README.md'
+        self.assertIn('release candidate 1.0.0-rc.1', rc.read_text())
+
+    def test_existing_notes_are_immutable(self):
+        self.ok(self.tree.publish('--base', 'nrf-v0.27'))
+        self.refused(self.tree.publish('--base', 'nrf-v0.27', notes=NOTES.replace('First release.', 'Changed.')),
+                     'releases never change')
+
     def test_to_stock_is_not_a_release(self):
         """A to-stock patch belongs to a release and does not need its own sidecar."""
-        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{}\n')))
+        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{"base": "nrf-v0.27"}\n')))
         (self.folder / 'to-stock' / 'stray.patch.json').write_text(mini_patch())
         self.refused(self.tree.run('build'), 'stray.patch.json has no matching release')
 
     def test_check_refuses_changed_or_missing_to_stock(self):
-        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{}\n')))
+        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{"base": "nrf-v0.27"}\n')))
         back = self.folder / 'to-stock' / 'uv5rmini-fw-to-stock-nrf-v0.27-hw1.7-1.0.0.patch.json'
         back.write_text('{"changed": true}\n')
         self.refused(self.tree.run('check'), 'releases.json is out of date')
@@ -163,7 +216,7 @@ class ReleaseIndexTest(unittest.TestCase):
         self.refused(self.tree.run('check'), 'releases.json is out of date')
 
     def test_refuses_bad_to_stock_json_and_wrong_base(self):
-        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{}\n')))
+        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{"base": "nrf-v0.27"}\n')))
         back = self.folder / 'to-stock' / 'uv5rmini-fw-to-stock-nrf-v0.27-hw1.7-1.0.0.patch.json'
         back.write_text('{bad')
         self.refused(self.tree.run('check'), 'invalid JSON')
@@ -171,7 +224,7 @@ class ReleaseIndexTest(unittest.TestCase):
         self.refused(self.tree.run('check'), "patch says base 'wrong'")
 
     def test_check_link_checks_pages_pointing_at_to_stock(self):
-        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{}\n')))
+        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{"base": "nrf-v0.27"}\n')))
         docs = self.tree.root / 'docs' / MINI
         docs.mkdir(parents=True, exist_ok=True)
         page = docs / 'README.md'
@@ -193,7 +246,7 @@ class ReleaseIndexTest(unittest.TestCase):
         self.refused(self.tree.publish('--base', 'nrf-v0.27', radio='baofeng-dm32uv'), 'have no base')
 
     def test_refuses_to_stock_on_a_radio_without_bases(self):
-        self.refused(self.tree.publish('--to-stock', self.tree.write('back.json', '{}\n'), radio='baofeng-dm32uv'),
+        self.refused(self.tree.publish('--to-stock', self.tree.write('back.json', '{"base": "nrf-v0.27"}\n'), radio='baofeng-dm32uv'),
                      'no to-stock')
 
     def test_refuses_a_patch_on_another_base(self):
@@ -201,7 +254,6 @@ class ReleaseIndexTest(unittest.TestCase):
                      "patch says base 'nrfb-v0.04'")
 
     def test_build_refuses_a_sidecar_base_that_disagrees_with_the_patch(self):
-        self.tree.add_base('nrfb-v0.04', 'L1', 'v0.04 (NRFB)', 'nrfb-v0.04-hw1.4')
         self.ok(self.tree.publish('--base', 'nrf-v0.27'))
         sidecar = self.folder / 'uv5rmini-fw-1.0.0-nrf-v0.27-hw1.7.md'
         sidecar.write_text(sidecar.read_text().replace('stock: v0.27 (NRF)\nbase: nrf-v0.27',
@@ -237,11 +289,11 @@ class ReleaseIndexTest(unittest.TestCase):
         self.refused(self.tree.publish('--base', 'nrf-v0.27', patch=mini_patch(extra=1)), 'releases never change')
 
     def test_refuses_changed_to_stock_bytes(self):
-        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{}\n')))
-        self.refused(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '[]\n')),
+        self.ok(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{"base": "nrf-v0.27"}\n')))
+        self.refused(self.tree.publish('--base', 'nrf-v0.27', '--to-stock', self.tree.write('back.json', '{"base": "nrf-v0.27", "changed": true}\n')),
                      'to-stock/uv5rmini-fw-to-stock-nrf-v0.27-hw1.7-1.0.0.patch.json is already published')
         back = self.folder / 'to-stock' / 'uv5rmini-fw-to-stock-nrf-v0.27-hw1.7-1.0.0.patch.json'
-        self.assertEqual(back.read_text(), '{}\n')
+        self.assertEqual(back.read_text(), '{"base": "nrf-v0.27"}\n')
 
     def test_leaks(self):
         page = self.tree.root / 'docs' / 'leak.md'

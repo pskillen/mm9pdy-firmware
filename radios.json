@@ -21,6 +21,12 @@
         "stockVersion": "v0.27 (NRF)",
         "fileLabel": "nrf-v0.27-hw1.7",
         "shows": "NRF, Firmware V0.27, Hardware V1.7"
+      },
+      "nrfb-v0.04": {
+        "layout": "L1",
+        "stockVersion": "v0.04 (NRFB)",
+        "fileLabel": "nrfb-v0.04-hw1.7",
+        "shows": "NRFB, Firmware V0.04, Hardware V1.7"
       }
     }
   },

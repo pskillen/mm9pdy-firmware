@@ -83,6 +83,26 @@
     },
     {
       "radioId": "anytone-at-d890uv",
+      "version": "1.2.1",
+      "channel": "final",
+      "patchName": "anytone-d890-firmware",
+      "patchFile": "d890-fw-1.2.1.patch.json",
+      "patchPath": "releases/anytone-at-d890uv/d890-fw-1.2.1.patch.json",
+      "patchSha256": "a442928ca98e8cde68ce2793f125607d77b56b9d8a64bdebfb9bc6932d71a8fa",
+      "stockVersion": "V1.05 (20260521)",
+      "publishedOn": "2026-10-27",
+      "summary": "S-meter and channel-distance fixes, Busy Lock following the timeslot in use, and two new Bluetooth menu rows (knob volume on/off, internal mic with a headset).",
+      "verifyHint": "After the radio restarts, Device Info > Mod Ver shows \"mm9pdy-1.2.1\".",
+      "resultSha256": {
+        "cdd": "4b8e480993f882b18692d358abd4ac30727509909802da7fdf76c331083a44f2",
+        "cdi": "fec93404bb0b10e245987503c0c32a7db99834b5edd2e28973158dff9d4294ad",
+        "spi": "789aeab2c1054277b8bc876114433b6b02241acc1a4631e1efa735b808b4d1d8"
+      },
+      "notesPath": "releases/anytone-at-d890uv/d890-fw-1.2.1.md",
+      "notes": "The 1.2.1 release of the AT-D890UV firmware mods. It applies to the stock **V1.05** package (20260521) only.\n\nIt is the same build as release candidate 1.2.1-rc.1, apart from the release name, and rc.1 passed its radio check. Everything in 1.2.0 is also in this build.\n\n**What's fixed since 1.2.0**\n\n- **S-meter on the air band:** on the air band (108–136 MHz) the signal bar is no longer drawn. It used to stay on screen, frozen at its last reading. The full-screen S-meter says it cannot measure there. Leaving the air band brings the bar back with a fresh reading.\n- **Channel distance:** the text is no longer cut off at the right edge. The compass point is drawn whole, for example `992km NW` and `9.9mi NW`, where before the last letter was missing or cut.\n- **Busy Lock follows the timeslot in use:** after `*`, or on a talk group with its own timeslot, Busy Lock checks the slot the radio is actually using, not the channel's programmed slot. Before, on a digital repeater channel it could refuse to transmit because the other slot was busy, and let you key up over a call on your own slot.\n\n**What's new since 1.2.0**\n\n- **BT Knob Vol:** Main Menu > BT has a new row, **BT Knob Vol** (On or Off). On is the default and works as before. Off gives stock behaviour: the volume knob no longer changes the headset volume, and the headset keeps the Bluetooth speaker-gain value from the CPS or the Bluetooth menu. With a headset connected the change applies at once.\n- **BT Int Mic:** Main Menu > BT has a new last row, **BT Int Mic** (Off or On). Off is the default and is stock. On means the radio's own PTT transmits from the radio's microphone (or the hand microphone) while a Bluetooth headset is connected. The headset's PTT button and VOX still use the headset's microphone. The first PTT you press decides the microphone for the whole transmission. The emergency alarm's voice still uses the headset microphone, as stock.\n\n**Known limits**\n\n- The new Busy Lock behaviour hasn't been tried on air yet.\n- The sub PTT and the hand microphone's PTT are expected to behave like the main PTT with BT Int Mic, but haven't been tried on a radio.\n- Busy Lock and the heard-call record are fixed. Other places where the radio might still use the channel's programmed timeslot instead of the slot in use are being looked at for a later release.\n- The volume ranges' loudness steps are first values and may change in a later release.\n\n**Checking it worked:** after the radio restarts, Device Info > Mod Ver shows `mm9pdy-1.2.1`.\n\n**Going back to stock:** flash stock V1.05 from this page, or use the official CPS.\n"
+    },
+    {
+      "radioId": "anytone-at-d890uv",
       "version": "1.2.1-rc.1",
       "channel": "rc",
       "patchName": "anytone-d890-firmware",
@@ -103,23 +123,23 @@
     },
     {
       "radioId": "anytone-at-d890uv",
-      "version": "1.2.1",
+      "version": "1.2.0",
       "channel": "final",
       "patchName": "anytone-d890-firmware",
-      "patchFile": "d890-fw-1.2.1.patch.json",
-      "patchPath": "releases/anytone-at-d890uv/d890-fw-1.2.1.patch.json",
-      "patchSha256": "a442928ca98e8cde68ce2793f125607d77b56b9d8a64bdebfb9bc6932d71a8fa",
+      "patchFile": "d890-fw-1.2.0.patch.json",
+      "patchPath": "releases/anytone-at-d890uv/d890-fw-1.2.0.patch.json",
+      "patchSha256": "94ffa65cab1cb930dd3f0eb6f2516a5e72a113fe50b80031ab51ad42b579c332",
       "stockVersion": "V1.05 (20260521)",
-      "publishedOn": "2026-10-27",
-      "summary": "S-meter and channel-distance fixes, Busy Lock following the timeslot in use, and two new Bluetooth menu rows (knob volume on/off, internal mic with a headset).",
-      "verifyHint": "After the radio restarts, Device Info > Mod Ver shows \"mm9pdy-1.2.1\".",
+      "publishedOn": "2026-10-26",
+      "summary": "Channel distance, an S-meter with a spectrum and a signal history, a zone-scan resume time, volume ranges with a volume bar, timeslot fixes, and a new single-display layout.",
+      "verifyHint": "After the radio restarts, Device Info > Mod Ver shows \"mm9pdy-1.2.0\".",
       "resultSha256": {
-        "cdd": "4b8e480993f882b18692d358abd4ac30727509909802da7fdf76c331083a44f2",
-        "cdi": "fec93404bb0b10e245987503c0c32a7db99834b5edd2e28973158dff9d4294ad",
-        "spi": "789aeab2c1054277b8bc876114433b6b02241acc1a4631e1efa735b808b4d1d8"
+        "cdd": "bfd1e71fa5c945b22c1d9f4513754ce72c3a0d8b891a4dc793e1a6484d096029",
+        "cdi": "f48b0d1374d78acec08067f143d5646734fe0af30ddce8377c387001becc9e79",
+        "spi": "b7d713b004e1bbd708192633dcdc2a72da80e6a272bc35870d4067ee26cb14ab"
       },
-      "notesPath": "releases/anytone-at-d890uv/d890-fw-1.2.1.md",
-      "notes": "The 1.2.1 release of the AT-D890UV firmware mods. It applies to the stock **V1.05** package (20260521) only.\n\nIt is the same build as release candidate 1.2.1-rc.1, apart from the release name, and rc.1 passed its radio check. Everything in 1.2.0 is also in this build.\n\n**What's fixed since 1.2.0**\n\n- **S-meter on the air band:** on the air band (108–136 MHz) the signal bar is no longer drawn. It used to stay on screen, frozen at its last reading. The full-screen S-meter says it cannot measure there. Leaving the air band brings the bar back with a fresh reading.\n- **Channel distance:** the text is no longer cut off at the right edge. The compass point is drawn whole, for example `992km NW` and `9.9mi NW`, where before the last letter was missing or cut.\n- **Busy Lock follows the timeslot in use:** after `*`, or on a talk group with its own timeslot, Busy Lock checks the slot the radio is actually using, not the channel's programmed slot. Before, on a digital repeater channel it could refuse to transmit because the other slot was busy, and let you key up over a call on your own slot.\n\n**What's new since 1.2.0**\n\n- **BT Knob Vol:** Main Menu > BT has a new row, **BT Knob Vol** (On or Off). On is the default and works as before. Off gives stock behaviour: the volume knob no longer changes the headset volume, and the headset keeps the Bluetooth speaker-gain value from the CPS or the Bluetooth menu. With a headset connected the change applies at once.\n- **BT Int Mic:** Main Menu > BT has a new last row, **BT Int Mic** (Off or On). Off is the default and is stock. On means the radio's own PTT transmits from the radio's microphone (or the hand microphone) while a Bluetooth headset is connected. The headset's PTT button and VOX still use the headset's microphone. The first PTT you press decides the microphone for the whole transmission. The emergency alarm's voice still uses the headset microphone, as stock.\n\n**Known limits**\n\n- The new Busy Lock behaviour hasn't been tried on air yet.\n- The sub PTT and the hand microphone's PTT are expected to behave like the main PTT with BT Int Mic, but haven't been tried on a radio.\n- Busy Lock and the heard-call record are fixed. Other places where the radio might still use the channel's programmed timeslot instead of the slot in use are being looked at for a later release.\n- The volume ranges' loudness steps are first values and may change in a later release.\n\n**Checking it worked:** after the radio restarts, Device Info > Mod Ver shows `mm9pdy-1.2.1`.\n\n**Going back to stock:** flash stock V1.05 from this page, or use the official CPS.\n"
+      "notesPath": "releases/anytone-at-d890uv/d890-fw-1.2.0.md",
+      "notes": "The 1.2.0 release of the AT-D890UV firmware mods. It applies to the stock **V1.05** package (20260521) only.\n\nIt is the same build as release candidate 1.2.0-rc.4, apart from the release name, and rc.4 passed its radio check. Everything in 1.1.0 is also in this build.\n\n**What's new since 1.1.0**\n\n- **Channel distance:** the channel screen shows how far away the current memory channel's site is, and in which direction, from the radio's GPS fix, for example `850m N` or `4.3km NE`. It needs channel positions written by Codeplug Studio's **MM9PDY** target, GPS on and a recent fix.\n- **Single display:** one 3-line layout for analogue and digital channels: the channel name, then the talk group or receive frequency, then the zone name on a small line underneath. In the dual display the sub side's line shows its own `Talk group / Zone`.\n- **S-meter:** Main Menu > **S-Meter** opens the screens first, then the settings.\n  - A signal bar on the channel screen, coloured by level, with a raw, dBm or S-unit reading.\n  - A full-screen meter with min / max / average and a difference mode for comparing antennas.\n  - A **spectrum** that sweeps the receiver around the channel and shows signals as peaks at their own frequency.\n  - A **signal history** that plots the channel's level over time, like a heart monitor.\n  - One fixed colour scale everywhere, so a colour always means the same strength.\n- **Zone scan resume time:** Main Menu > Scan > **Zone scan resume** (0.5 s, 1 s, 2 s, 5 s or 10 s; default 5 s) sets how long a zone scan waits on a channel after the activity ends, and after you transmit, before it carries on. Before, it could carry on after a fraction of a second.\n- **Heard-call popup:** a zone scan that holds on a DMR call shows who and which talk group. **Scan** (Zone / List) and **Scan popup** are rows of Main Menu > Scan.\n- **Timeslots:** the T1 / T2 badge shows the slot in use, a short `*` always switches it, and a Slot Switch key does the same and saves it into the channel.\n- **Volume:** **Vol Range** (Stock, Indoor, Outdoor, Full) changes how the knob maps to loudness, with true silence at the bottom of a range. An optional volume bar shows the level and range when you turn the knob; press **Menu** on it to step the range. Both settings are rows of Settings > Radio Set > Voice Func. With a Bluetooth headset connected, the knob sets the headset's volume.\n- **Quick filters:** **Tone match: On / Off** (Off opens the squelch of a toned analogue channel on any signal) and **To VFO: Copy** (copies the main side's channel into its VFO).\n\n**Known limits**\n\n- The channel distance text can clip at the right, and the dual display shows no distance.\n- The S-meter's dBm, S-units and colours are approximate until it is calibrated. On the air band the signal bar stays on screen with its last reading. During a spectrum sweep the main side isn't listening to the channel.\n- The volume ranges' loudness steps are first values and may change in a later release.\n- A channel with no contact must store \"none\" within 0–9999 (Codeplug Studio writes 9999).\n\n**Checking it worked:** after the radio restarts, Device Info > Mod Ver shows `mm9pdy-1.2.0`.\n\n**Going back to stock:** flash stock V1.05 from this page, or use the official CPS.\n"
     },
     {
       "radioId": "anytone-at-d890uv",
@@ -160,26 +180,6 @@
       },
       "notesPath": "releases/anytone-at-d890uv/d890-fw-1.2.0-rc.3.md",
       "notes": "A release candidate for 1.2.0, for testing. It applies to the stock **V1.05** package (20260521) only. It is 1.2.0-rc.2 with the **S-meter** added. Everything in 1.1.0 and 1.2.0-rc.2 is also in this build.\n\n**How far it has been checked:** the S-meter has been tried on the owner's radio from a test build: the bar, the signal screen and the spectrum all respond to a nearby transmitter. This exact build is checked in an emulator only.\n\n**What's new since 1.2.0-rc.2**\n\n- **S-meter menu:** the Main Menu has a new **S-Meter** item at the end. **Display** turns the signal bar on and picks what it shows: Bar, Bar + raw, Bar + dBm or Bar + S (S-units). It is off by default. **Average** smooths the reading (Off, Fast, Slow). **Peak hold** keeps a peak marker for 1 or 3 seconds.\n- **Signal bar:** in the single display, a bar under the channel shows the received signal strength, with the reading in the corner. It replaces the last-call lines while it is on. It shows the noise floor as well as signals, so it moves even when nothing is heard.\n- **Signal screen:** **S-Meter > S-Meter screen** (or a key assigned to **Satellite Predicting** in the CPS, which this firmware turns into the S-meter key) opens a full-screen meter with a large reading, a scale, and min / max / average. Press **P1** to take the current reading as a reference: the screen then shows the difference in dB, which is handy for comparing antennas. **P2** clears the reference and the min / max. Up and Down change the unit. **Back** leaves it.\n- **Spectrum:** **S-Meter > Spectrum** sweeps the main side's receiver across a band around the channel and draws the signal level at each step. **S-Meter > Spectrum set** chooses the span, the step and the top and bottom of the scale. On the screen, **P1** and **P2** change the span and step, Up and Down move a marker that shows its frequency and level, and **Back** stops the sweep and returns the radio to the channel. The backlight stays on while the spectrum is open.\n\n**Known limits**\n\n- The dBm and S-unit readings are approximate: the meter isn't calibrated against a signal generator yet. The raw reading and the dB difference on the signal screen are the reliable parts, so use those to compare antennas.\n- On the air band (108–136 MHz) the radio can't measure signal strength. The spectrum won't start there, but the signal bar stays on screen with its last reading. That is a bug, to be fixed.\n- The dual display shows no signal bar.\n- The spectrum sweeps a few dozen steps a second, and stays within the channel's band.\n- During a sweep the main side isn't listening to the channel. Back returns it.\n\n**Checking it worked:** after the radio restarts, Device Info > Mod Ver shows `mm9pdy-1.2.0-rc.3`, and Main Menu ends with **S-Meter**.\n\n**Going back to stock:** flash stock V1.05 from this page, or use the official CPS.\n"
-    },
-    {
-      "radioId": "anytone-at-d890uv",
-      "version": "1.2.0",
-      "channel": "final",
-      "patchName": "anytone-d890-firmware",
-      "patchFile": "d890-fw-1.2.0.patch.json",
-      "patchPath": "releases/anytone-at-d890uv/d890-fw-1.2.0.patch.json",
-      "patchSha256": "94ffa65cab1cb930dd3f0eb6f2516a5e72a113fe50b80031ab51ad42b579c332",
-      "stockVersion": "V1.05 (20260521)",
-      "publishedOn": "2026-10-26",
-      "summary": "Channel distance, an S-meter with a spectrum and a signal history, a zone-scan resume time, volume ranges with a volume bar, timeslot fixes, and a new single-display layout.",
-      "verifyHint": "After the radio restarts, Device Info > Mod Ver shows \"mm9pdy-1.2.0\".",
-      "resultSha256": {
-        "cdd": "bfd1e71fa5c945b22c1d9f4513754ce72c3a0d8b891a4dc793e1a6484d096029",
-        "cdi": "f48b0d1374d78acec08067f143d5646734fe0af30ddce8377c387001becc9e79",
-        "spi": "b7d713b004e1bbd708192633dcdc2a72da80e6a272bc35870d4067ee26cb14ab"
-      },
-      "notesPath": "releases/anytone-at-d890uv/d890-fw-1.2.0.md",
-      "notes": "The 1.2.0 release of the AT-D890UV firmware mods. It applies to the stock **V1.05** package (20260521) only.\n\nIt is the same build as release candidate 1.2.0-rc.4, apart from the release name, and rc.4 passed its radio check. Everything in 1.1.0 is also in this build.\n\n**What's new since 1.1.0**\n\n- **Channel distance:** the channel screen shows how far away the current memory channel's site is, and in which direction, from the radio's GPS fix, for example `850m N` or `4.3km NE`. It needs channel positions written by Codeplug Studio's **MM9PDY** target, GPS on and a recent fix.\n- **Single display:** one 3-line layout for analogue and digital channels: the channel name, then the talk group or receive frequency, then the zone name on a small line underneath. In the dual display the sub side's line shows its own `Talk group / Zone`.\n- **S-meter:** Main Menu > **S-Meter** opens the screens first, then the settings.\n  - A signal bar on the channel screen, coloured by level, with a raw, dBm or S-unit reading.\n  - A full-screen meter with min / max / average and a difference mode for comparing antennas.\n  - A **spectrum** that sweeps the receiver around the channel and shows signals as peaks at their own frequency.\n  - A **signal history** that plots the channel's level over time, like a heart monitor.\n  - One fixed colour scale everywhere, so a colour always means the same strength.\n- **Zone scan resume time:** Main Menu > Scan > **Zone scan resume** (0.5 s, 1 s, 2 s, 5 s or 10 s; default 5 s) sets how long a zone scan waits on a channel after the activity ends, and after you transmit, before it carries on. Before, it could carry on after a fraction of a second.\n- **Heard-call popup:** a zone scan that holds on a DMR call shows who and which talk group. **Scan** (Zone / List) and **Scan popup** are rows of Main Menu > Scan.\n- **Timeslots:** the T1 / T2 badge shows the slot in use, a short `*` always switches it, and a Slot Switch key does the same and saves it into the channel.\n- **Volume:** **Vol Range** (Stock, Indoor, Outdoor, Full) changes how the knob maps to loudness, with true silence at the bottom of a range. An optional volume bar shows the level and range when you turn the knob; press **Menu** on it to step the range. Both settings are rows of Settings > Radio Set > Voice Func. With a Bluetooth headset connected, the knob sets the headset's volume.\n- **Quick filters:** **Tone match: On / Off** (Off opens the squelch of a toned analogue channel on any signal) and **To VFO: Copy** (copies the main side's channel into its VFO).\n\n**Known limits**\n\n- The channel distance text can clip at the right, and the dual display shows no distance.\n- The S-meter's dBm, S-units and colours are approximate until it is calibrated. On the air band the signal bar stays on screen with its last reading. During a spectrum sweep the main side isn't listening to the channel.\n- The volume ranges' loudness steps are first values and may change in a later release.\n- A channel with no contact must store \"none\" within 0–9999 (Codeplug Studio writes 9999).\n\n**Checking it worked:** after the radio restarts, Device Info > Mod Ver shows `mm9pdy-1.2.0`.\n\n**Going back to stock:** flash stock V1.05 from this page, or use the official CPS.\n"
     },
     {
       "radioId": "anytone-at-d890uv",
@@ -297,30 +297,6 @@
     },
     {
       "radioId": "baofeng-uv5rmini",
-      "version": "1.0.0-rc.1",
-      "channel": "rc",
-      "patchName": "baofeng-uv5rmini-firmware",
-      "patchFile": "uv5rmini-fw-1.0.0-rc.1-nrf-v0.27-hw1.7.patch.json",
-      "patchPath": "releases/baofeng-uv5rmini/uv5rmini-fw-1.0.0-rc.1-nrf-v0.27-hw1.7.patch.json",
-      "patchSha256": "c728cd409e15645376924efcd9b1046bec1571c4e4bf2f7ffee358f9a157d465",
-      "stockVersion": "v0.27 (NRF)",
-      "layout": "L2",
-      "base": "nrf-v0.27",
-      "publishedOn": "2026-11-14",
-      "summary": "A 1.0.0 release candidate, the first MM9PDY build for the UV-5R Mini. Zones for each side, the zone under the channel name, scanning inside a zone, and the build name in Radio Info.",
-      "verifyHint": "After the radio restarts, Menu > Radio Info shows \"mm9pdy-L2-1.0.0-rc.1\" on its fourth row.",
-      "resultSha256": {
-        "ufw": "9b8ce8e38ed20274b6f8455a218ee99be7a73c9fe00920e0fab43787c61d6993"
-      },
-      "toStock": {
-        "path": "releases/baofeng-uv5rmini/to-stock/uv5rmini-fw-to-stock-nrf-v0.27-hw1.7-1.0.0-rc.1.patch.json",
-        "sha256": "751ab03b62d32fc665c9f846b0de57945447b2c33926c81cedc8b15bda6f9a44"
-      },
-      "notesPath": "releases/baofeng-uv5rmini/uv5rmini-fw-1.0.0-rc.1-nrf-v0.27-hw1.7.md",
-      "notes": "A release candidate for 1.0.0, for testing. It is only for UV-5R Mini radios that show `5RMINI NRF` on the hold-8 power-on screen and `Firmware:V0.27` and `Hardware:V1.7` in Radio Info. A radio with any other combination is not supported, and Codeplug Studio writes nothing to it.\n\n**What's new**\n\n- **Zones:** up to 24 named groups of channels, written with the codeplug. Each side chooses its own zone from the menu (MENU, then UP to **Zones A** or **Zones B**), and Up and Down then step only through that zone's channels. Typing a channel number still reaches any channel.\n- **Zone line:** in NAME display mode, the idle screen shows each side's zone in small letters under the channel name.\n- **Zone scan:** a scan in a zone visits only that zone's channels: those with SCAN ADD on, or all of them when none has it.\n- **Build name:** the power-on screen and the fourth row of Radio Info show the build name.\n- A codeplug with no zones works exactly as the stock firmware does.\n\n**How far it has been checked:** everything in this build passes in an emulator. On a radio, once, with test builds that differ only in the build name: the install from Codeplug Studio, the build name on the power-on screen and in Radio Info, and zones on both sides. Going back to stock, carrying on after a cut update, and writing the same build again have not been tried on a radio yet.\n\n**Checking it worked:** after the radio restarts, Menu > Radio Info shows `mm9pdy-L2-1.0.0-rc.1` on its fourth row. The Firmware and Hardware rows are unchanged.\n\n**Going back to stock:** use **Back to stock** in Codeplug Studio's firmware flasher, with the to-stock file published with this release and your stock firmware file. It is meant for emergencies.\n"
-    },
-    {
-      "radioId": "baofeng-uv5rmini",
       "version": "1.0.0",
       "channel": "final",
       "patchName": "baofeng-uv5rmini-firmware",
@@ -342,6 +318,30 @@
       },
       "notesPath": "releases/baofeng-uv5rmini/uv5rmini-fw-1.0.0-nrf-v0.27-hw1.7.md",
       "notes": "The first release of the MM9PDY firmware for the UV-5R Mini. It is only for radios that show `5RMINI NRF` on the hold-8 power-on screen and `Firmware:V0.27` and `Hardware:V1.7` in Radio Info. A radio with any other combination is not supported, and Codeplug Studio writes nothing to it.\n\n**What's new**\n\n- **Zones:** up to 24 named groups of channels, written with the codeplug. Each side chooses its own zone from the menu (MENU, then UP to **Zones A** or **Zones B**), and Up and Down then step only through that zone's channels. Typing a channel number still reaches any channel.\n- **Zone line:** in NAME display mode, the idle screen shows each side's zone in small letters under the channel name.\n- **Zone scan:** a scan in a zone visits only that zone's channels: those with SCAN ADD on, or all of them when none has it.\n- **Build name:** the power-on screen and the fourth row of Radio Info show the build name.\n- A codeplug with no zones works exactly as the stock firmware does.\n\n**How far it has been checked:** the release candidate was installed through Codeplug Studio once. On a radio, both sides kept their zones and channels over a power cycle; the zone line and zone scan were checked. Carrier scan resumed almost always after 5 seconds. Studio stopped for unsupported radio answers. A full read matched that radio's calibration reference; no writes followed that read during the sitting. Other zone checks, back to stock, recovery and writing the same build again were not checked at the sitting.\n\n**Checking it worked:** after the radio restarts, Menu > Radio Info shows `mm9pdy-L2-1.0.0` on its fourth row. The Firmware and Hardware rows are unchanged.\n\n**Going back to stock:** use **Back to stock** in Codeplug Studio's firmware flasher, with the to-stock file published with this release and your stock firmware file. It is meant for emergencies.\n"
+    },
+    {
+      "radioId": "baofeng-uv5rmini",
+      "version": "1.0.0-rc.1",
+      "channel": "rc",
+      "patchName": "baofeng-uv5rmini-firmware",
+      "patchFile": "uv5rmini-fw-1.0.0-rc.1-nrf-v0.27-hw1.7.patch.json",
+      "patchPath": "releases/baofeng-uv5rmini/uv5rmini-fw-1.0.0-rc.1-nrf-v0.27-hw1.7.patch.json",
+      "patchSha256": "c728cd409e15645376924efcd9b1046bec1571c4e4bf2f7ffee358f9a157d465",
+      "stockVersion": "v0.27 (NRF)",
+      "layout": "L2",
+      "base": "nrf-v0.27",
+      "publishedOn": "2026-11-14",
+      "summary": "A 1.0.0 release candidate, the first MM9PDY build for the UV-5R Mini. Zones for each side, the zone under the channel name, scanning inside a zone, and the build name in Radio Info.",
+      "verifyHint": "After the radio restarts, Menu > Radio Info shows \"mm9pdy-L2-1.0.0-rc.1\" on its fourth row.",
+      "resultSha256": {
+        "ufw": "9b8ce8e38ed20274b6f8455a218ee99be7a73c9fe00920e0fab43787c61d6993"
+      },
+      "toStock": {
+        "path": "releases/baofeng-uv5rmini/to-stock/uv5rmini-fw-to-stock-nrf-v0.27-hw1.7-1.0.0-rc.1.patch.json",
+        "sha256": "751ab03b62d32fc665c9f846b0de57945447b2c33926c81cedc8b15bda6f9a44"
+      },
+      "notesPath": "releases/baofeng-uv5rmini/uv5rmini-fw-1.0.0-rc.1-nrf-v0.27-hw1.7.md",
+      "notes": "A release candidate for 1.0.0, for testing. It is only for UV-5R Mini radios that show `5RMINI NRF` on the hold-8 power-on screen and `Firmware:V0.27` and `Hardware:V1.7` in Radio Info. A radio with any other combination is not supported, and Codeplug Studio writes nothing to it.\n\n**What's new**\n\n- **Zones:** up to 24 named groups of channels, written with the codeplug. Each side chooses its own zone from the menu (MENU, then UP to **Zones A** or **Zones B**), and Up and Down then step only through that zone's channels. Typing a channel number still reaches any channel.\n- **Zone line:** in NAME display mode, the idle screen shows each side's zone in small letters under the channel name.\n- **Zone scan:** a scan in a zone visits only that zone's channels: those with SCAN ADD on, or all of them when none has it.\n- **Build name:** the power-on screen and the fourth row of Radio Info show the build name.\n- A codeplug with no zones works exactly as the stock firmware does.\n\n**How far it has been checked:** everything in this build passes in an emulator. On a radio, once, with test builds that differ only in the build name: the install from Codeplug Studio, the build name on the power-on screen and in Radio Info, and zones on both sides. Going back to stock, carrying on after a cut update, and writing the same build again have not been tried on a radio yet.\n\n**Checking it worked:** after the radio restarts, Menu > Radio Info shows `mm9pdy-L2-1.0.0-rc.1` on its fourth row. The Firmware and Hardware rows are unchanged.\n\n**Going back to stock:** use **Back to stock** in Codeplug Studio's firmware flasher, with the to-stock file published with this release and your stock firmware file. It is meant for emergencies.\n"
     },
     {
       "radioId": "retevis-rt95-head",
