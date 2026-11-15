@@ -1,7 +1,7 @@
 # Recovery
 
 <!-- variant-status:start -->
-> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.0.0. NRFB, Firmware V0.04, Hardware V1.7: no final release; release candidate 1.0.0-rc.1.
+> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.0.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.0.0.
 <!-- variant-status:end -->
 
 **Not yet checked on a radio.** Every step below is a plan, not a record.
@@ -19,8 +19,8 @@ The cable came out, the battery ran down, or the computer went to sleep during *
 4. **Not yet checked on a radio.** Check it as in [install.md](install.md#3-check-it-worked), or for back to stock as
    in [back-to-stock.md](back-to-stock.md#check-it-worked).
 
-If the radio starts normally instead, the update either finished or never began. Check Radio Info: a fourth line with
-the build name means it finished. Otherwise start the install again from the beginning.
+If the radio starts normally instead, the update either finished or never began. Check Radio Info: `MM9PDY mod` and
+the build name under the stock lines (the build name alone up to 1.0.0) mean it finished. Otherwise start the install again from the beginning.
 
 ## The radio refused the file
 

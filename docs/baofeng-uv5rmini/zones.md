@@ -1,14 +1,14 @@
 # Zones
 
 <!-- variant-status:start -->
-> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.0.0. NRFB, Firmware V0.04, Hardware V1.7: no final release; release candidate 1.0.0-rc.1.
+> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.0.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.0.0.
 <!-- variant-status:end -->
 
 Zones let each side of the radio work with a named group of channels instead of all of them. With side A in a zone
 called "HOME", Up and Down on side A visit only HOME's channels, while side B can use another zone or all channels.
 
-Zones need the MM9PDY firmware for the UV-5R Mini, release 1.0.0, which is for radios that came with suffix `NRF`,
-Firmware `V0.27` and Hardware `V1.7` (see [the first page](README.md#read-this-first)).
+Zones need the MM9PDY firmware for the UV-5R Mini, release 1.0.0, which is for radios that came with Hardware `V1.7`
+and suffix `NRF` with Firmware `V0.27`, or suffix `NRFB` with Firmware `V0.04` (see [the first page](README.md#read-this-first)).
 
 ## Setting up zones
 

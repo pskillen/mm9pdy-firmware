@@ -300,6 +300,30 @@
       "version": "1.0.0",
       "channel": "final",
       "patchName": "baofeng-uv5rmini-firmware",
+      "patchFile": "uv5rmini-fw-1.0.0-nrfb-v0.04-hw1.7.patch.json",
+      "patchPath": "releases/baofeng-uv5rmini/uv5rmini-fw-1.0.0-nrfb-v0.04-hw1.7.patch.json",
+      "patchSha256": "3128f0d3bee28a52887f8ed21c5298f84bcdaf58a99731953f64ec9d51f4d126",
+      "stockVersion": "v0.04 (NRFB)",
+      "layout": "L1",
+      "base": "nrfb-v0.04",
+      "publishedOn": "2026-11-15",
+      "summary": "MM9PDY 1.0.0 for the UV-5R Mini, hardware V1.7: NRF with firmware V0.27, or NRFB with firmware V0.04. Zones, zone scan and the build name in Radio Info.",
+      "verifyHint": "After the radio restarts, Menu > Radio Info shows \"mm9pdy-L2-1.0.0\" on its fourth row (on a V0.04 radio, \"MM9PDY mod\" then \"v0.04-NRFB-1.0.0\").",
+      "resultSha256": {
+        "ufw": "dc46492ad7768e215678d1079d6e14f0e6a8f6e196b652e2f96d705da25e2987"
+      },
+      "toStock": {
+        "path": "releases/baofeng-uv5rmini/to-stock/uv5rmini-fw-to-stock-nrfb-v0.04-hw1.7-1.0.0.patch.json",
+        "sha256": "55de01669b514a17eeee4062024ca5a5dccc8fc625e892b671298fa7e9c3fefe"
+      },
+      "notesPath": "releases/baofeng-uv5rmini/uv5rmini-fw-1.0.0-nrfb-v0.04-hw1.7.md",
+      "notes": "The first release of the MM9PDY firmware for the UV-5R Mini. The V0.27 file is only for radios that show `5RMINI NRF` on the hold-8 power-on screen and `Firmware:V0.27` and `Hardware:V1.7` in Radio Info. A radio with any other combination is not supported, and Codeplug Studio writes nothing to it.\n\n**V0.04 radios:** a second file, `v0.04-NRFB-1.0.0`, is for radios that show `5RMINI NRFB`, `Firmware:V0.04` and `Hardware:V1.7`. It works the same, except that the power-on screen and Radio Info show a fixed `MM9PDY mod` line above the build name; the V0.27 file gets that line in its next release.\n\n**What's new**\n\n- **Zones:** up to 24 named groups of channels, written with the codeplug. Each side chooses its own zone from the menu (MENU, then UP to **Zones A** or **Zones B**), and Up and Down then step only through that zone's channels. Typing a channel number still reaches any channel.\n- **Zone line:** in NAME display mode, the idle screen shows each side's zone in small letters under the channel name.\n- **Zone scan:** a scan in a zone visits only that zone's channels: those with SCAN ADD on, or all of them when none has it.\n- **Build name:** the power-on screen and the fourth row of Radio Info show the build name.\n- A codeplug with no zones works exactly as the stock firmware does.\n\n**How far the V0.27 file has been checked:** its release candidate was installed through Codeplug Studio once. On a radio, both sides kept their zones and channels over a power cycle; the zone line and zone scan were checked. Carrier scan resumed almost always after 5 seconds. Studio stopped for unsupported radio answers. A full read matched that radio's calibration reference; no writes followed that read during the sitting. Other zone checks, back to stock, recovery and writing the same build again were not checked at the sitting.\n\n**How far the V0.04 file has been checked:** its release candidate was installed from Codeplug Studio on one V0.04 radio. Zones worked and the basic radio functions were good. Back to stock, then installing it again, both succeeded, and the radio's calibration was unchanged throughout.\n\n**Checking it worked:** after the radio restarts, Menu > Radio Info shows `mm9pdy-L2-1.0.0` on its fourth row (on a V0.04 radio, `MM9PDY mod` then `v0.04-NRFB-1.0.0`). The Firmware and Hardware rows are unchanged.\n\n**Going back to stock:** use **Back to stock** in Codeplug Studio's firmware flasher, with the to-stock file published with this release and your stock firmware file. It is meant for emergencies.\n"
+    },
+    {
+      "radioId": "baofeng-uv5rmini",
+      "version": "1.0.0",
+      "channel": "final",
+      "patchName": "baofeng-uv5rmini-firmware",
       "patchFile": "uv5rmini-fw-1.0.0-nrf-v0.27-hw1.7.patch.json",
       "patchPath": "releases/baofeng-uv5rmini/uv5rmini-fw-1.0.0-nrf-v0.27-hw1.7.patch.json",
       "patchSha256": "2d6e5e30dcb6771e1ffd4c43cf5e57b1823beeb6befd95594d0ef8905c9fa266",
