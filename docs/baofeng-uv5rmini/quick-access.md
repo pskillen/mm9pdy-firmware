@@ -1,7 +1,7 @@
 # Quick Access
 
 <!-- variant-status:start -->
-> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.1.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.0.0.
+> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.1.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.1.0.
 <!-- variant-status:end -->
 
 Quick Access is a short list of things you switch often: **scan**, the **flashlight**, **monitor** and the

@@ -1,7 +1,7 @@
 # Recovery
 
 <!-- variant-status:start -->
-> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.1.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.0.0.
+> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.1.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.1.0.
 <!-- variant-status:end -->
 
 **Not yet checked on a radio.** Every step below is a plan, not a record.

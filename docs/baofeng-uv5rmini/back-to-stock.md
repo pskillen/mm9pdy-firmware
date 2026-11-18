@@ -1,7 +1,7 @@
 # Back to stock
 
 <!-- variant-status:start -->
-> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.1.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.0.0.
+> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.1.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.1.0.
 <!-- variant-status:end -->
 
 Steps marked *Not yet checked on a radio* are a plan, not a record. Steps marked *Checked on a radio with the

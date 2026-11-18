@@ -1,7 +1,7 @@
 # Watch modes
 
 <!-- variant-status:start -->
-> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.1.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.0.0.
+> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.1.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.1.0.
 <!-- variant-status:end -->
 
 The radio has two sides, A and B. The watch mode decides how many of them you see and hear:

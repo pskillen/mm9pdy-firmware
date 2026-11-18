@@ -1,7 +1,7 @@
 # Baofeng UV-5R Mini (MM9PDY)
 
 <!-- variant-status:start -->
-> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.1.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.0.0.
+> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.1.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.1.0.
 <!-- variant-status:end -->
 
 A small, free modification of the Baofeng UV-5R Mini's own firmware. It adds zones (named groups of channels for
