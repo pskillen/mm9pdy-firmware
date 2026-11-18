@@ -1,10 +1,10 @@
 # Installing
 
 <!-- variant-status:start -->
-> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.0.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.0.0.
+> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.1.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.0.0.
 <!-- variant-status:end -->
 
-Release 1.0.0 is for the **UV-5R Mini** with Hardware `V1.7` and either Firmware `V0.27` with suffix `NRF`, or
+Release 1.1.0 is for the **UV-5R Mini** with Hardware `V1.7` and either Firmware `V0.27` with suffix `NRF`, or
 Firmware `V0.04` with suffix `NRFB`. Check **MENU > Radio Info** for Firmware and Hardware, and the hold-8 power-on screen for the suffix. Other Minis
 are not supported yet.
 
@@ -12,6 +12,8 @@ Steps marked *Not yet checked on a radio* are a plan, not a record. Steps marked
 builds* were done once, with test builds that differ from a release only in the build name. Do not rely on any of it
 more than that. Steps marked *Checked on a radio with the 1.0.0 release* were performed installing 1.0.0 over
 stock v0.27 through the app, and again over stock v0.04; for steps with alternatives, this marker covers the stock path only.
+Steps marked *Checked on a radio with the 1.1.0 release candidate* were performed installing it with Codeplug Studio
+2.14.0 over earlier MM9PDY builds, on a V0.04 and a V0.27 radio.
 
 ## What you need
 
@@ -47,9 +49,13 @@ stock v0.27 through the app, and again over stock v0.04; for steps with alternat
 4. **Checked on a radio with the 1.0.0 release.**
    With the radio switched on as normal and the cable in, let Studio read the radio.
    - A radio already running an MM9PDY build tells Studio which build it has, and Studio asks nothing.
-   - A stock radio can't tell Studio its version, so Studio asks what Radio Info shows: pick the **Firmware** and
-     **Hardware** lines from the lists, and confirm the suffix. Studio stops if they are not one of the
-     combinations on [the first page](README.md#read-this-first). **Checked once:** Studio stopped for unsupported answers.
+   - A stock radio can't tell Studio what it is, so Studio asks: pick the **suffix** from the hold-8 screen and the
+     **Hardware** line from Radio Info. Studio stops if they are not one of the combinations on
+     [the first page](README.md#read-this-first). **Checked once, with 1.0.0:** Studio stopped for unsupported answers.
+     **Not yet checked on a radio with 1.1.0:** Studio no longer asks for the Firmware line. It may send the file for
+     the other firmware version first; the radio refuses that before installing anything and keeps its settings, and
+     Studio offers the other file. Put the radio back into update mode and press **Connect and flash** again. If
+     Studio asks for the other stock file as well, add it.
 5. **Checked on a radio with the 1.0.0 release.**
    Put the radio into update mode: switch it off, hold **PTT-A** and
    **=** together, and switch it on. Let go when the screen shows a computer picture and `UPDATE...`.
@@ -62,19 +68,19 @@ stock v0.27 through the app, and again over stock v0.04; for steps with alternat
 If the update is cut part way (the cable comes out, the battery runs down), see [recovery.md](recovery.md): you can
 carry on with the same files.
 
-If Studio was given the file for another kind of UV-5R Mini, the radio refuses it before anything is installed. Its FM
-radio presets and volume may be reset; nothing else changes. A file that does not match this radio's own key is
+If Studio was given the file for another kind of UV-5R Mini, the radio refuses it before anything is installed, and
+nothing on the radio changes. (With releases up to 1.0.0, its FM radio presets and volume could be reset.) A file that does not match this radio's own key is
 refused before anything is written ("not for this radio's key").
 
 ## 3. Check it worked
 
-1. **Checked on a radio with the 1.0.0 release.**
+1. **Checked on a radio with the 1.0.0 release and the 1.1.0 release candidate.**
    The radio restarts by itself and shows its normal screen.
-2. **Checked on a radio with the 1.0.0 release.** On a V0.27 radio, 1.0.0 shows the build name alone, without the
+2. **Checked on a radio with the 1.0.0 release and the 1.1.0 release candidate.** On a V0.27 radio, 1.0.0 shows the build name alone, without the
    `MM9PDY mod` line.
    Switch the radio off and on again. The bottom of the power-on screen shows `MM9PDY mod` and under it the
-   build name, for example `mm9pdy-L2-1.0.0` or `v0.04-NRFB-1.0.0`.
-3. **Checked on a radio with the 1.0.0 release.** On a V0.27 radio, 1.0.0 shows the build name alone, without the
+   build name, for example `v0.27-NRF-1.1.0` or `v0.04-NRFB-1.1.0`.
+3. **Checked on a radio with the 1.0.0 release and the 1.1.0 release candidate.** On a V0.27 radio, 1.0.0 shows the build name alone, without the
    `MM9PDY mod` line.
    Press **MENU**, then **UP** to **Radio Info**, then **MENU**. Under the stock lines, `MM9PDY mod` and the same
    build name show in small text. The Firmware and Hardware lines are unchanged.

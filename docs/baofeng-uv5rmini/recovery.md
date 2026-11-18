@@ -1,7 +1,7 @@
 # Recovery
 
 <!-- variant-status:start -->
-> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.0.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.0.0.
+> **Availability by radio:** NRF, Firmware V0.27, Hardware V1.7: latest release 1.1.0. NRFB, Firmware V0.04, Hardware V1.7: latest release 1.0.0.
 <!-- variant-status:end -->
 
 **Not yet checked on a radio.** Every step below is a plan, not a record.
@@ -24,8 +24,9 @@ the build name under the stock lines (the build name alone up to 1.0.0) mean it 
 
 ## The radio refused the file
 
-- **The file is for the other kind of UV-5R Mini.** The radio refuses it before anything is installed. Its FM radio
-  presets and volume may have been reset; set them again. Nothing else has changed. Check your radio's suffix, Firmware
+- **The file is for the other kind of UV-5R Mini.** The radio refuses it before anything is installed. With 1.1.0 or
+  later nothing has changed; with earlier releases its FM radio presets and volume may have been reset, so set them
+  again. On a first install over stock firmware this can be expected: Studio then offers the other file. Check your radio's suffix, Firmware
   and Hardware lines ([the first page](README.md#read-this-first)).
 - **"Not for this radio's key."** The files do not fit this radio, and nothing was written. Check that you chose
   the right release and stock file for your radio.
