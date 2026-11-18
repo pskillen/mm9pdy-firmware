@@ -10,6 +10,7 @@ features added. Everything else behaves as stock. You install it from the browse
 | Baofeng DM-32UV | v1.01.048 | [docs/baofeng-dm32uv](docs/baofeng-dm32uv/README.md) | [releases/baofeng-dm32uv](releases/baofeng-dm32uv) |
 | Baofeng UV-5R Mini | V0.27 (NRF) or V0.04 (NRFB), Hardware V1.7 | [docs/baofeng-uv5rmini](docs/baofeng-uv5rmini/README.md) | [releases/baofeng-uv5rmini](releases/baofeng-uv5rmini) |
 | Retevis RT95 front panel (LCD) | LCD V1.41 (20231202) | [docs/retevis-rt95-head](docs/retevis-rt95-head/README.md) | [releases/retevis-rt95-head](releases/retevis-rt95-head) |
+| Retevis RT95 main board (RF CPU), for the audio level meter | MAIN V1.61 (20231202) | [docs/retevis-rt95-head](docs/retevis-rt95-head/install.md) | [releases/retevis-rt95-main](releases/retevis-rt95-main) |
 
 A release fits only the stock firmware in the table. Codeplug Studio checks your stock firmware file and stops before
 writing anything that does not match. Each user guide says how to read your radio's version.
@@ -61,15 +62,18 @@ under [what it does](docs/baofeng-uv5rmini/README.md#what-it-does).
 
 ### Retevis RT95 (also sold as the AnyTone AT-778UV)
 
-Mobile radio. The mods change the front panel only; the radio board's firmware stays as the maker made it.
+Mobile radio. The mods change the front panel; an optional radio board (RF CPU) update adds the audio level meter.
 
 - **[Zones](docs/retevis-rt95-head/features.md#zones):** up to 32 named zones, picked with a key. The knob, the mic's
-  Up and Down and scan stay inside the zone, and each side keeps its own.
+  Up and Down and scan follow the zone's own channel order, each zone can have its own scan set, and switching zone
+  returns to the channel you last used there.
 - **[Channel descriptions](docs/retevis-rt95-head/features.md#channel-descriptions):** in single watch, a
   12-character description under the channel name, with the zone above it.
 - **[Nuisance delete](docs/retevis-rt95-head/features.md#nuisance-delete-in-scan) and
   [Scan Pause Time](docs/retevis-rt95-head/features.md#co-scan-and-scan-pause-time):** hold SCN to skip a busy
-  channel; carrier scan waits the pause time after the signal goes.
+  channel until you switch off; carrier scan waits the pause time after the signal goes.
+- **[Audio level meter](docs/retevis-rt95-head/features.md#audio-level-meter):** received audio and your microphone
+  level as nine segments in single watch; needs the radio board update.
 
 Each user guide says what every feature does, its limits, and how far it has been checked on a radio.
 
