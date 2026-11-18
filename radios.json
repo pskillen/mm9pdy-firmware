@@ -35,5 +35,11 @@
     "patchName": "retevis-rt95-firmware",
     "assetPrefix": "rt95-fw-",
     "stockVersion": "LCD V1.41 (20231202)"
+  },
+  "retevis-rt95-main": {
+    "name": "Retevis RT95 main board (RF CPU)",
+    "patchName": "retevis-rt95-main-firmware",
+    "assetPrefix": "rt95-main-fw-",
+    "stockVersion": "MAIN V1.61 (20231202)"
   }
 }
