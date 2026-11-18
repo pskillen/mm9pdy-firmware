@@ -13,6 +13,19 @@
 4. **Not yet checked on a radio.** If Studio will not write, use the maker's programming software for the same stock
    write.
 
+## The radio does not start after a radio board (RF CPU) update
+
+**Not yet checked on a radio.** This is a plan, not a record.
+
+1. **Not yet checked on a radio.** Switch it off and remove the DC power. Check the battery or supply.
+2. **Not yet checked on a radio.** The radio board is reached through the front panel. If the front panel also does not
+   start, put the stock front-panel firmware back first ([back-to-stock.md](back-to-stock.md)). Then enter radio board update mode again (cold start, **P3** and the knob push). The
+   screen must read `UPDATE THE` and `RF CPU`.
+3. **Not yet checked on a radio.** With Codeplug Studio, write the maker's stock radio board firmware (Studio asks for the calibration backup before any radio board write), as in
+   [back-to-stock.md](back-to-stock.md#the-radio-board-rf-cpu).
+4. **Not yet checked on a radio.** If the radio then starts with factory settings, keep the calibration backup (the one
+   Studio asked you to save) safe. Studio cannot yet restore it by itself, so ask for help as below, with the backup to hand.
+
 ## The write stopped half way
 
 The front-panel update mode is still there after a failed write. Do not unplug the radio or switch it off to "try
@@ -21,8 +34,8 @@ again" more than once: switch off, enter update mode as above, and write the sto
 ## Things to avoid
 
 - Do not hold **FUNC** and **P6** while switching on: that resets the radio to factory settings.
-- Do not use the radio board's update mode (**P3** and the knob at power on) for anything here. Nothing in this project
-  writes the radio board.
+- Do not use the radio board's update mode (**P3** and the knob at power on) except for the optional audio level meter
+  update or to put the stock radio board firmware back, and only with the screen reading `UPDATE THE` and `RF CPU`.
 - Do not write firmware made for another model or revision.
 
 If none of this works, ask for help with the radio's serial number, the version shown, and what the screen did.

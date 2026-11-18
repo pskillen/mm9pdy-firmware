@@ -1,8 +1,11 @@
 # Retevis RT95 front panel (MM9PDY)
 
 A small, free modification for the front panel (the "head", with the screen, keys and knob) of the Retevis RT95 and the
-AnyTone AT-778UV it is built on. It is applied to the **stock front-panel firmware, version LCD V1.41**, and leaves the
-radio board's own firmware (the "RF" side) exactly as the maker made it.
+AnyTone AT-778UV it is built on. It is applied to the **stock front-panel firmware, version LCD V1.41**. The
+front-panel modification leaves the radio board's own firmware (the "RF" side, the RF CPU) exactly as the maker made it.
+The one exception is the **audio level meter**, which needs a small, optional update of the radio board (RF CPU), put on
+and taken off with Codeplug Studio ([install.md](install.md#the-radio-board-rf-cpu-update-for-the-audio-level-meter)).
+Without it, everything else works as before.
 
 **Not much here has been checked on a radio.** Test builds were written with Codeplug Studio and worked, including one
 with zones and descriptions. Every step not yet seen on a radio is marked *Not yet checked on a radio*; the others say
@@ -14,8 +17,8 @@ how far they were checked.
 |---|---|
 | [features.md](features.md) | What the modification does: the version line, zones, and channel descriptions in single watch |
 | [codeplug.md](codeplug.md) | Zones and the CPS and CHIRP: what writes them, what leaves them alone |
-| [install.md](install.md) | Putting it on the radio with Codeplug Studio |
-| [back-to-stock.md](back-to-stock.md) | Putting the maker's firmware back |
+| [install.md](install.md) | Putting it on the radio with Codeplug Studio, and the optional radio board (RF CPU) update for the audio level meter |
+| [back-to-stock.md](back-to-stock.md) | Putting the maker's firmware back, on the front panel and on the radio board |
 | [recovery.md](recovery.md) | If the radio does not start after a write |
 
 ## Read this first
