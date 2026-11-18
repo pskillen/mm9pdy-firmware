@@ -1,0 +1,44 @@
+{
+ "format": 1,
+ "name": "retevis-rt95-main-firmware",
+ "version": "1.2.0",
+ "stock": {
+  ".CDD": {
+   "sha256": "ca7918ffd242362b39bda5457b2350ab69d112d4704129187909bcfa1f609551",
+   "size": 55652
+  },
+  ".CDI": {
+   "sha256": "75fce5bd6093449b6a5cd04d2319019b1c4689ea81ac6e8328e2f40fa76af9d9",
+   "size": 278
+  },
+  ".spi": {
+   "sha256": "3d096d4788e747417c669f5348ac4b4c6aa3d31a2bd8dd7799300203729714c3",
+   "size": 10
+  }
+ },
+ "result": {
+  ".CDD": {
+   "sha256": "47bf4773d49af87f07bfd84734ce1dcf9cc870676e8961e020f076d0e5d2c2bd",
+   "size": 55784
+  },
+  ".CDI": {
+   "sha256": "24d6cb5347ca47c95a807a89cd54fc0c4a4f0daa53407078da2850b28f5cfdaa",
+   "size": 278
+  },
+  ".spi": {
+   "sha256": "368909c711bb6700143982aeeccc278689f20fd75aaac49b6758dd9d5bd3faad",
+   "size": 10
+  }
+ },
+ "append": {
+  "offset": 55612,
+  "hex": "2de9f04182b0fbf7a1fb40f26a1840f26610c2f20008c2f2000098f800508078c00731d140f294120021c2f2000240f2ce730024002000bf16889f1b98bfa6f2ce770191019e8742c8bf3846f7087c2f07d800bf019f01370197019fb7f57a7ff8d30134082ce7d181087f294ff07f0105f0fe0238bf8108101f38bf0020b2eb410f98bf480007e01a20fbf710ff40f22e10c2f20000008800f0fe0005f00101084488f8000002b0bde8f081"
+ },
+ "hooks": [
+  {
+   "offset": 898,
+   "original": "08f081fe",
+   "hex": "0df0dbfa"
+  }
+ ]
+}
